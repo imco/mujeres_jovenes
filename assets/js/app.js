@@ -1,5 +1,7 @@
 import { geoMercator, geoNaturalEarth1, geoPath } from 'd3-geo';
 
+// Configuración principal del micrositio.
+// Si necesitas agregar una nueva sección o pestaña, empieza aquí.
 const TABS = [
   {
     id: 'dashboard-nacional',
@@ -39,7 +41,8 @@ const TABS = [
         title: 'Evolución de la informalidad laboral por sexo',
         subtitle: 'Tasas trimestrales de ocupación informal 2005 - 2025',
         file: 'data/dashboard-nacional/evolucion_informalidad_laboral_por_sexo_fuente.json',
-        width: 'half'
+        width: 'half',
+        chartHeightScale: 1.2
       },
       {
         key: 'valor-cuidados',
@@ -95,6 +98,7 @@ const palette = {
   grid: '#ece9f8'
 };
 
+// Fuentes de geometría para mapas (mundo, México y CDMX).
 const WORLD_GEOJSON_URL = 'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson';
 const MEXICO_GEOJSON_URL = 'https://raw.githubusercontent.com/angelnmara/geojson/master/mexicoHigh.json';
 const CDMX_GEOJSON_LOCAL = 'data/cdmx-alcaldia/cdmx_alcaldias_real.geojson';
@@ -107,6 +111,7 @@ const REGION_NAMES_EN = typeof Intl !== 'undefined' && Intl.DisplayNames
   : null;
 const ENGLISH_TO_SPANISH_REGION = buildEnglishToSpanishRegionMap();
 
+// Alias para empatar nombres de países entre geojson (inglés) y dataset (español).
 const COUNTRY_ALIASES = {
   'brazil': 'brasil',
   'brasil': 'brasil',
@@ -145,6 +150,7 @@ const COUNTRY_ALIASES = {
   'viet nam': 'vietnam'
 };
 
+// Alias de estados para empatar nombres entre mapa y archivo de datos.
 const MEXICO_STATE_ALIASES = {
   'estado de mexico': 'mexico',
   'mexico state': 'mexico',
@@ -158,6 +164,7 @@ const MEXICO_STATE_ALIASES = {
   'michoacan': 'michoacan'
 };
 
+// Alias de alcaldías para empatar nombres entre mapa y archivo de datos.
 const ALCALDIA_ALIASES = {
   'gustavo a madero': 'gustavo a madero',
   'gustavo a. madero': 'gustavo a madero',
@@ -204,11 +211,13 @@ let activeTab = TABS[0].id;
 
 init();
 
+// Punto de entrada de la app.
 function init() {
   renderTabButtons();
   loadTab(activeTab);
 }
 
+// Renderiza navegación superior de pestañas.
 function renderTabButtons() {
   tabNav.innerHTML = '';
 
@@ -227,6 +236,7 @@ function renderTabButtons() {
   });
 }
 
+// Carga datos + renderiza todas las secciones de la pestaña activa.
 async function loadTab(tabId) {
   const tab = TABS.find((item) => item.id === tabId);
   if (!tab) return;
@@ -254,6 +264,8 @@ async function loadTab(tabId) {
   }
 }
 
+// Fabrica visual de cada tipo de sección.
+// Para añadir un nuevo tipo de gráfico, agrega un nuevo bloque aquí.
 async function renderSection(section, data) {
   const node = sectionTemplate.content.firstElementChild.cloneNode(true);
   node.querySelector('.section-title').textContent = section.title;
@@ -315,7 +327,11 @@ async function renderSection(section, data) {
       yTicks: section.key === 'valor-cuidados' ? [0, 8, 16, 30] : null,
       source: section.key === 'valor-cuidados' ? data.source : ''
     });
-    attachBarChartTooltip(body, '.stack-segment');
+    if (section.key === 'valor-cuidados') {
+      attachStackedCombinedTooltip(body);
+    } else {
+      attachBarChartTooltip(body, '.stack-segment');
+    }
   }
 
   if (section.type === 'horizontal-bars') {
@@ -326,6 +342,7 @@ async function renderSection(section, data) {
   return node;
 }
 
+// Sección de mapa mundial + ranking internacional.
 async function renderWorldMapRanking(data) {
   const items = Array.isArray(data)
     ? data
@@ -386,6 +403,7 @@ async function renderWorldMapRanking(data) {
   `;
 }
 
+// Dibuja el mapa mundial SVG coloreando por intensidad.
 function renderWorldSvg(features, valuesByName, valuesByCanonical, labelsByName, labelsByCanonical, min, max) {
   const width = 980;
   const height = 460;
@@ -431,6 +449,7 @@ function renderWorldSvg(features, valuesByName, valuesByCanonical, labelsByName,
   </svg>`;
 }
 
+// Tooltip del mapa mundial.
 function attachWorldMapTooltip(container) {
   const svg = container.querySelector('.world-map-svg');
   if (!svg) return;
@@ -484,6 +503,7 @@ function attachWorldMapTooltip(container) {
   svg.addEventListener('mouseout', onSvgOut);
 }
 
+// Mantiene la misma altura visual entre mapa y ranking (desktop).
 function syncRankingHeightToMap(container) {
   const mapPanel = container.querySelector('.map-panel');
   const ranking = container.querySelector('.ranking');
@@ -524,6 +544,7 @@ function renderMapFallback(items, min, max) {
   `;
 }
 
+// Cascarón compartido para pestañas "Entidad" y "CDMX por Alcaldía".
 function renderMexicoIndicatorMapShell() {
   return `
     <div class="mexico-map-layout">
@@ -564,6 +585,10 @@ function renderMexicoIndicatorMapShell() {
   `;
 }
 
+// Lógica de pestaña "Estadísticas por Entidad".
+// Punto clave para cambiar:
+// - indicador inicial (defaultVar)
+// - contenido de panel lateral (sideTitle/sideDesc/sideMeta)
 async function attachMexicoIndicatorMap(container, payload) {
   const records = Array.isArray(payload?.data) ? payload.data : (Array.isArray(payload) ? payload : []);
   const rows = records.filter((r) =>
@@ -747,6 +772,8 @@ async function attachMexicoIndicatorMap(container, payload) {
   syncIndicatorSideHeightToMap(mapWrap, indicatorSide);
 }
 
+// Lógica de pestaña "CDMX por Alcaldía".
+// Mantiene la misma experiencia que Entidad, pero con datos de alcaldías.
 async function attachCdmxIndicatorMap(container, payload) {
   const records = Array.isArray(payload?.data) ? payload.data : (Array.isArray(payload) ? payload : []);
   const rows = records.filter((r) =>
@@ -983,10 +1010,13 @@ function syncIndicatorSideHeightToMap(mapWrap, indicatorSide) {
   }
 }
 
+// Render de barras verticales (vista alterna de mapa).
+// Este bloque controla también el hint de scroll en móvil.
 function renderBarsStage(container, items, selectedKey, onSelect) {
   const max = Math.max(...items.map((i) => i.value), 1);
   container.className = 'bars-stage';
   container.innerHTML = `
+    <p class="bars-scroll-hint" aria-hidden="true">Desliza para ver el gráfico completo →</p>
     <div class="vbars-scroll">
       <div class="vbars-plot" style="--bar-count:${items.length}">
         ${items.map((item, index) => {
@@ -1018,6 +1048,7 @@ function compactBarLabel(label) {
   return normalized.slice(0, 14);
 }
 
+// Alterna visualización "Mapa" <-> "Barras", renderizando una sola a la vez.
 function setIndicatorStageView(svg, barsStage, mapVisible) {
   svg.hidden = !mapVisible;
   barsStage.hidden = mapVisible;
@@ -1025,6 +1056,7 @@ function setIndicatorStageView(svg, barsStage, mapVisible) {
   barsStage.style.display = mapVisible ? 'none' : 'grid';
 }
 
+// Utilidad para obtener un nombre de feature compatible con varios geojson.
 function getFeatureName(feature) {
   return feature?.properties?.name
     || feature?.properties?.NAME
@@ -1038,6 +1070,7 @@ function getFeatureName(feature) {
     || 'País';
 }
 
+// Resuelve la mejor coincidencia país-dato considerando alias y traducciones.
 function resolveCountryMatch(countryName, feature, valuesByName, valuesByCanonical, labelsByName, labelsByCanonical) {
   const candidates = new Set();
   const seedCandidates = [countryName, ...collectFeatureNameCandidates(feature)];
@@ -1170,6 +1203,7 @@ function normalizeCountry(name) {
     .trim();
 }
 
+// Construye diccionario inglés->español de países usando Intl.DisplayNames.
 function buildEnglishToSpanishRegionMap() {
   const map = new Map();
   if (!REGION_NAMES_EN || !REGION_NAMES_ES) return map;
@@ -1201,6 +1235,7 @@ function colorFromValue(value, min, max) {
   return `rgba(111, 79, 232, ${alpha.toFixed(3)})`;
 }
 
+// Sanitiza texto para insertar en HTML sin riesgos de inyección.
 function escapeHtml(text) {
   return String(text)
     .replaceAll('&', '&amp;')
@@ -1358,7 +1393,7 @@ function renderStackedBars(data, options = {}) {
         y="${yPos}"
         width="${barWidth}"
         height="${h}"
-        rx="4"
+        rx="${options.variant === 'care' ? 0 : 4}"
         fill="${s.color}"
         opacity="0.9"
         class="stack-segment"
@@ -1520,6 +1555,50 @@ function attachBarChartTooltip(container, selector) {
   });
 }
 
+// Tooltip combinado para barras apiladas:
+// al hover de cualquier segmento, muestra todas las series del mismo periodo.
+function attachStackedCombinedTooltip(container) {
+  const segments = Array.from(container.querySelectorAll('.stack-segment'));
+  if (!segments.length) return;
+
+  const tooltip = getSharedChartTooltip();
+
+  segments.forEach((segment) => {
+    segment.addEventListener('mousemove', (event) => {
+      const label = segment.dataset.label || '';
+      const unit = segment.dataset.unit || '';
+      const svg = segment.ownerSVGElement;
+      if (!svg) return;
+
+      const sameLabelSegments = Array.from(svg.querySelectorAll('.stack-segment'))
+        .filter((node) => node.dataset.label === label);
+
+      const rows = sameLabelSegments.map((node) => {
+        const series = node.dataset.series || '';
+        const value = Number(node.dataset.value || 0);
+        const color = node.dataset.color || palette.women;
+        return `
+          <div class="chart-tooltip-row">
+            <span class="chart-tooltip-dot" style="background:${color}"></span>
+            <span>${escapeHtml(series)}: ${value.toFixed(1)}${escapeHtml(unit)}</span>
+          </div>
+        `;
+      }).join('');
+
+      tooltip.innerHTML = `
+        <div class="chart-tooltip-title">${escapeHtml(label)}</div>
+        ${rows}
+      `;
+      tooltip.hidden = false;
+      positionSharedTooltip(tooltip, event.clientX, event.clientY);
+    });
+
+    segment.addEventListener('mouseleave', () => {
+      tooltip.hidden = true;
+    });
+  });
+}
+
 function getSharedChartTooltip() {
   let tooltip = document.getElementById('chart-tooltip');
   if (tooltip) return tooltip;
@@ -1549,6 +1628,7 @@ function positionSharedTooltip(tooltip, clientX, clientY) {
   tooltip.style.top = `${y}px`;
 }
 
+// Fetch base para todos los archivos json del proyecto.
 async function fetchJSON(path) {
   const response = await fetch(path);
   if (!response.ok) {
@@ -1557,6 +1637,8 @@ async function fetchJSON(path) {
   return response.json();
 }
 
+// Normaliza formato de fuentes tipo "Excel exportado" a la estructura de chart interna.
+// Si cambia la estructura de un JSON de origen, normalmente el ajuste va aquí.
 function normalizeSectionData(section, data) {
   if (section.key === 'brecha-salarial-genero' && data?.sheets?.Hoja1) {
     const rows = data.sheets.Hoja1.filter((row) => Number.isFinite(row?.Año) && Number.isFinite(row?.Brecha));

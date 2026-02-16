@@ -1,0 +1,165 @@
+{
+  "unit": "%",
+  "items": [
+    {
+      "name": "Guerrero",
+      "value": 23.02,
+      "color": "#ec4899"
+    },
+    {
+      "name": "Sinaloa",
+      "value": 21.3,
+      "color": "#ec4899"
+    },
+    {
+      "name": "Morelos",
+      "value": 20.96,
+      "color": "#ec4899"
+    },
+    {
+      "name": "Hidalgo",
+      "value": 20.34,
+      "color": "#ec4899"
+    },
+    {
+      "name": "Oaxaca",
+      "value": 19.72,
+      "color": "#ec4899"
+    },
+    {
+      "name": "Querétaro",
+      "value": 19.56,
+      "color": "#ec4899"
+    },
+    {
+      "name": "Colima",
+      "value": 18.92,
+      "color": "#ec4899"
+    },
+    {
+      "name": "Tlaxcala",
+      "value": 18.05,
+      "color": "#ec4899"
+    },
+    {
+      "name": "Michoacán",
+      "value": 18.04,
+      "color": "#ec4899"
+    },
+    {
+      "name": "Coahuila",
+      "value": 17.77,
+      "color": "#ec4899"
+    },
+    {
+      "name": "Nayarit",
+      "value": 16.91,
+      "color": "#ec4899"
+    },
+    {
+      "name": "Guanajuato",
+      "value": 16.85,
+      "color": "#ec4899"
+    },
+    {
+      "name": "Tamaulipas",
+      "value": 16.44,
+      "color": "#ec4899"
+    },
+    {
+      "name": "Jalisco",
+      "value": 16.33,
+      "color": "#ec4899"
+    },
+    {
+      "name": "Sonora",
+      "value": 15.82,
+      "color": "#ec4899"
+    },
+    {
+      "name": "Zacatecas",
+      "value": 15.59,
+      "color": "#ec4899"
+    },
+    {
+      "name": "Durango",
+      "value": 15.28,
+      "color": "#2f9e88"
+    },
+    {
+      "name": "Baja California",
+      "value": 14.88,
+      "color": "#2f9e88"
+    },
+    {
+      "name": "Chihuahua",
+      "value": 14.79,
+      "color": "#2f9e88"
+    },
+    {
+      "name": "Aguascalientes",
+      "value": 14.72,
+      "color": "#2f9e88"
+    },
+    {
+      "name": "Quintana Roo",
+      "value": 13.74,
+      "color": "#2f9e88"
+    },
+    {
+      "name": "Nuevo León",
+      "value": 13.59,
+      "color": "#2f9e88"
+    },
+    {
+      "name": "Baja California Sur",
+      "value": 13.28,
+      "color": "#2f9e88"
+    },
+    {
+      "name": "Puebla",
+      "value": 13.14,
+      "color": "#2f9e88"
+    },
+    {
+      "name": "San Luis Potosí",
+      "value": 12.95,
+      "color": "#2f9e88"
+    },
+    {
+      "name": "Yucatán",
+      "value": 12.53,
+      "color": "#2f9e88"
+    },
+    {
+      "name": "México",
+      "value": 11.17,
+      "color": "#2f9e88"
+    },
+    {
+      "name": "Veracruz de Ignacio de la Llave",
+      "value": 9.68,
+      "color": "#2f9e88"
+    },
+    {
+      "name": "Ciudad de México",
+      "value": 9.6,
+      "color": "#2f9e88"
+    },
+    {
+      "name": "Tabasco",
+      "value": 7.2,
+      "color": "#2f9e88"
+    },
+    {
+      "name": "Campeche",
+      "value": 6.57,
+      "color": "#2f9e88"
+    },
+    {
+      "name": "Chiapas",
+      "value": 4.67,
+      "color": "#2f9e88"
+    }
+  ]
+}

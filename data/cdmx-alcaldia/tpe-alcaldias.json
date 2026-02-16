@@ -1,0 +1,12 @@
+{
+  "unit": "%",
+  "items": [
+    { "name": "Benito Juárez", "value": 52.6, "color": "#6f4fe8" },
+    { "name": "Miguel Hidalgo", "value": 50.9, "color": "#6f4fe8" },
+    { "name": "Cuauhtémoc", "value": 49.8, "color": "#6f4fe8" },
+    { "name": "Coyoacán", "value": 48.3, "color": "#6f4fe8" },
+    { "name": "Iztapalapa", "value": 42.1, "color": "#ff7b53" },
+    { "name": "Gustavo A. Madero", "value": 41.9, "color": "#ff7b53" },
+    { "name": "Milpa Alta", "value": 39.6, "color": "#ff7b53" }
+  ]
+}

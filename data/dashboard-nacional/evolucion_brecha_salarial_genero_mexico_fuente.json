@@ -1,0 +1,99 @@
+{
+  "source_file": "evolucion de la brecha salarial por genero en mexico.xlsx",
+  "sheets": {
+    "Hoja1": [
+      {
+        "Año": 2005,
+        "Brecha": 0.19789274910096627
+      },
+      {
+        "Año": 2006,
+        "Brecha": 0.1863687959416604
+      },
+      {
+        "Año": 2007,
+        "Brecha": 0.18795852514357442
+      },
+      {
+        "Año": 2008,
+        "Brecha": 0.1885455574386681
+      },
+      {
+        "Año": 2009,
+        "Brecha": 0.1668513700346217
+      },
+      {
+        "Año": 2010,
+        "Brecha": 0.16409748839528895
+      },
+      {
+        "Año": 2011,
+        "Brecha": 0.1550445329925674
+      },
+      {
+        "Año": 2012,
+        "Brecha": 0.15477816812792766
+      },
+      {
+        "Año": 2013,
+        "Brecha": 0.1536349104773627
+      },
+      {
+        "Año": 2014,
+        "Brecha": 0.14835022862668812
+      },
+      {
+        "Año": 2015,
+        "Brecha": 0.15090488642658523
+      },
+      {
+        "Año": 2016,
+        "Brecha": 0.15559162682431127
+      },
+      {
+        "Año": 2017,
+        "Brecha": 0.14423441346307014
+      },
+      {
+        "Año": 2018,
+        "Brecha": 0.14521762768712365
+      },
+      {
+        "Año": 2019,
+        "Brecha": 0.14974658665744786
+      },
+      {
+        "Año": 2020,
+        "Brecha": 0.11340856700777749
+      },
+      {
+        "Año": 2021,
+        "Brecha": 0.13111848104112134
+      },
+      {
+        "Año": 2022,
+        "Brecha": 0.13713576433138264
+      },
+      {
+        "Año": 2023,
+        "Brecha": 0.1493958332499973
+      },
+      {
+        "Año": 2024,
+        "Brecha": 0.15039095343992517
+      },
+      {
+        "Año": 2025,
+        "Brecha": 0.13750849430012843
+      },
+      {
+        "Año": null,
+        "Brecha": null
+      },
+      {
+        "Año": "Fuente: Elaborado por el IMCO con el promedio de los cuatro trimestres de la ENOE del INEGI de 2005 a 2025. \nNota: Para 2025 se consideran los primeros trimestres del año.",
+        "Brecha": null
+      }
+    ]
+  }
+}

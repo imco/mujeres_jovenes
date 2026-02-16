@@ -1,0 +1,738 @@
+[
+  {
+    "pais": "Afganistán",
+    "tpe": 5.1
+  },
+  {
+    "pais": "Angola",
+    "tpe": 73.1
+  },
+  {
+    "pais": "Albania",
+    "tpe": 53.5
+  },
+  {
+    "pais": "Emiratos Árabes Unidos",
+    "tpe": 54.1
+  },
+  {
+    "pais": "Argentina",
+    "tpe": 52.9
+  },
+  {
+    "pais": "Armenia",
+    "tpe": 56.4
+  },
+  {
+    "pais": "Australia",
+    "tpe": 62.4
+  },
+  {
+    "pais": "Austria",
+    "tpe": 55.6
+  },
+  {
+    "pais": "Azerbaiyán",
+    "tpe": 60.4
+  },
+  {
+    "pais": "Burundi",
+    "tpe": 79.9
+  },
+  {
+    "pais": "Bélgica",
+    "tpe": 49.8
+  },
+  {
+    "pais": "Benín",
+    "tpe": 74.3
+  },
+  {
+    "pais": "Burkina Faso",
+    "tpe": 41.0
+  },
+  {
+    "pais": "Bangladés",
+    "tpe": 44.2
+  },
+  {
+    "pais": "Bulgaria",
+    "tpe": 50.9
+  },
+  {
+    "pais": "Baréin",
+    "tpe": 43.0
+  },
+  {
+    "pais": "Bahamas",
+    "tpe": 66.5
+  },
+  {
+    "pais": "Bosnia y Herzegovina",
+    "tpe": 39.4
+  },
+  {
+    "pais": "Bielorrusia",
+    "tpe": 56.9
+  },
+  {
+    "pais": "Belice",
+    "tpe": 49.2
+  },
+  {
+    "pais": "Bolivia",
+    "tpe": 72.5
+  },
+  {
+    "pais": "Brasil",
+    "tpe": 53.0
+  },
+  {
+    "pais": "Barbados",
+    "tpe": 59.7
+  },
+  {
+    "pais": "Brunéi",
+    "tpe": 53.2
+  },
+  {
+    "pais": "Bután",
+    "tpe": 56.5
+  },
+  {
+    "pais": "Botsuana",
+    "tpe": 63.8
+  },
+  {
+    "pais": "República Centroafricana",
+    "tpe": 65.8
+  },
+  {
+    "pais": "Canadá",
+    "tpe": 61.0
+  },
+  {
+    "pais": "Suiza",
+    "tpe": 62.0
+  },
+  {
+    "pais": "Chile",
+    "tpe": 52.0
+  },
+  {
+    "pais": "República Popular China",
+    "tpe": 59.6
+  },
+  {
+    "pais": "Costa de Marfil",
+    "tpe": 58.8
+  },
+  {
+    "pais": "Camerún",
+    "tpe": 56.5
+  },
+  {
+    "pais": "República Democrática del Congo",
+    "tpe": 62.3
+  },
+  {
+    "pais": "República del Congo",
+    "tpe": 66.3
+  },
+  {
+    "pais": "Colombia",
+    "tpe": 51.7
+  },
+  {
+    "pais": "Comoras",
+    "tpe": 41.5
+  },
+  {
+    "pais": "Cabo Verde",
+    "tpe": 50.3
+  },
+  {
+    "pais": "Costa Rica",
+    "tpe": 43.8
+  },
+  {
+    "pais": "Cuba",
+    "tpe": 39.5
+  },
+  {
+    "pais": "Chipre",
+    "tpe": 62.4
+  },
+  {
+    "pais": "República Checa",
+    "tpe": 53.1
+  },
+  {
+    "pais": "Alemania",
+    "tpe": 55.6
+  },
+  {
+    "pais": "Yibuti",
+    "tpe": 18.7
+  },
+  {
+    "pais": "Dinamarca",
+    "tpe": 59.8
+  },
+  {
+    "pais": "República Dominicana",
+    "tpe": 52.9
+  },
+  {
+    "pais": "Argelia",
+    "tpe": 14.0
+  },
+  {
+    "pais": "Ecuador",
+    "tpe": 52.4
+  },
+  {
+    "pais": "Egipto",
+    "tpe": 15.1
+  },
+  {
+    "pais": "Eritrea",
+    "tpe": 72.3
+  },
+  {
+    "pais": "España",
+    "tpe": 52.6
+  },
+  {
+    "pais": "Estonia",
+    "tpe": 60.8
+  },
+  {
+    "pais": "Etiopía",
+    "tpe": 57.3
+  },
+  {
+    "pais": "Finlandia",
+    "tpe": 57.4
+  },
+  {
+    "pais": "Fiyi",
+    "tpe": 38.5
+  },
+  {
+    "pais": "Francia",
+    "tpe": 51.7
+  },
+  {
+    "pais": "Gabón",
+    "tpe": 41.7
+  },
+  {
+    "pais": "Reino Unido",
+    "tpe": 57.3
+  },
+  {
+    "pais": "Georgia",
+    "tpe": 55.0
+  },
+  {
+    "pais": "Ghana",
+    "tpe": 61.5
+  },
+  {
+    "pais": "Guinea",
+    "tpe": 41.6
+  },
+  {
+    "pais": "Gambia",
+    "tpe": 45.2
+  },
+  {
+    "pais": "Guinea-Bisáu",
+    "tpe": 56.5
+  },
+  {
+    "pais": "Guinea Ecuatorial",
+    "tpe": 52.8
+  },
+  {
+    "pais": "Grecia",
+    "tpe": 44.5
+  },
+  {
+    "pais": "Guatemala",
+    "tpe": 40.4
+  },
+  {
+    "pais": "Guam",
+    "tpe": 56.4
+  },
+  {
+    "pais": "Guyana",
+    "tpe": 40.3
+  },
+  {
+    "pais": "Hong Kong",
+    "tpe": 52.0
+  },
+  {
+    "pais": "Honduras",
+    "tpe": 39.5
+  },
+  {
+    "pais": "Croacia",
+    "tpe": 47.0
+  },
+  {
+    "pais": "Haití",
+    "tpe": 60.0
+  },
+  {
+    "pais": "Hungría",
+    "tpe": 53.9
+  },
+  {
+    "pais": "Indonesia",
+    "tpe": 52.6
+  },
+  {
+    "pais": "India",
+    "tpe": 32.8
+  },
+  {
+    "pais": "Irlanda",
+    "tpe": 60.1
+  },
+  {
+    "pais": "Irán",
+    "tpe": 13.4
+  },
+  {
+    "pais": "Irak",
+    "tpe": 10.8
+  },
+  {
+    "pais": "Islandia",
+    "tpe": 70.3
+  },
+  {
+    "pais": "Israel",
+    "tpe": 62.0
+  },
+  {
+    "pais": "Italia",
+    "tpe": 41.3
+  },
+  {
+    "pais": "Jamaica",
+    "tpe": 61.3
+  },
+  {
+    "pais": "Jordania",
+    "tpe": 14.0
+  },
+  {
+    "pais": "Japón",
+    "tpe": 55.3
+  },
+  {
+    "pais": "Kazajistán",
+    "tpe": 66.0
+  },
+  {
+    "pais": "Kenia",
+    "tpe": 62.2
+  },
+  {
+    "pais": "Kirguistán",
+    "tpe": 53.0
+  },
+  {
+    "pais": "Camboya",
+    "tpe": 74.0
+  },
+  {
+    "pais": "Corea del Sur",
+    "tpe": 56.0
+  },
+  {
+    "pais": "Kuwait",
+    "tpe": 48.6
+  },
+  {
+    "pais": "Laos",
+    "tpe": 61.5
+  },
+  {
+    "pais": "Liberia",
+    "tpe": 72.1
+  },
+  {
+    "pais": "Libia",
+    "tpe": 32.8
+  },
+  {
+    "pais": "Santa Lucía",
+    "tpe": 62.9
+  },
+  {
+    "pais": "Sri Lanka",
+    "tpe": 31.6
+  },
+  {
+    "pais": "Lesoto",
+    "tpe": 48.7
+  },
+  {
+    "pais": "Lituania",
+    "tpe": 57.9
+  },
+  {
+    "pais": "Luxemburgo",
+    "tpe": 57.1
+  },
+  {
+    "pais": "Letonia",
+    "tpe": 55.1
+  },
+  {
+    "pais": "Marruecos",
+    "tpe": 19.5
+  },
+  {
+    "pais": "Moldavia",
+    "tpe": 70.1
+  },
+  {
+    "pais": "Madagascar",
+    "tpe": 82.6
+  },
+  {
+    "pais": "Maldivas",
+    "tpe": 41.0
+  },
+  {
+    "pais": "México",
+    "tpe": 47.4
+  },
+  {
+    "pais": "Macedonia del Norte",
+    "tpe": 41.7
+  },
+  {
+    "pais": "Mali",
+    "tpe": 58.0
+  },
+  {
+    "pais": "Malta",
+    "tpe": 55.3
+  },
+  {
+    "pais": "Birmania",
+    "tpe": 41.0
+  },
+  {
+    "pais": "Montenegro",
+    "tpe": 41.4
+  },
+  {
+    "pais": "Mongolia",
+    "tpe": 53.1
+  },
+  {
+    "pais": "Mozambique",
+    "tpe": 78.1
+  },
+  {
+    "pais": "Mauritania",
+    "tpe": 26.1
+  },
+  {
+    "pais": "Mauricio",
+    "tpe": 42.6
+  },
+  {
+    "pais": "Malaui",
+    "tpe": 63.2
+  },
+  {
+    "pais": "Malasia",
+    "tpe": 51.6
+  },
+  {
+    "pais": "Namibia",
+    "tpe": 55.4
+  },
+  {
+    "pais": "Nueva Caledonia",
+    "tpe": 51.8
+  },
+  {
+    "pais": "Níger",
+    "tpe": 60.2
+  },
+  {
+    "pais": "Nigeria",
+    "tpe": 80.7
+  },
+  {
+    "pais": "Nicaragua",
+    "tpe": 50.1
+  },
+  {
+    "pais": "Países Bajos",
+    "tpe": 62.9
+  },
+  {
+    "pais": "Noruega",
+    "tpe": 61.7
+  },
+  {
+    "pais": "Nepal",
+    "tpe": 27.6
+  },
+  {
+    "pais": "Nueva Zelanda",
+    "tpe": 66.9
+  },
+  {
+    "pais": "Omán",
+    "tpe": 30.7
+  },
+  {
+    "pais": "Pakistán",
+    "tpe": 24.3
+  },
+  {
+    "pais": "Panamá",
+    "tpe": 52.7
+  },
+  {
+    "pais": "Perú",
+    "tpe": 65.2
+  },
+  {
+    "pais": "Filipinas",
+    "tpe": 49.9
+  },
+  {
+    "pais": "Papúa Nueva Guinea",
+    "tpe": 50.7
+  },
+  {
+    "pais": "Polonia",
+    "tpe": 51.6
+  },
+  {
+    "pais": "Puerto Rico",
+    "tpe": 32.4
+  },
+  {
+    "pais": "Corea del Norte",
+    "tpe": 77.7
+  },
+  {
+    "pais": "Portugal",
+    "tpe": 54.7
+  },
+  {
+    "pais": "Paraguay",
+    "tpe": 59.1
+  },
+  {
+    "pais": "Polinesia Francesa",
+    "tpe": 45.8
+  },
+  {
+    "pais": "Catar",
+    "tpe": 63.3
+  },
+  {
+    "pais": "Rumania",
+    "tpe": 41.8
+  },
+  {
+    "pais": "Rusia",
+    "tpe": 54.6
+  },
+  {
+    "pais": "Ruanda",
+    "tpe": 57.9
+  },
+  {
+    "pais": "Arabia Saudita",
+    "tpe": 34.4
+  },
+  {
+    "pais": "Senegal",
+    "tpe": 37.2
+  },
+  {
+    "pais": "Singapur",
+    "tpe": 62.3
+  },
+  {
+    "pais": "Islas Salomón",
+    "tpe": 82.4
+  },
+  {
+    "pais": "Sierra Leona",
+    "tpe": 51.2
+  },
+  {
+    "pais": "El Salvador",
+    "tpe": 46.7
+  },
+  {
+    "pais": "Somalia",
+    "tpe": 20.9
+  },
+  {
+    "pais": "Serbia",
+    "tpe": 49.9
+  },
+  {
+    "pais": "Santo Tomé y Príncipe",
+    "tpe": 23.1
+  },
+  {
+    "pais": "Surinam",
+    "tpe": 44.7
+  },
+  {
+    "pais": "Eslovaquia",
+    "tpe": 55.4
+  },
+  {
+    "pais": "Eslovenia",
+    "tpe": 53.3
+  },
+  {
+    "pais": "Suecia",
+    "tpe": 61.7
+  },
+  {
+    "pais": "Suazilandia",
+    "tpe": 44.8
+  },
+  {
+    "pais": "Siria",
+    "tpe": 13.3
+  },
+  {
+    "pais": "Chad",
+    "tpe": 48.4
+  },
+  {
+    "pais": "Togo",
+    "tpe": 56.1
+  },
+  {
+    "pais": "Tailandia",
+    "tpe": 58.9
+  },
+  {
+    "pais": "Tayikistán",
+    "tpe": 31.8
+  },
+  {
+    "pais": "Turkmenistán",
+    "tpe": 48.7
+  },
+  {
+    "pais": "Timor Oriental",
+    "tpe": 61.0
+  },
+  {
+    "pais": "Tonga",
+    "tpe": 41.7
+  },
+  {
+    "pais": "Trinidad y Tobago",
+    "tpe": 49.7
+  },
+  {
+    "pais": "Túnez",
+    "tpe": 26.7
+  },
+  {
+    "pais": "Turquía",
+    "tpe": 36.3
+  },
+  {
+    "pais": "Tanzania",
+    "tpe": 80.2
+  },
+  {
+    "pais": "Uganda",
+    "tpe": 76.5
+  },
+  {
+    "pais": "Uruguay",
+    "tpe": 57.3
+  },
+  {
+    "pais": "Estados Unidos",
+    "tpe": 56.5
+  },
+  {
+    "pais": "Uzbekistán",
+    "tpe": 39.4
+  },
+  {
+    "pais": "San Vicente y las Granadinas",
+    "tpe": 55.8
+  },
+  {
+    "pais": "Venezuela",
+    "tpe": 37.7
+  },
+  {
+    "pais": "Islas Vírgenes Británicas",
+    "tpe": 50.2
+  },
+  {
+    "pais": "Vietnam",
+    "tpe": 69.1
+  },
+  {
+    "pais": "Vanuatu",
+    "tpe": 53.7
+  },
+  {
+    "pais": "Samoa",
+    "tpe": 30.6
+  },
+  {
+    "pais": "Yemen",
+    "tpe": 4.9
+  },
+  {
+    "pais": "Sudáfrica",
+    "tpe": 53.0
+  },
+  {
+    "pais": "Zambia",
+    "tpe": 53.9
+  },
+  {
+    "pais": "Zimbabue",
+    "tpe": 59.6
+  },
+  {
+    "pais": "Rusia",
+    "tpe": 54.6
+  },
+  {
+    "pais": "Ucrania",
+    "tpe": 47.7
+  },
+  {
+    "pais": "Sudán",
+    "tpe": 14.4
+  },
+  {
+    "pais": "Sudán del Sur",
+    "tpe": 71.3
+  }
+]

@@ -1,0 +1,417 @@
+{
+  "source_file": "Evolución de la informalidad laboral por sexo.xlsx",
+  "sheets": {
+    "Hoja1": [
+      {
+        "Trimestre": "1T 2005",
+        "Hombres": 0.512,
+        "Mujeres": 0.576
+      },
+      {
+        "Trimestre": "2T 2005",
+        "Hombres": 0.511,
+        "Mujeres": 0.582
+      },
+      {
+        "Trimestre": "3T 2005",
+        "Hombres": 0.51,
+        "Mujeres": 0.584
+      },
+      {
+        "Trimestre": "4T 2005",
+        "Hombres": 0.512,
+        "Mujeres": 0.582
+      },
+      {
+        "Trimestre": "1T 2006",
+        "Hombres": 0.506,
+        "Mujeres": 0.573
+      },
+      {
+        "Trimestre": "2T 2006",
+        "Hombres": 0.509,
+        "Mujeres": 0.577
+      },
+      {
+        "Trimestre": "3T 2006",
+        "Hombres": 0.497,
+        "Mujeres": 0.566
+      },
+      {
+        "Trimestre": "4T 2006",
+        "Hombres": 0.493,
+        "Mujeres": 0.564
+      },
+      {
+        "Trimestre": "1T 2007",
+        "Hombres": 0.495,
+        "Mujeres": 0.564
+      },
+      {
+        "Trimestre": "2T 2007",
+        "Hombres": 0.498,
+        "Mujeres": 0.573
+      },
+      {
+        "Trimestre": "3T 2007",
+        "Hombres": 0.495,
+        "Mujeres": 0.562
+      },
+      {
+        "Trimestre": "4T 2007",
+        "Hombres": 0.498,
+        "Mujeres": 0.577
+      },
+      {
+        "Trimestre": "1T 2008",
+        "Hombres": 0.498,
+        "Mujeres": 0.569
+      },
+      {
+        "Trimestre": "2T 2008",
+        "Hombres": 0.501,
+        "Mujeres": 0.579
+      },
+      {
+        "Trimestre": "3T 2008",
+        "Hombres": 0.499,
+        "Mujeres": 0.568
+      },
+      {
+        "Trimestre": "4T 2008",
+        "Hombres": 0.501,
+        "Mujeres": 0.573
+      },
+      {
+        "Trimestre": "1T 2009",
+        "Hombres": 0.511,
+        "Mujeres": 0.577
+      },
+      {
+        "Trimestre": "2T 2009",
+        "Hombres": 0.519,
+        "Mujeres": 0.584
+      },
+      {
+        "Trimestre": "3T 2009",
+        "Hombres": 0.513,
+        "Mujeres": 0.589
+      },
+      {
+        "Trimestre": "4T 2009",
+        "Hombres": 0.515,
+        "Mujeres": 0.593
+      },
+      {
+        "Trimestre": "1T 2010",
+        "Hombres": 0.52,
+        "Mujeres": 0.59
+      },
+      {
+        "Trimestre": "2T 2010",
+        "Hombres": 0.519,
+        "Mujeres": 0.59
+      },
+      {
+        "Trimestre": "3T 2010",
+        "Hombres": 0.506,
+        "Mujeres": 0.586
+      },
+      {
+        "Trimestre": "4T 2010",
+        "Hombres": 0.509,
+        "Mujeres": 0.581
+      },
+      {
+        "Trimestre": "1T 2011",
+        "Hombres": 0.515,
+        "Mujeres": 0.583
+      },
+      {
+        "Trimestre": "2T 2011",
+        "Hombres": 0.512,
+        "Mujeres": 0.587
+      },
+      {
+        "Trimestre": "3T 2011",
+        "Hombres": 0.513,
+        "Mujeres": 0.588
+      },
+      {
+        "Trimestre": "4T 2011",
+        "Hombres": 0.513,
+        "Mujeres": 0.591
+      },
+      {
+        "Trimestre": "1T 2012",
+        "Hombres": 0.517,
+        "Mujeres": 0.588
+      },
+      {
+        "Trimestre": "2T 2012",
+        "Hombres": 0.512,
+        "Mujeres": 0.594
+      },
+      {
+        "Trimestre": "3T 2012",
+        "Hombres": 0.514,
+        "Mujeres": 0.593
+      },
+      {
+        "Trimestre": "4T 2012",
+        "Hombres": 0.508,
+        "Mujeres": 0.591
+      },
+      {
+        "Trimestre": "1T 2013",
+        "Hombres": 0.507,
+        "Mujeres": 0.581
+      },
+      {
+        "Trimestre": "2T 2013",
+        "Hombres": 0.504,
+        "Mujeres": 0.586
+      },
+      {
+        "Trimestre": "3T 2013",
+        "Hombres": 0.505,
+        "Mujeres": 0.58
+      },
+      {
+        "Trimestre": "4T 2013",
+        "Hombres": 0.501,
+        "Mujeres": 0.582
+      },
+      {
+        "Trimestre": "1T 2014",
+        "Hombres": 0.496,
+        "Mujeres": 0.575
+      },
+      {
+        "Trimestre": "2T 2014",
+        "Hombres": 0.491,
+        "Mujeres": 0.57
+      },
+      {
+        "Trimestre": "3T 2014",
+        "Hombres": 0.492,
+        "Mujeres": 0.569
+      },
+      {
+        "Trimestre": "4T 2014",
+        "Hombres": 0.494,
+        "Mujeres": 0.571
+      },
+      {
+        "Trimestre": "1T 2015",
+        "Hombres": 0.497,
+        "Mujeres": 0.57
+      },
+      {
+        "Trimestre": "2T 2015",
+        "Hombres": 0.493,
+        "Mujeres": 0.574
+      },
+      {
+        "Trimestre": "3T 2015",
+        "Hombres": 0.496,
+        "Mujeres": 0.572
+      },
+      {
+        "Trimestre": "4T 2015",
+        "Hombres": 0.497,
+        "Mujeres": 0.582
+      },
+      {
+        "Trimestre": "1T 2016",
+        "Hombres": 0.496,
+        "Mujeres": 0.571
+      },
+      {
+        "Trimestre": "2T 2016",
+        "Hombres": 0.492,
+        "Mujeres": 0.565
+      },
+      {
+        "Trimestre": "3T 2016",
+        "Hombres": 0.49,
+        "Mujeres": 0.568
+      },
+      {
+        "Trimestre": "4T 2016",
+        "Hombres": 0.493,
+        "Mujeres": 0.563
+      },
+      {
+        "Trimestre": "1T 2017",
+        "Hombres": 0.497,
+        "Mujeres": 0.565
+      },
+      {
+        "Trimestre": "2T 2017",
+        "Hombres": 0.49,
+        "Mujeres": 0.554
+      },
+      {
+        "Trimestre": "3T 2017",
+        "Hombres": 0.491,
+        "Mujeres": 0.561
+      },
+      {
+        "Trimestre": "4T 2017",
+        "Hombres": 0.491,
+        "Mujeres": 0.559
+      },
+      {
+        "Trimestre": "1T 2018",
+        "Hombres": 0.492,
+        "Mujeres": 0.559
+      },
+      {
+        "Trimestre": "2T 2018",
+        "Hombres": 0.49,
+        "Mujeres": 0.561
+      },
+      {
+        "Trimestre": "3T 2018",
+        "Hombres": 0.49,
+        "Mujeres": 0.557
+      },
+      {
+        "Trimestre": "4T 2018",
+        "Hombres": 0.488,
+        "Mujeres": 0.562
+      },
+      {
+        "Trimestre": "1T 2019",
+        "Hombres": 0.494,
+        "Mujeres": 0.567
+      },
+      {
+        "Trimestre": "2T 2019",
+        "Hombres": 0.487,
+        "Mujeres": 0.562
+      },
+      {
+        "Trimestre": "3T 2019",
+        "Hombres": 0.486,
+        "Mujeres": 0.563
+      },
+      {
+        "Trimestre": "4T 2019",
+        "Hombres": 0.483,
+        "Mujeres": 0.564
+      },
+      {
+        "Trimestre": "1T 2020",
+        "Hombres": 0.488,
+        "Mujeres": 0.557
+      },
+      {
+        "Trimestre": "3T 2020",
+        "Hombres": 0.477,
+        "Mujeres": 0.513
+      },
+      {
+        "Trimestre": "4T 2020",
+        "Hombres": 0.485,
+        "Mujeres": 0.542
+      },
+      {
+        "Trimestre": "1T 2021",
+        "Hombres": 0.489,
+        "Mujeres": 0.533
+      },
+      {
+        "Trimestre": "2T 2021",
+        "Hombres": 0.497,
+        "Mujeres": 0.547
+      },
+      {
+        "Trimestre": "3T 2021",
+        "Hombres": 0.495,
+        "Mujeres": 0.549
+      },
+      {
+        "Trimestre": "4T 2021",
+        "Hombres": 0.491,
+        "Mujeres": 0.548
+      },
+      {
+        "Trimestre": "1T 2022",
+        "Hombres": 0.487,
+        "Mujeres": 0.543
+      },
+      {
+        "Trimestre": "2T 2022",
+        "Hombres": 0.494,
+        "Mujeres": 0.547
+      },
+      {
+        "Trimestre": "3T 2022",
+        "Hombres": 0.488,
+        "Mujeres": 0.543
+      },
+      {
+        "Trimestre": "4T 2022",
+        "Hombres": 0.48,
+        "Mujeres": 0.548
+      },
+      {
+        "Trimestre": "1T 2023",
+        "Hombres": 0.487,
+        "Mujeres": 0.548
+      },
+      {
+        "Trimestre": "2T 2023",
+        "Hombres": 0.486,
+        "Mujeres": 0.549
+      },
+      {
+        "Trimestre": "3T 2023",
+        "Hombres": 0.485,
+        "Mujeres": 0.548
+      },
+      {
+        "Trimestre": "4T 2023",
+        "Hombres": 0.482,
+        "Mujeres": 0.546
+      },
+      {
+        "Trimestre": "1T 2024",
+        "Hombres": 0.479,
+        "Mujeres": 0.546
+      },
+      {
+        "Trimestre": "2T 2024",
+        "Hombres": 0.483,
+        "Mujeres": 0.539
+      },
+      {
+        "Trimestre": "3T 2024",
+        "Hombres": 0.478,
+        "Mujeres": 0.541
+      },
+      {
+        "Trimestre": "4T 2024",
+        "Hombres": 0.482,
+        "Mujeres": 0.541
+      },
+      {
+        "Trimestre": "1T 2025",
+        "Hombres": 0.48139124,
+        "Mujeres": 0.53973271
+      },
+      {
+        "Trimestre": "2T 2025",
+        "Hombres": 0.48659479,
+        "Mujeres": 0.54270508
+      },
+      {
+        "Trimestre": "3T 2025",
+        "Hombres": 0.49246772,
+        "Mujeres": 0.54811745
+      }
+    ]
+  }
+}

@@ -142,6 +142,73 @@ npm run build
 npm run preview
 ```
 
+## Actualización estandarizada de datos (Google Sheets -> JSON)
+
+Sí, el proyecto ya quedó preparado para actualizar datos desde Google Sheets.
+
+Archivos nuevos:
+- `scripts/sync-data-from-sheets.mjs`
+- `scripts/data-sources.config.json`
+
+Comandos:
+
+```bash
+# Simulación (no escribe archivos)
+npm run data:sync:dry
+
+# Sincronización real
+npm run data:sync
+```
+
+Qué pasa cuando agregas/actualizas fuentes en el config:
+1. `npm run data:sync:dry`
+   - Lee `scripts/data-sources.config.json`.
+   - Descarga y valida cada fuente habilitada (`enabled: true`).
+   - Muestra cuántas filas procesaría.
+   - **No escribe archivos**.
+2. `npm run data:sync`
+   - Descarga los CSV desde Google Sheets.
+   - Aplica la transformación configurada.
+   - Sobrescribe los JSON destino en `public/data/...`.
+3. El sitio se actualiza al recargar localmente (`npm run dev`) o después de hacer commit + deploy.
+4. Si una fuente falla (permisos, `gid` incorrecto o columnas distintas), esa fuente no se actualiza.
+
+Cómo funciona:
+1. Configuras cada fuente en `scripts/data-sources.config.json`.
+2. Marcas `enabled: true` en las fuentes que quieres actualizar.
+3. El script descarga CSV de Google Sheets y transforma al formato esperado por cada sección.
+4. Escribe el JSON en `public/data/...`.
+
+Requisitos de Google Sheets:
+- La hoja debe estar compartida como **“Cualquier persona con el enlace”** (al menos lectura).
+- Debes indicar en cada fuente:
+  - `spreadsheetId`
+  - `gid`
+  - o `csvUrl` directo
+
+Tipos de transformación soportados:
+- `array`: salida como arreglo JSON.
+- `sheet-wrapper`: salida tipo `{ source_file, sheets: { Hoja1: [...] } }`.
+- `scope-data-wrapper`: salida tipo `{ source_file, scope, data: [...] }`.
+- `entity-enriched`: salida enriquecida para Entidad (`entidades`, `variables`, `values`, `data`).
+
+Ejemplo mínimo de fuente:
+
+```json
+{
+  "id": "participacion-global",
+  "enabled": true,
+  "source": {
+    "spreadsheetId": "TU_SPREADSHEET_ID",
+    "gid": "0"
+  },
+  "transform": {
+    "type": "array"
+  },
+  "output": "public/data/dashboard-nacional/participacion_economica_mujeres_por_pais.json"
+}
+```
+
 ## Deploy en Vercel
 
 El proyecto ya incluye `vercel.json`:
@@ -159,4 +226,3 @@ Pasos:
 2. Verificar que los JSON estén en `public/data/...`.
 3. Confirmar cambios en `assets/js/app.js` y `assets/css/styles.css`.
 4. No editar manualmente `dist/`.
-

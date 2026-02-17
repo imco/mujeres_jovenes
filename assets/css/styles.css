@@ -1056,6 +1056,74 @@ h2 {
   font-size: 11px !important;
 }
 
+/* Optimización de densidad visual para laptop estándar (1366x768 aprox.). */
+@media (min-width: 1100px) and (max-width: 1600px) and (max-height: 950px) {
+  .app-shell {
+    width: calc(100vw - 1rem);
+    max-width: 1440px;
+    margin: .45rem auto;
+    gap: .75rem;
+  }
+
+  .topbar,
+  .view-header,
+  .section {
+    padding: .8rem 1rem;
+  }
+
+  .view-header {
+    padding-right: 12.5rem;
+  }
+
+  .tab-btn {
+    font-size: .84rem;
+    padding: .5rem .82rem;
+  }
+
+  h2 {
+    font-size: 1.32rem;
+  }
+
+  #view-subtitle {
+    font-size: .92rem;
+  }
+
+  .section-title {
+    font-size: 1.06rem;
+  }
+
+  .section-subtitle {
+    font-size: .84rem;
+  }
+
+  .chart-wrap {
+    padding: .58rem;
+  }
+
+  .chart-legend {
+    font-size: .94rem;
+    margin-bottom: .35rem;
+  }
+
+  .section-body.map-ranking-body {
+    grid-template-columns: 3.6fr 1.2fr;
+    gap: .75rem;
+  }
+
+  .ranking {
+    max-height: 520px;
+  }
+
+  .mexico-map-layout {
+    grid-template-columns: 2.8fr 1.2fr;
+    gap: .75rem;
+  }
+
+  .mexico-map-stage {
+    height: clamp(320px, 46vw, 520px);
+  }
+}
+
 /* Tablet y pantallas medianas. */
 @media (max-width: 1024px) {
   .app-shell {

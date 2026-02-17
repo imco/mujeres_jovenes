@@ -648,6 +648,7 @@ function renderMexicoIndicatorMapShell() {
           <div></div>
           <span>Máx</span>
         </div>
+        <p class="chart-source indicator-chart-source" hidden></p>
       </div>
       <aside class="indicator-side">
         <h4 class="indicator-side-title"></h4>
@@ -687,9 +688,10 @@ async function attachMexicoIndicatorMap(container, payload) {
   const sideDesc = container.querySelector('.indicator-side-desc');
   const sideMeta = container.querySelector('.indicator-side-meta');
   const sideTop = container.querySelector('.indicator-side-top');
+  const indicatorSource = container.querySelector('.indicator-chart-source');
   const entityProfileName = container.querySelector('.entity-profile-name');
   const entityProfileList = container.querySelector('.entity-profile-list');
-  if (!rows.length || !select || !svg || !barsStage || !mapWrap || !indicatorSide || !sideTitle || !sideDesc || !sideMeta || !sideTop || !entityProfileName || !entityProfileList) {
+  if (!rows.length || !select || !svg || !barsStage || !mapWrap || !indicatorSide || !sideTitle || !sideDesc || !sideMeta || !sideTop || !indicatorSource || !entityProfileName || !entityProfileList) {
     container.innerHTML = '<div class="chart-wrap">No hay datos disponibles para el mapa por entidad.</div>';
     return;
   }
@@ -732,6 +734,7 @@ async function attachMexicoIndicatorMap(container, payload) {
     const max = Math.max(...values);
     const description = subset.find((r) => typeof r.Que_mide === 'string' && r.Que_mide.trim())?.Que_mide || 'Sin descripción.';
     const unit = subset.find((r) => typeof r.Unidad === 'string' && r.Unidad.trim())?.Unidad || 'Porcentaje';
+    const source = subset.find((r) => typeof r.Fuente === 'string' && r.Fuente.trim())?.Fuente || '';
     const unitSymbol = unit.toLowerCase().includes('porcent') ? '%' : unit;
     const sortedEntities = subset.slice().sort((a, b) => b.Valor - a.Valor);
 
@@ -787,6 +790,13 @@ async function attachMexicoIndicatorMap(container, payload) {
     sideTitle.textContent = variable;
     sideDesc.textContent = description;
     sideMeta.textContent = `Cobertura: ${subset.length} entidades | Unidad: ${unit}`;
+    if (source) {
+      indicatorSource.textContent = /^fuente:/i.test(source.trim()) ? source.trim() : `Fuente: ${source.trim()}`;
+      indicatorSource.hidden = false;
+    } else {
+      indicatorSource.textContent = '';
+      indicatorSource.hidden = true;
+    }
     sideTop.innerHTML = sortedEntities
       .map((r, i) => {
         const key = normalizeStateName(r.Entidad);
@@ -872,10 +882,11 @@ async function attachCdmxIndicatorMap(container, payload) {
   const sideDesc = container.querySelector('.indicator-side-desc');
   const sideMeta = container.querySelector('.indicator-side-meta');
   const sideTop = container.querySelector('.indicator-side-top');
+  const indicatorSource = container.querySelector('.indicator-chart-source');
   const sideTopTitle = container.querySelector('.indicator-side-subtitle');
   const entityProfileName = container.querySelector('.entity-profile-name');
   const entityProfileList = container.querySelector('.entity-profile-list');
-  if (!rows.length || !select || !svg || !barsStage || !mapWrap || !indicatorSide || !sideTitle || !sideDesc || !sideMeta || !sideTop || !sideTopTitle || !entityProfileName || !entityProfileList) {
+  if (!rows.length || !select || !svg || !barsStage || !mapWrap || !indicatorSide || !sideTitle || !sideDesc || !sideMeta || !sideTop || !indicatorSource || !sideTopTitle || !entityProfileName || !entityProfileList) {
     container.innerHTML = '<div class="chart-wrap">No hay datos disponibles para el mapa de alcaldías.</div>';
     return;
   }
@@ -924,6 +935,7 @@ async function attachCdmxIndicatorMap(container, payload) {
     const max = Math.max(...values);
     const description = subset.find((r) => typeof r.Que_mide === 'string' && r.Que_mide.trim())?.Que_mide || 'Sin descripción.';
     const unit = subset.find((r) => typeof r.Unidad === 'string' && r.Unidad.trim())?.Unidad || 'Valor';
+    const source = subset.find((r) => typeof r.Fuente === 'string' && r.Fuente.trim())?.Fuente || '';
     const unitSymbol = unit.toLowerCase().includes('porcent') ? '%' : '';
     const sortedItems = subset.slice().sort((a, b) => b.Valor - a.Valor);
 
@@ -978,6 +990,13 @@ async function attachCdmxIndicatorMap(container, payload) {
     sideTitle.textContent = variable;
     sideDesc.textContent = description;
     sideMeta.textContent = `Cobertura: ${subset.length} alcaldías | Unidad: ${unit}`;
+    if (source) {
+      indicatorSource.textContent = /^fuente:/i.test(source.trim()) ? source.trim() : `Fuente: ${source.trim()}`;
+      indicatorSource.hidden = false;
+    } else {
+      indicatorSource.textContent = '';
+      indicatorSource.hidden = true;
+    }
     sideTop.innerHTML = sortedItems
       .map((r, i) => {
         const key = normalizeAlcaldiaName(r.Entidad);

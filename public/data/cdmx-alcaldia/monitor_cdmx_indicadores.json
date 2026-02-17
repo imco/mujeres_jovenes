@@ -7,1911 +7,2184 @@
       "Variable": "Población de mujeres jóvenes",
       "Valor": 19.9,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Azcapotzalco",
       "Variable": "Porcentaje de mujeres con hijos",
       "Valor": 24.4,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con hijos respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Azcapotzalco",
       "Variable": "Mujeres jóvenes que hablan una lengua indígena",
       "Valor": 7.3,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que hablan lengua indígena y/o se autoadscriben como afrodescendientes, respecto al total de mujeres en ese grupo de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de población y vivienda"
     },
     {
       "Entidad": "Azcapotzalco",
       "Variable": "Mujeres con discapacidad",
       "Valor": 2.2,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con discapacidad respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Azcapotzalco",
       "Variable": "Rezago educativo",
       "Valor": 9.6,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con rezago educativo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Azcapotzalco",
       "Variable": "Mujeres fuera del sistema educativo y del mercado de trabajo",
       "Valor": 7.3,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que no estudian ni tienen un empleo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Azcapotzalco",
       "Variable": "Acceso a servicios de salud",
       "Valor": 24.2,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años sin acceso a servicios médicos o de salud pública y/o privada respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Azcapotzalco",
       "Variable": "Feminicidios",
       "Valor": 0.9,
       "Que_mide": "Mujeres víctimas de feminicidios por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Azcapotzalco",
       "Variable": "Delitos sexuales",
       "Valor": 120.4,
       "Que_mide": "Carpetas de investigación de delitos de acoso y abuso sexual por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Azcapotzalco",
       "Variable": "Tasa de participación económica de las mujeres",
       "Valor": 65.1,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que tienen un empleo o que buscan uno respecto a la población total en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Azcapotzalco",
       "Variable": "Duración de la jornada laboral",
       "Valor": 36.0,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a actividades remuneradas.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Azcapotzalco",
       "Variable": "Brecha de ingresos",
       "Valor": 26.3,
       "Que_mide": "Valor absoluto de la diferencia de ingresos mensuales promedio de hombres y mujeres entre 15 y 29 años dividida entre los ingresos mensuales promedio de los hombres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Azcapotzalco",
       "Variable": "Informalidad",
       "Valor": 28.1,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años ocupadas en trabajos dentro del sector informal respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Azcapotzalco",
       "Variable": "Mujeres jóvenes con trabajo precario",
       "Valor": 30.3,
       "Que_mide": "Porcentaje de mujeres ocupadas entre 15 y 29 años sin seguridad social y con ingresos por debajo de la linea de bienestar respecto a la población ocupada en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE por GOYN Ciudad de México"
     },
     {
       "Entidad": "Azcapotzalco",
       "Variable": "Inclusión financiera",
       "Valor": -6.7,
       "Que_mide": "Valor absoluto de la diferencia entre la media ponderada de los montos otorgados a hombres y mujeres entre 18 y 29 años para créditos de vivienda dividida entre el promedio de los montos otorgados a hombres",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "CNBV por Tukan\n"
     },
     {
       "Entidad": "Azcapotzalco",
       "Variable": "Emprendedoras",
       "Valor": 7.6,
       "Que_mide": "Porcentaje de emprendedoras entre 15 años y 29 años respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Coyoacán",
       "Variable": "Población de mujeres jóvenes",
       "Valor": 20.9,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Coyoacán",
       "Variable": "Porcentaje de mujeres con hijos",
       "Valor": 18.8,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con hijos respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Coyoacán",
       "Variable": "Mujeres jóvenes que hablan una lengua indígena",
       "Valor": 6.1,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que hablan lengua indígena y/o se autoadscriben como afrodescendientes, respecto al total de mujeres en ese grupo de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de población y vivienda"
     },
     {
       "Entidad": "Coyoacán",
       "Variable": "Mujeres con discapacidad",
       "Valor": 2.0,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con discapacidad respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Coyoacán",
       "Variable": "Rezago educativo",
       "Valor": 8.2,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con rezago educativo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Coyoacán",
       "Variable": "Mujeres fuera del sistema educativo y del mercado de trabajo",
       "Valor": 8.8,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que no estudian ni tienen un empleo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Coyoacán",
       "Variable": "Acceso a servicios de salud",
       "Valor": 24.7,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años sin acceso a servicios médicos o de salud pública y/o privada respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Coyoacán",
       "Variable": "Feminicidios",
       "Valor": 0.9,
       "Que_mide": "Mujeres víctimas de feminicidios por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Coyoacán",
       "Variable": "Delitos sexuales",
       "Valor": 125.1,
       "Que_mide": "Carpetas de investigación de delitos de acoso y abuso sexual por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Coyoacán",
       "Variable": "Tasa de participación económica de las mujeres",
       "Valor": 57.3,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que tienen un empleo o que buscan uno respecto a la población total en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Coyoacán",
       "Variable": "Duración de la jornada laboral",
       "Valor": 35.1,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a actividades remuneradas.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Coyoacán",
       "Variable": "Brecha de ingresos",
       "Valor": 11.4,
       "Que_mide": "Valor absoluto de la diferencia de ingresos mensuales promedio de hombres y mujeres entre 15 y 29 años dividida entre los ingresos mensuales promedio de los hombres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Coyoacán",
       "Variable": "Informalidad",
       "Valor": 36.4,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años ocupadas en trabajos dentro del sector informal respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Coyoacán",
       "Variable": "Mujeres jóvenes con trabajo precario",
       "Valor": 31.2,
       "Que_mide": "Porcentaje de mujeres ocupadas entre 15 y 29 años sin seguridad social y con ingresos por debajo de la linea de bienestar respecto a la población ocupada en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE por GOYN Ciudad de México"
     },
     {
       "Entidad": "Coyoacán",
       "Variable": "Inclusión financiera",
       "Valor": 17.2,
       "Que_mide": "Valor absoluto de la diferencia entre la media ponderada de los montos otorgados a hombres y mujeres entre 18 y 29 años para créditos de vivienda dividida entre el promedio de los montos otorgados a hombres",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "CNBV por Tukan\n"
     },
     {
       "Entidad": "Coyoacán",
       "Variable": "Emprendedoras",
       "Valor": 5.4,
       "Que_mide": "Porcentaje de emprendedoras entre 15 años y 29 años respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Cuajimalpa de Morelos",
       "Variable": "Población de mujeres jóvenes",
       "Valor": 23.4,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Cuajimalpa de Morelos",
       "Variable": "Porcentaje de mujeres con hijos",
       "Valor": 25.2,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con hijos respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Cuajimalpa de Morelos",
       "Variable": "Mujeres jóvenes que hablan una lengua indígena",
       "Valor": 6.9,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que hablan lengua indígena y/o se autoadscriben como afrodescendientes, respecto al total de mujeres en ese grupo de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de población y vivienda"
     },
     {
       "Entidad": "Cuajimalpa de Morelos",
       "Variable": "Mujeres con discapacidad",
       "Valor": 1.8,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con discapacidad respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Cuajimalpa de Morelos",
       "Variable": "Rezago educativo",
       "Valor": 14.8,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con rezago educativo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Cuajimalpa de Morelos",
       "Variable": "Mujeres fuera del sistema educativo y del mercado de trabajo",
       "Valor": 15.5,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que no estudian ni tienen un empleo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Cuajimalpa de Morelos",
       "Variable": "Acceso a servicios de salud",
       "Valor": 21.7,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años sin acceso a servicios médicos o de salud pública y/o privada respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Cuajimalpa de Morelos",
       "Variable": "Delitos sexuales",
       "Valor": 107.3,
       "Que_mide": "Carpetas de investigación de delitos de acoso y abuso sexual por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Cuajimalpa de Morelos",
       "Variable": "Tasa de participación económica de las mujeres",
       "Valor": 47.8,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que tienen un empleo o que buscan uno respecto a la población total en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Cuajimalpa de Morelos",
       "Variable": "Duración de la jornada laboral",
       "Valor": 36.6,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a actividades remuneradas.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Cuajimalpa de Morelos",
       "Variable": "Brecha de ingresos",
       "Valor": 16.3,
       "Que_mide": "Valor absoluto de la diferencia de ingresos mensuales promedio de hombres y mujeres entre 15 y 29 años dividida entre los ingresos mensuales promedio de los hombres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Cuajimalpa de Morelos",
       "Variable": "Informalidad",
       "Valor": 37.3,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años ocupadas en trabajos dentro del sector informal respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Cuajimalpa de Morelos",
       "Variable": "Mujeres jóvenes con trabajo precario",
       "Valor": 20.8,
       "Que_mide": "Porcentaje de mujeres ocupadas entre 15 y 29 años sin seguridad social y con ingresos por debajo de la linea de bienestar respecto a la población ocupada en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE por GOYN Ciudad de México"
     },
     {
       "Entidad": "Cuajimalpa de Morelos",
       "Variable": "Inclusión financiera",
       "Valor": 27.9,
       "Que_mide": "Valor absoluto de la diferencia entre la media ponderada de los montos otorgados a hombres y mujeres entre 18 y 29 años para créditos de vivienda dividida entre el promedio de los montos otorgados a hombres",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "CNBV por Tukan\n"
     },
     {
       "Entidad": "Cuajimalpa de Morelos",
       "Variable": "Emprendedoras",
       "Valor": 9.9,
       "Que_mide": "Porcentaje de emprendedoras entre 15 años y 29 años respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Gustavo A. Madero",
       "Variable": "Población de mujeres jóvenes",
       "Valor": 21.5,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Gustavo A. Madero",
       "Variable": "Porcentaje de mujeres con hijos",
       "Valor": 26.8,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con hijos respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Gustavo A. Madero",
       "Variable": "Mujeres jóvenes que hablan una lengua indígena",
       "Valor": 9.6,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que hablan lengua indígena y/o se autoadscriben como afrodescendientes, respecto al total de mujeres en ese grupo de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de población y vivienda"
     },
     {
       "Entidad": "Gustavo A. Madero",
       "Variable": "Mujeres con discapacidad",
       "Valor": 2.8,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con discapacidad respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Gustavo A. Madero",
       "Variable": "Rezago educativo",
       "Valor": 8.8,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con rezago educativo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Gustavo A. Madero",
       "Variable": "Mujeres fuera del sistema educativo y del mercado de trabajo",
       "Valor": 17.5,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que no estudian ni tienen un empleo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Gustavo A. Madero",
       "Variable": "Acceso a servicios de salud",
       "Valor": 24.4,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años sin acceso a servicios médicos o de salud pública y/o privada respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Gustavo A. Madero",
       "Variable": "Mujeres con programas sociales",
       "Valor": 28.2,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que reciben ingresos provenientes de programas sociales respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENIGH, INEGI"
     },
     {
       "Entidad": "Gustavo A. Madero",
       "Variable": "Feminicidios",
       "Valor": 0.7,
       "Que_mide": "Mujeres víctimas de feminicidios por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Gustavo A. Madero",
       "Variable": "Delitos sexuales",
       "Valor": 137.6,
       "Que_mide": "Carpetas de investigación de delitos de acoso y abuso sexual por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Gustavo A. Madero",
       "Variable": "Horas promedio destinadas a las tareas del hogar",
       "Valor": 11.7,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a tareas del hogar.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENIGH, INEGI"
     },
     {
       "Entidad": "Gustavo A. Madero",
       "Variable": "Horas promedio destinadas a los cuidados",
       "Valor": 25.9,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a actividades de cuidado.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENIGH, INEGI"
     },
     {
       "Entidad": "Gustavo A. Madero",
       "Variable": "Tasa de participación económica de las mujeres",
       "Valor": 45.5,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que tienen un empleo o que buscan uno respecto a la población total en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Gustavo A. Madero",
       "Variable": "Duración de la jornada laboral",
       "Valor": 38.5,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a actividades remuneradas.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Gustavo A. Madero",
       "Variable": "Brecha de ingresos",
       "Valor": -5.0,
       "Que_mide": "Valor absoluto de la diferencia de ingresos mensuales promedio de hombres y mujeres entre 15 y 29 años dividida entre los ingresos mensuales promedio de los hombres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Gustavo A. Madero",
       "Variable": "Informalidad",
       "Valor": 37.4,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años ocupadas en trabajos dentro del sector informal respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Gustavo A. Madero",
       "Variable": "Mujeres jóvenes con trabajo precario",
       "Valor": 28.7,
       "Que_mide": "Porcentaje de mujeres ocupadas entre 15 y 29 años sin seguridad social y con ingresos por debajo de la linea de bienestar respecto a la población ocupada en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE por GOYN Ciudad de México"
     },
     {
       "Entidad": "Gustavo A. Madero",
       "Variable": "Inclusión financiera",
       "Valor": -2.5,
       "Que_mide": "Valor absoluto de la diferencia entre la media ponderada de los montos otorgados a hombres y mujeres entre 18 y 29 años para créditos de vivienda dividida entre el promedio de los montos otorgados a hombres",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "CNBV por Tukan\n"
     },
     {
       "Entidad": "Gustavo A. Madero",
       "Variable": "Dependencia de ingresos",
       "Valor": 34.97,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que no percibe ingresos monetarios directos respecto a la población total en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENIGH, INEGI"
     },
     {
       "Entidad": "Gustavo A. Madero",
       "Variable": "Emprendedoras",
       "Valor": 9.8,
       "Que_mide": "Porcentaje de emprendedoras entre 15 años y 29 años respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Iztacalco",
       "Variable": "Población de mujeres jóvenes",
       "Valor": 22.0,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Iztacalco",
       "Variable": "Porcentaje de mujeres con hijos",
       "Valor": 25.2,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con hijos respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Iztacalco",
       "Variable": "Mujeres jóvenes que hablan una lengua indígena",
       "Valor": 9.3,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que hablan lengua indígena y/o se autoadscriben como afrodescendientes, respecto al total de mujeres en ese grupo de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de población y vivienda"
     },
     {
       "Entidad": "Iztacalco",
       "Variable": "Mujeres con discapacidad",
       "Valor": 3.2,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con discapacidad respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Iztacalco",
       "Variable": "Rezago educativo",
       "Valor": 10.2,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con rezago educativo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Iztacalco",
       "Variable": "Mujeres fuera del sistema educativo y del mercado de trabajo",
       "Valor": 14.8,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que no estudian ni tienen un empleo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Iztacalco",
       "Variable": "Acceso a servicios de salud",
       "Valor": 24.7,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años sin acceso a servicios médicos o de salud pública y/o privada respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Iztacalco",
       "Variable": "Feminicidios",
       "Valor": 1.4,
       "Que_mide": "Mujeres víctimas de feminicidios por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Iztacalco",
       "Variable": "Delitos sexuales",
       "Valor": 144.2,
       "Que_mide": "Carpetas de investigación de delitos de acoso y abuso sexual por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Iztacalco",
       "Variable": "Tasa de participación económica de las mujeres",
       "Valor": 54.4,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que tienen un empleo o que buscan uno respecto a la población total en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Iztacalco",
       "Variable": "Duración de la jornada laboral",
       "Valor": 39.5,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a actividades remuneradas.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Iztacalco",
       "Variable": "Brecha de ingresos",
       "Valor": -2.2,
       "Que_mide": "Valor absoluto de la diferencia de ingresos mensuales promedio de hombres y mujeres entre 15 y 29 años dividida entre los ingresos mensuales promedio de los hombres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Iztacalco",
       "Variable": "Informalidad",
       "Valor": 40.8,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años ocupadas en trabajos dentro del sector informal respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Iztacalco",
       "Variable": "Mujeres jóvenes con trabajo precario",
       "Valor": 43.8,
       "Que_mide": "Porcentaje de mujeres ocupadas entre 15 y 29 años sin seguridad social y con ingresos por debajo de la linea de bienestar respecto a la población ocupada en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE por GOYN Ciudad de México"
     },
     {
       "Entidad": "Iztacalco",
       "Variable": "Inclusión financiera",
       "Valor": 19.6,
       "Que_mide": "Valor absoluto de la diferencia entre la media ponderada de los montos otorgados a hombres y mujeres entre 18 y 29 años para créditos de vivienda dividida entre el promedio de los montos otorgados a hombres",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "CNBV por Tukan\n"
     },
     {
       "Entidad": "Iztacalco",
       "Variable": "Emprendedoras",
       "Valor": 6.4,
       "Que_mide": "Porcentaje de emprendedoras entre 15 años y 29 años respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Iztapalapa",
       "Variable": "Población de mujeres jóvenes",
       "Valor": 23.5,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Iztapalapa",
       "Variable": "Porcentaje de mujeres con hijos",
       "Valor": 31.4,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con hijos respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Iztapalapa",
       "Variable": "Mujeres jóvenes que hablan una lengua indígena",
       "Valor": 7.5,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que hablan lengua indígena y/o se autoadscriben como afrodescendientes, respecto al total de mujeres en ese grupo de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de población y vivienda"
     },
     {
       "Entidad": "Iztapalapa",
       "Variable": "Mujeres con discapacidad",
       "Valor": 2.6,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con discapacidad respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Iztapalapa",
       "Variable": "Rezago educativo",
       "Valor": 13.1,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con rezago educativo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Iztapalapa",
       "Variable": "Mujeres fuera del sistema educativo y del mercado de trabajo",
       "Valor": 17.3,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que no estudian ni tienen un empleo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Iztapalapa",
       "Variable": "Acceso a servicios de salud",
       "Valor": 29.8,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años sin acceso a servicios médicos o de salud pública y/o privada respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Iztapalapa",
       "Variable": "Mujeres con programas sociales",
       "Valor": 20.3,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que reciben ingresos provenientes de programas sociales respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENIGH, INEGI"
     },
     {
       "Entidad": "Iztapalapa",
       "Variable": "Feminicidios",
       "Valor": 1.6,
       "Que_mide": "Mujeres víctimas de feminicidios por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Iztapalapa",
       "Variable": "Delitos sexuales",
       "Valor": 135.1,
       "Que_mide": "Carpetas de investigación de delitos de acoso y abuso sexual por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Iztapalapa",
       "Variable": "Horas promedio destinadas a las tareas del hogar",
       "Valor": 11.6,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a tareas del hogar.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENIGH, INEGI"
     },
     {
       "Entidad": "Iztapalapa",
       "Variable": "Horas promedio destinadas a los cuidados",
       "Valor": 29.8,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a actividades de cuidado.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENIGH, INEGI"
     },
     {
       "Entidad": "Iztapalapa",
       "Variable": "Tasa de participación económica de las mujeres",
       "Valor": 42.3,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que tienen un empleo o que buscan uno respecto a la población total en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Iztapalapa",
       "Variable": "Duración de la jornada laboral",
       "Valor": 36.6,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a actividades remuneradas.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Iztapalapa",
       "Variable": "Brecha de ingresos",
       "Valor": 10.0,
       "Que_mide": "Valor absoluto de la diferencia de ingresos mensuales promedio de hombres y mujeres entre 15 y 29 años dividida entre los ingresos mensuales promedio de los hombres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Iztapalapa",
       "Variable": "Informalidad",
       "Valor": 50.4,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años ocupadas en trabajos dentro del sector informal respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Iztapalapa",
       "Variable": "Mujeres jóvenes con trabajo precario",
       "Valor": 51.2,
       "Que_mide": "Porcentaje de mujeres ocupadas entre 15 y 29 años sin seguridad social y con ingresos por debajo de la linea de bienestar respecto a la población ocupada en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE por GOYN Ciudad de México"
     },
     {
       "Entidad": "Iztapalapa",
       "Variable": "Inclusión financiera",
       "Valor": -2.2,
       "Que_mide": "Valor absoluto de la diferencia entre la media ponderada de los montos otorgados a hombres y mujeres entre 18 y 29 años para créditos de vivienda dividida entre el promedio de los montos otorgados a hombres",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "CNBV por Tukan\n"
     },
     {
       "Entidad": "Iztapalapa",
       "Variable": "Dependencia de ingresos",
       "Valor": 21.33,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que no percibe ingresos monetarios directos respecto a la población total en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENIGH, INEGI"
     },
     {
       "Entidad": "Iztapalapa",
       "Variable": "Emprendedoras",
       "Valor": 10.5,
       "Que_mide": "Porcentaje de emprendedoras entre 15 años y 29 años respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "La Magdalena Contreras",
       "Variable": "Población de mujeres jóvenes",
       "Valor": 22.8,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "La Magdalena Contreras",
       "Variable": "Porcentaje de mujeres con hijos",
       "Valor": 30.3,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con hijos respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "La Magdalena Contreras",
       "Variable": "Mujeres jóvenes que hablan una lengua indígena",
       "Valor": 8.1,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que hablan lengua indígena y/o se autoadscriben como afrodescendientes, respecto al total de mujeres en ese grupo de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de población y vivienda"
     },
     {
       "Entidad": "La Magdalena Contreras",
       "Variable": "Mujeres con discapacidad",
       "Valor": 2.5,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con discapacidad respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "La Magdalena Contreras",
       "Variable": "Rezago educativo",
       "Valor": 13.3,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con rezago educativo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "La Magdalena Contreras",
       "Variable": "Mujeres fuera del sistema educativo y del mercado de trabajo",
       "Valor": 7.9,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que no estudian ni tienen un empleo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "La Magdalena Contreras",
       "Variable": "Acceso a servicios de salud",
       "Valor": 27.8,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años sin acceso a servicios médicos o de salud pública y/o privada respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "La Magdalena Contreras",
       "Variable": "Delitos sexuales",
       "Valor": 119.7,
       "Que_mide": "Carpetas de investigación de delitos de acoso y abuso sexual por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "La Magdalena Contreras",
       "Variable": "Tasa de participación económica de las mujeres",
       "Valor": 47.2,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que tienen un empleo o que buscan uno respecto a la población total en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "La Magdalena Contreras",
       "Variable": "Duración de la jornada laboral",
       "Valor": 40.0,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a actividades remuneradas.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "La Magdalena Contreras",
       "Variable": "Brecha de ingresos",
       "Valor": 2.8,
       "Que_mide": "Valor absoluto de la diferencia de ingresos mensuales promedio de hombres y mujeres entre 15 y 29 años dividida entre los ingresos mensuales promedio de los hombres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "La Magdalena Contreras",
       "Variable": "Informalidad",
       "Valor": 53.0,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años ocupadas en trabajos dentro del sector informal respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "La Magdalena Contreras",
       "Variable": "Mujeres jóvenes con trabajo precario",
       "Valor": 64.1,
       "Que_mide": "Porcentaje de mujeres ocupadas entre 15 y 29 años sin seguridad social y con ingresos por debajo de la linea de bienestar respecto a la población ocupada en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE por GOYN Ciudad de México"
     },
     {
       "Entidad": "La Magdalena Contreras",
       "Variable": "Inclusión financiera",
       "Valor": -45.3,
       "Que_mide": "Valor absoluto de la diferencia entre la media ponderada de los montos otorgados a hombres y mujeres entre 18 y 29 años para créditos de vivienda dividida entre el promedio de los montos otorgados a hombres",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "CNBV por Tukan\n"
     },
     {
       "Entidad": "La Magdalena Contreras",
       "Variable": "Emprendedoras",
       "Valor": 7.5,
       "Que_mide": "Porcentaje de emprendedoras entre 15 años y 29 años respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Milpa Alta",
       "Variable": "Población de mujeres jóvenes",
       "Valor": 25.1,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Milpa Alta",
       "Variable": "Porcentaje de mujeres con hijos",
       "Valor": 41.7,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con hijos respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Milpa Alta",
       "Variable": "Mujeres jóvenes que hablan una lengua indígena",
       "Valor": 24.2,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que hablan lengua indígena y/o se autoadscriben como afrodescendientes, respecto al total de mujeres en ese grupo de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de población y vivienda"
     },
     {
       "Entidad": "Milpa Alta",
       "Variable": "Mujeres con discapacidad",
       "Valor": 2.9,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con discapacidad respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Milpa Alta",
       "Variable": "Rezago educativo",
       "Valor": 16.1,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con rezago educativo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Milpa Alta",
       "Variable": "Mujeres fuera del sistema educativo y del mercado de trabajo",
       "Valor": 21.9,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que no estudian ni tienen un empleo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Milpa Alta",
       "Variable": "Acceso a servicios de salud",
       "Valor": 28.4,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años sin acceso a servicios médicos o de salud pública y/o privada respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Milpa Alta",
       "Variable": "Mujeres con programas sociales",
       "Valor": 32.3,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que reciben ingresos provenientes de programas sociales respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENIGH, INEGI"
     },
     {
       "Entidad": "Milpa Alta",
       "Variable": "Feminicidios",
       "Valor": 5.0,
       "Que_mide": "Mujeres víctimas de feminicidios por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Milpa Alta",
       "Variable": "Delitos sexuales",
       "Valor": 139.5,
       "Que_mide": "Carpetas de investigación de delitos de acoso y abuso sexual por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Milpa Alta",
       "Variable": "Horas promedio destinadas a las tareas del hogar",
       "Valor": 15.4,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a tareas del hogar.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENIGH, INEGI"
     },
     {
       "Entidad": "Milpa Alta",
       "Variable": "Horas promedio destinadas a los cuidados",
       "Valor": 29.0,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a actividades de cuidado.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENIGH, INEGI"
     },
     {
       "Entidad": "Milpa Alta",
       "Variable": "Tasa de participación económica de las mujeres",
       "Valor": 42.7,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que tienen un empleo o que buscan uno respecto a la población total en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Milpa Alta",
       "Variable": "Duración de la jornada laboral",
       "Valor": 33.8,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a actividades remuneradas.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Milpa Alta",
       "Variable": "Brecha de ingresos",
       "Valor": 12.2,
       "Que_mide": "Valor absoluto de la diferencia de ingresos mensuales promedio de hombres y mujeres entre 15 y 29 años dividida entre los ingresos mensuales promedio de los hombres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Milpa Alta",
       "Variable": "Informalidad",
       "Valor": 59.1,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años ocupadas en trabajos dentro del sector informal respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Milpa Alta",
       "Variable": "Mujeres jóvenes con trabajo precario",
       "Valor": 36.8,
       "Que_mide": "Porcentaje de mujeres ocupadas entre 15 y 29 años sin seguridad social y con ingresos por debajo de la linea de bienestar respecto a la población ocupada en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE por GOYN Ciudad de México"
     },
     {
       "Entidad": "Milpa Alta",
       "Variable": "Dependencia de ingresos",
       "Valor": 16.56,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que no percibe ingresos monetarios directos respecto a la población total en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENIGH, INEGI"
     },
     {
       "Entidad": "Milpa Alta",
       "Variable": "Emprendedoras",
       "Valor": 13.3,
       "Que_mide": "Porcentaje de emprendedoras entre 15 años y 29 años respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Álvaro Obregón",
       "Variable": "Población de mujeres jóvenes",
       "Valor": 22.6,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Álvaro Obregón",
       "Variable": "Porcentaje de mujeres con hijos",
       "Valor": 25.4,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con hijos respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Álvaro Obregón",
       "Variable": "Mujeres jóvenes que hablan una lengua indígena",
       "Valor": 9.2,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que hablan lengua indígena y/o se autoadscriben como afrodescendientes, respecto al total de mujeres en ese grupo de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de población y vivienda"
     },
     {
       "Entidad": "Álvaro Obregón",
       "Variable": "Mujeres con discapacidad",
       "Valor": 1.9,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con discapacidad respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Álvaro Obregón",
       "Variable": "Rezago educativo",
       "Valor": 14.1,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con rezago educativo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Álvaro Obregón",
       "Variable": "Mujeres fuera del sistema educativo y del mercado de trabajo",
       "Valor": 7.7,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que no estudian ni tienen un empleo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Álvaro Obregón",
       "Variable": "Acceso a servicios de salud",
       "Valor": 27.0,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años sin acceso a servicios médicos o de salud pública y/o privada respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Álvaro Obregón",
       "Variable": "Feminicidios",
       "Valor": 1.2,
       "Que_mide": "Mujeres víctimas de feminicidios por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Álvaro Obregón",
       "Variable": "Delitos sexuales",
       "Valor": 136.3,
       "Que_mide": "Carpetas de investigación de delitos de acoso y abuso sexual por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Álvaro Obregón",
       "Variable": "Tasa de participación económica de las mujeres",
       "Valor": 49.6,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que tienen un empleo o que buscan uno respecto a la población total en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Álvaro Obregón",
       "Variable": "Duración de la jornada laboral",
       "Valor": 35.5,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a actividades remuneradas.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Álvaro Obregón",
       "Variable": "Brecha de ingresos",
       "Valor": -6.7,
       "Que_mide": "Valor absoluto de la diferencia de ingresos mensuales promedio de hombres y mujeres entre 15 y 29 años dividida entre los ingresos mensuales promedio de los hombres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Álvaro Obregón",
       "Variable": "Informalidad",
       "Valor": 46.7,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años ocupadas en trabajos dentro del sector informal respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Álvaro Obregón",
       "Variable": "Mujeres jóvenes con trabajo precario",
       "Valor": 37.3,
       "Que_mide": "Porcentaje de mujeres ocupadas entre 15 y 29 años sin seguridad social y con ingresos por debajo de la linea de bienestar respecto a la población ocupada en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE por GOYN Ciudad de México"
     },
     {
       "Entidad": "Álvaro Obregón",
       "Variable": "Inclusión financiera",
       "Valor": 2.6,
       "Que_mide": "Valor absoluto de la diferencia entre la media ponderada de los montos otorgados a hombres y mujeres entre 18 y 29 años para créditos de vivienda dividida entre el promedio de los montos otorgados a hombres",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "CNBV por Tukan\n"
     },
     {
       "Entidad": "Álvaro Obregón",
       "Variable": "Emprendedoras",
       "Valor": 7.3,
       "Que_mide": "Porcentaje de emprendedoras entre 15 años y 29 años respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Tláhuac",
       "Variable": "Población de mujeres jóvenes",
       "Valor": 24.1,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Tláhuac",
       "Variable": "Porcentaje de mujeres con hijos",
       "Valor": 32.0,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con hijos respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Tláhuac",
       "Variable": "Mujeres jóvenes que hablan una lengua indígena",
       "Valor": 9.6,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que hablan lengua indígena y/o se autoadscriben como afrodescendientes, respecto al total de mujeres en ese grupo de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de población y vivienda"
     },
     {
       "Entidad": "Tláhuac",
       "Variable": "Mujeres con discapacidad",
       "Valor": 3.5,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con discapacidad respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Tláhuac",
       "Variable": "Rezago educativo",
       "Valor": 13.1,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con rezago educativo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Tláhuac",
       "Variable": "Mujeres fuera del sistema educativo y del mercado de trabajo",
       "Valor": 14.0,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que no estudian ni tienen un empleo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Tláhuac",
       "Variable": "Acceso a servicios de salud",
       "Valor": 23.9,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años sin acceso a servicios médicos o de salud pública y/o privada respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Tláhuac",
       "Variable": "Feminicidios",
       "Valor": 2.0,
       "Que_mide": "Mujeres víctimas de feminicidios por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Tláhuac",
       "Variable": "Delitos sexuales",
       "Valor": 124.8,
       "Que_mide": "Carpetas de investigación de delitos de acoso y abuso sexual por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Tláhuac",
       "Variable": "Tasa de participación económica de las mujeres",
       "Valor": 46.4,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que tienen un empleo o que buscan uno respecto a la población total en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Tláhuac",
       "Variable": "Duración de la jornada laboral",
       "Valor": 36.9,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a actividades remuneradas.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Tláhuac",
       "Variable": "Brecha de ingresos",
       "Valor": 12.3,
       "Que_mide": "Valor absoluto de la diferencia de ingresos mensuales promedio de hombres y mujeres entre 15 y 29 años dividida entre los ingresos mensuales promedio de los hombres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Tláhuac",
       "Variable": "Informalidad",
       "Valor": 49.2,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años ocupadas en trabajos dentro del sector informal respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Tláhuac",
       "Variable": "Mujeres jóvenes con trabajo precario",
       "Valor": 45.4,
       "Que_mide": "Porcentaje de mujeres ocupadas entre 15 y 29 años sin seguridad social y con ingresos por debajo de la linea de bienestar respecto a la población ocupada en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE por GOYN Ciudad de México"
     },
     {
       "Entidad": "Tláhuac",
       "Variable": "Inclusión financiera",
       "Valor": -42.6,
       "Que_mide": "Valor absoluto de la diferencia entre la media ponderada de los montos otorgados a hombres y mujeres entre 18 y 29 años para créditos de vivienda dividida entre el promedio de los montos otorgados a hombres",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "CNBV por Tukan\n"
     },
     {
       "Entidad": "Tláhuac",
       "Variable": "Emprendedoras",
       "Valor": 14.5,
       "Que_mide": "Porcentaje de emprendedoras entre 15 años y 29 años respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Tlalpan",
       "Variable": "Población de mujeres jóvenes",
       "Valor": 22.1,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Tlalpan",
       "Variable": "Porcentaje de mujeres con hijos",
       "Valor": 30.3,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con hijos respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Tlalpan",
       "Variable": "Mujeres jóvenes que hablan una lengua indígena",
       "Valor": 12.0,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que hablan lengua indígena y/o se autoadscriben como afrodescendientes, respecto al total de mujeres en ese grupo de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de población y vivienda"
     },
     {
       "Entidad": "Tlalpan",
       "Variable": "Mujeres con discapacidad",
       "Valor": 2.5,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con discapacidad respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Tlalpan",
       "Variable": "Rezago educativo",
       "Valor": 11.7,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con rezago educativo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Tlalpan",
       "Variable": "Mujeres fuera del sistema educativo y del mercado de trabajo",
       "Valor": 9.9,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que no estudian ni tienen un empleo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Tlalpan",
       "Variable": "Acceso a servicios de salud",
       "Valor": 30.0,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años sin acceso a servicios médicos o de salud pública y/o privada respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Tlalpan",
       "Variable": "Mujeres con programas sociales",
       "Valor": 20.3,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que reciben ingresos provenientes de programas sociales respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENIGH, INEGI"
     },
     {
       "Entidad": "Tlalpan",
       "Variable": "Feminicidios",
       "Valor": 1.1,
       "Que_mide": "Mujeres víctimas de feminicidios por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Tlalpan",
       "Variable": "Delitos sexuales",
       "Valor": 117.3,
       "Que_mide": "Carpetas de investigación de delitos de acoso y abuso sexual por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Tlalpan",
       "Variable": "Horas promedio destinadas a las tareas del hogar",
       "Valor": 12.2,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a tareas del hogar.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENIGH, INEGI"
     },
     {
       "Entidad": "Tlalpan",
       "Variable": "Horas promedio destinadas a los cuidados",
       "Valor": 42.9,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a actividades de cuidado.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENIGH, INEGI"
     },
     {
       "Entidad": "Tlalpan",
       "Variable": "Tasa de participación económica de las mujeres",
       "Valor": 45.0,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que tienen un empleo o que buscan uno respecto a la población total en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Tlalpan",
       "Variable": "Duración de la jornada laboral",
       "Valor": 31.4,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a actividades remuneradas.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Tlalpan",
       "Variable": "Brecha de ingresos",
       "Valor": 1.1,
       "Que_mide": "Valor absoluto de la diferencia de ingresos mensuales promedio de hombres y mujeres entre 15 y 29 años dividida entre los ingresos mensuales promedio de los hombres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Tlalpan",
       "Variable": "Informalidad",
       "Valor": 50.3,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años ocupadas en trabajos dentro del sector informal respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Tlalpan",
       "Variable": "Mujeres jóvenes con trabajo precario",
       "Valor": 38.2,
       "Que_mide": "Porcentaje de mujeres ocupadas entre 15 y 29 años sin seguridad social y con ingresos por debajo de la linea de bienestar respecto a la población ocupada en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE por GOYN Ciudad de México"
     },
     {
       "Entidad": "Tlalpan",
       "Variable": "Inclusión financiera",
       "Valor": 33.4,
       "Que_mide": "Valor absoluto de la diferencia entre la media ponderada de los montos otorgados a hombres y mujeres entre 18 y 29 años para créditos de vivienda dividida entre el promedio de los montos otorgados a hombres",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "CNBV por Tukan\n"
     },
     {
       "Entidad": "Tlalpan",
       "Variable": "Dependencia de ingresos",
       "Valor": 40.31,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que no percibe ingresos monetarios directos respecto a la población total en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENIGH, INEGI"
     },
     {
       "Entidad": "Tlalpan",
       "Variable": "Emprendedoras",
       "Valor": 11.2,
       "Que_mide": "Porcentaje de emprendedoras entre 15 años y 29 años respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Xochimilco",
       "Variable": "Población de mujeres jóvenes",
       "Valor": 23.4,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Xochimilco",
       "Variable": "Porcentaje de mujeres con hijos",
       "Valor": 33.3,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con hijos respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Xochimilco",
       "Variable": "Mujeres jóvenes que hablan una lengua indígena",
       "Valor": 14.5,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que hablan lengua indígena y/o se autoadscriben como afrodescendientes, respecto al total de mujeres en ese grupo de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de población y vivienda"
     },
     {
       "Entidad": "Xochimilco",
       "Variable": "Mujeres con discapacidad",
       "Valor": 3.7,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con discapacidad respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Xochimilco",
       "Variable": "Rezago educativo",
       "Valor": 13.9,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con rezago educativo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Xochimilco",
       "Variable": "Mujeres fuera del sistema educativo y del mercado de trabajo",
       "Valor": 14.4,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que no estudian ni tienen un empleo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Xochimilco",
       "Variable": "Acceso a servicios de salud",
       "Valor": 28.5,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años sin acceso a servicios médicos o de salud pública y/o privada respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Xochimilco",
       "Variable": "Mujeres con programas sociales",
       "Valor": 41.2,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que reciben ingresos provenientes de programas sociales respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENIGH, INEGI"
     },
     {
       "Entidad": "Xochimilco",
       "Variable": "Feminicidios",
       "Valor": 1.8,
       "Que_mide": "Mujeres víctimas de feminicidios por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Xochimilco",
       "Variable": "Delitos sexuales",
       "Valor": 107.2,
       "Que_mide": "Carpetas de investigación de delitos de acoso y abuso sexual por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Xochimilco",
       "Variable": "Horas promedio destinadas a las tareas del hogar",
       "Valor": 10.4,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a tareas del hogar.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENIGH, INEGI"
     },
     {
       "Entidad": "Xochimilco",
       "Variable": "Horas promedio destinadas a los cuidados",
       "Valor": 17.6,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a actividades de cuidado.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENIGH, INEGI"
     },
     {
       "Entidad": "Xochimilco",
       "Variable": "Tasa de participación económica de las mujeres",
       "Valor": 51.1,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que tienen un empleo o que buscan uno respecto a la población total en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Xochimilco",
       "Variable": "Duración de la jornada laboral",
       "Valor": 34.1,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a actividades remuneradas.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Xochimilco",
       "Variable": "Brecha de ingresos",
       "Valor": 7.2,
       "Que_mide": "Valor absoluto de la diferencia de ingresos mensuales promedio de hombres y mujeres entre 15 y 29 años dividida entre los ingresos mensuales promedio de los hombres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Xochimilco",
       "Variable": "Informalidad",
       "Valor": 71.0,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años ocupadas en trabajos dentro del sector informal respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Xochimilco",
       "Variable": "Mujeres jóvenes con trabajo precario",
       "Valor": 61.4,
       "Que_mide": "Porcentaje de mujeres ocupadas entre 15 y 29 años sin seguridad social y con ingresos por debajo de la linea de bienestar respecto a la población ocupada en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE por GOYN Ciudad de México"
     },
     {
       "Entidad": "Xochimilco",
       "Variable": "Inclusión financiera",
       "Valor": 58.1,
       "Que_mide": "Valor absoluto de la diferencia entre la media ponderada de los montos otorgados a hombres y mujeres entre 18 y 29 años para créditos de vivienda dividida entre el promedio de los montos otorgados a hombres",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "CNBV por Tukan\n"
     },
     {
       "Entidad": "Xochimilco",
       "Variable": "Dependencia de ingresos",
       "Valor": 27.16,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que no percibe ingresos monetarios directos respecto a la población total en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENIGH, INEGI"
     },
     {
       "Entidad": "Xochimilco",
       "Variable": "Emprendedoras",
       "Valor": 12.4,
       "Que_mide": "Porcentaje de emprendedoras entre 15 años y 29 años respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Benito Juárez",
       "Variable": "Población de mujeres jóvenes",
       "Valor": 18.9,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Benito Juárez",
       "Variable": "Porcentaje de mujeres con hijos",
       "Valor": 8.6,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con hijos respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Benito Juárez",
       "Variable": "Mujeres jóvenes que hablan una lengua indígena",
       "Valor": 8.8,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que hablan lengua indígena y/o se autoadscriben como afrodescendientes, respecto al total de mujeres en ese grupo de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Benito Juárez",
       "Variable": "Mujeres con discapacidad",
       "Valor": 3.0,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con discapacidad respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Benito Juárez",
       "Variable": "Rezago educativo",
       "Valor": 5.9,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con rezago educativo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Benito Juárez",
       "Variable": "Mujeres fuera del sistema educativo y del mercado de trabajo",
       "Valor": 3.7,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que no estudian ni tienen un empleo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Benito Juárez",
       "Variable": "Acceso a servicios de salud",
       "Valor": 25.9,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años sin acceso a servicios médicos o de salud pública y/o privada respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Benito Juárez",
       "Variable": "Feminicidios",
       "Valor": 2.1,
       "Que_mide": "Mujeres víctimas de feminicidios por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Benito Juárez",
       "Variable": "Delitos sexuales",
       "Valor": 162.5,
       "Que_mide": "Carpetas de investigación de delitos de acoso y abuso sexual por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Benito Juárez",
       "Variable": "Tasa de participación económica de las mujeres",
       "Valor": 52.0,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que tienen un empleo o que buscan uno respecto a la población total en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Benito Juárez",
       "Variable": "Duración de la jornada laboral",
       "Valor": 31.3,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a actividades remuneradas.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Benito Juárez",
       "Variable": "Brecha de ingresos",
       "Valor": -0.1,
       "Que_mide": "Valor absoluto de la diferencia de ingresos mensuales promedio de hombres y mujeres entre 15 y 29 años dividida entre los ingresos mensuales promedio de los hombres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Benito Juárez",
       "Variable": "Informalidad",
       "Valor": 34.0,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años ocupadas en trabajos dentro del sector informal respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Benito Juárez",
       "Variable": "Mujeres jóvenes con trabajo precario",
       "Valor": 25.8,
       "Que_mide": "Porcentaje de mujeres ocupadas entre 15 y 29 años sin seguridad social y con ingresos por debajo de la linea de bienestar respecto a la población ocupada en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de población y vivienda"
     },
     {
       "Entidad": "Benito Juárez",
       "Variable": "Inclusión financiera",
       "Valor": 6.3,
       "Que_mide": "Valor absoluto de la diferencia entre la media ponderada de los montos otorgados a hombres y mujeres entre 18 y 29 años para créditos de vivienda dividida entre el promedio de los montos otorgados a hombres",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "CNBV por Tukan\n"
     },
     {
       "Entidad": "Benito Juárez",
       "Variable": "Emprendedoras",
       "Valor": 5.0,
       "Que_mide": "Porcentaje de emprendedoras entre 15 años y 29 años respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Cuauhtémoc",
       "Variable": "Población de mujeres jóvenes",
       "Valor": 20.9,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Cuauhtémoc",
       "Variable": "Porcentaje de mujeres con hijos",
       "Valor": 20.0,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con hijos respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Cuauhtémoc",
       "Variable": "Mujeres jóvenes que hablan una lengua indígena",
       "Valor": 10.8,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que hablan lengua indígena y/o se autoadscriben como afrodescendientes, respecto al total de mujeres en ese grupo de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Cuauhtémoc",
       "Variable": "Mujeres con discapacidad",
       "Valor": 3.0,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con discapacidad respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Cuauhtémoc",
       "Variable": "Rezago educativo",
       "Valor": 10.0,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con rezago educativo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Cuauhtémoc",
       "Variable": "Mujeres fuera del sistema educativo y del mercado de trabajo",
       "Valor": 14.8,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que no estudian ni tienen un empleo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Cuauhtémoc",
       "Variable": "Acceso a servicios de salud",
       "Valor": 28.1,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años sin acceso a servicios médicos o de salud pública y/o privada respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Cuauhtémoc",
       "Variable": "Feminicidios",
       "Valor": 3.6,
       "Que_mide": "Mujeres víctimas de feminicidios por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Cuauhtémoc",
       "Variable": "Delitos sexuales",
       "Valor": 370.8,
       "Que_mide": "Carpetas de investigación de delitos de acoso y abuso sexual por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Cuauhtémoc",
       "Variable": "Tasa de participación económica de las mujeres",
       "Valor": 54.0,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que tienen un empleo o que buscan uno respecto a la población total en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Cuauhtémoc",
       "Variable": "Duración de la jornada laboral",
       "Valor": 33.5,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a actividades remuneradas.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Cuauhtémoc",
       "Variable": "Brecha de ingresos",
       "Valor": 13.4,
       "Que_mide": "Valor absoluto de la diferencia de ingresos mensuales promedio de hombres y mujeres entre 15 y 29 años dividida entre los ingresos mensuales promedio de los hombres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Cuauhtémoc",
       "Variable": "Informalidad",
       "Valor": 60.2,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años ocupadas en trabajos dentro del sector informal respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Cuauhtémoc",
       "Variable": "Mujeres jóvenes con trabajo precario",
       "Valor": 61.9,
       "Que_mide": "Porcentaje de mujeres ocupadas entre 15 y 29 años sin seguridad social y con ingresos por debajo de la linea de bienestar respecto a la población ocupada en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE por GOYN Ciudad de México"
     },
     {
       "Entidad": "Cuauhtémoc",
       "Variable": "Inclusión financiera",
       "Valor": 2.1,
       "Que_mide": "Valor absoluto de la diferencia entre la media ponderada de los montos otorgados a hombres y mujeres entre 18 y 29 años para créditos de vivienda dividida entre el promedio de los montos otorgados a hombres",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "CNBV por Tukan\n"
     },
     {
       "Entidad": "Cuauhtémoc",
       "Variable": "Emprendedoras",
       "Valor": 19.3,
       "Que_mide": "Porcentaje de emprendedoras entre 15 años y 29 años respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Miguel Hidalgo",
       "Variable": "Población de mujeres jóvenes",
       "Valor": 19.4,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Miguel Hidalgo",
       "Variable": "Porcentaje de mujeres con hijos",
       "Valor": 17.1,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con hijos respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Miguel Hidalgo",
       "Variable": "Mujeres jóvenes que hablan una lengua indígena",
       "Valor": 10.6,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que hablan lengua indígena y/o se autoadscriben como afrodescendientes, respecto al total de mujeres en ese grupo de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de población y vivienda"
     },
     {
       "Entidad": "Miguel Hidalgo",
       "Variable": "Mujeres con discapacidad",
       "Valor": 1.8,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con discapacidad respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Miguel Hidalgo",
       "Variable": "Rezago educativo",
       "Valor": 8.9,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con rezago educativo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Miguel Hidalgo",
       "Variable": "Mujeres fuera del sistema educativo y del mercado de trabajo",
       "Valor": 10.8,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que no estudian ni tienen un empleo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Miguel Hidalgo",
       "Variable": "Acceso a servicios de salud",
       "Valor": 24.3,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años sin acceso a servicios médicos o de salud pública y/o privada respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Miguel Hidalgo",
       "Variable": "Feminicidios",
       "Valor": 0.9,
       "Que_mide": "Mujeres víctimas de feminicidios por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Miguel Hidalgo",
       "Variable": "Delitos sexuales",
       "Valor": 178.3,
       "Que_mide": "Carpetas de investigación de delitos de acoso y abuso sexual por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Miguel Hidalgo",
       "Variable": "Tasa de participación económica de las mujeres",
       "Valor": 53.8,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que tienen un empleo o que buscan uno respecto a la población total en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Miguel Hidalgo",
       "Variable": "Duración de la jornada laboral",
       "Valor": 32.9,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a actividades remuneradas.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Miguel Hidalgo",
       "Variable": "Brecha de ingresos",
       "Valor": 4.3,
       "Que_mide": "Valor absoluto de la diferencia de ingresos mensuales promedio de hombres y mujeres entre 15 y 29 años dividida entre los ingresos mensuales promedio de los hombres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Miguel Hidalgo",
       "Variable": "Informalidad",
       "Valor": 33.9,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años ocupadas en trabajos dentro del sector informal respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Miguel Hidalgo",
       "Variable": "Mujeres jóvenes con trabajo precario",
       "Valor": 37.8,
       "Que_mide": "Porcentaje de mujeres ocupadas entre 15 y 29 años sin seguridad social y con ingresos por debajo de la linea de bienestar respecto a la población ocupada en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE por GOYN Ciudad de México"
     },
     {
       "Entidad": "Miguel Hidalgo",
       "Variable": "Inclusión financiera",
       "Valor": 55.9,
       "Que_mide": "Valor absoluto de la diferencia entre la media ponderada de los montos otorgados a hombres y mujeres entre 18 y 29 años para créditos de vivienda dividida entre el promedio de los montos otorgados a hombres",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "CNBV por Tukan\n"
     },
     {
       "Entidad": "Miguel Hidalgo",
       "Variable": "Emprendedoras",
       "Valor": 4.4,
       "Que_mide": "Porcentaje de emprendedoras entre 15 años y 29 años respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Venustiano Carranza",
       "Variable": "Población de mujeres jóvenes",
       "Valor": 21.0,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Venustiano Carranza",
       "Variable": "Porcentaje de mujeres con hijos",
       "Valor": 27.3,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con hijos respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Venustiano Carranza",
       "Variable": "Mujeres jóvenes que hablan una lengua indígena",
       "Valor": 7.8,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que hablan lengua indígena y/o se autoadscriben como afrodescendientes, respecto al total de mujeres en ese grupo de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de población y vivienda"
     },
     {
       "Entidad": "Venustiano Carranza",
       "Variable": "Mujeres con discapacidad",
       "Valor": 1.8,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con discapacidad respecto al total de la población de mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Venustiano Carranza",
       "Variable": "Rezago educativo",
       "Valor": 10.1,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con rezago educativo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Venustiano Carranza",
       "Variable": "Mujeres fuera del sistema educativo y del mercado de trabajo",
       "Valor": 12.9,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que no estudian ni tienen un empleo respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Venustiano Carranza",
       "Variable": "Acceso a servicios de salud",
       "Valor": 27.9,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años sin acceso a servicios médicos o de salud pública y/o privada respecto a la población en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Venustiano Carranza",
       "Variable": "Feminicidios",
       "Valor": 1.3,
       "Que_mide": "Mujeres víctimas de feminicidios por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Venustiano Carranza",
       "Variable": "Delitos sexuales",
       "Valor": 147.0,
       "Que_mide": "Carpetas de investigación de delitos de acoso y abuso sexual por cada 100 mil mujeres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo"
     },
     {
       "Entidad": "Venustiano Carranza",
       "Variable": "Tasa de participación económica de las mujeres",
       "Valor": 56.6,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que tienen un empleo o que buscan uno respecto a la población total en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Venustiano Carranza",
       "Variable": "Duración de la jornada laboral",
       "Valor": 39.8,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a actividades remuneradas.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Venustiano Carranza",
       "Variable": "Brecha de ingresos",
       "Valor": 0.3,
       "Que_mide": "Valor absoluto de la diferencia de ingresos mensuales promedio de hombres y mujeres entre 15 y 29 años dividida entre los ingresos mensuales promedio de los hombres.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "Censo de Población y Vivienda"
     },
     {
       "Entidad": "Venustiano Carranza",
       "Variable": "Informalidad",
       "Valor": 51.5,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años ocupadas en trabajos dentro del sector informal respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     },
     {
       "Entidad": "Venustiano Carranza",
       "Variable": "Mujeres jóvenes con trabajo precario",
       "Valor": 49.5,
       "Que_mide": "Porcentaje de mujeres ocupadas entre 15 y 29 años sin seguridad social y con ingresos por debajo de la linea de bienestar respecto a la población ocupada en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE por GOYN Ciudad de México"
     },
     {
       "Entidad": "Venustiano Carranza",
       "Variable": "Inclusión financiera",
       "Valor": 8.7,
       "Que_mide": "Valor absoluto de la diferencia entre la media ponderada de los montos otorgados a hombres y mujeres entre 18 y 29 años para créditos de vivienda dividida entre el promedio de los montos otorgados a hombres",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "CNBV por Tukan\n"
     },
     {
       "Entidad": "Venustiano Carranza",
       "Variable": "Emprendedoras",
       "Valor": 11.9,
       "Que_mide": "Porcentaje de emprendedoras entre 15 años y 29 años respecto a la PEA en ese rango de edad.",
-      "Unidad": "Porcentaje"
+      "Unidad": "Porcentaje",
+      "Fuente": "ENOE, INEGI"
     }
   ]
 }

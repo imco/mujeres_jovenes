@@ -5,66 +5,70 @@ import { geoMercator, geoNaturalEarth1, geoPath } from 'd3-geo';
 const TABS = [
   {
     id: 'dashboard-nacional',
-    label: 'Dashboard Nacional',
-    title: 'Análisis de Participación Económica',
-    subtitle: 'Monitor de género y comparativa global',
-    pill: 'Participación Económica (Global)',
+    label: 'Resultados nacionales',
+    title: 'Datos nacionales',
+    downloadLabel: 'Descarga Resultados',
+    downloadHref: 'data/dashboard-nacional/participacion_economica_mujeres_por_pais.json',
+    downloadFilename: 'resultados_nacionales.json',
     sections: [
       {
         key: 'participacion-global',
         type: 'world-map-ranking',
-        title: 'Participación económica de las mujeres en el mundo',
-        subtitle: 'El país está por debajo del promedio mundial en participación económica de mujeres.',
+        title: 'El país está por debajo del promedio mundial en participación económica de mujeres',
+        subtitle: 'Participación económica de las mujeres por país',
         file: 'data/dashboard-nacional/participacion_economica_mujeres_por_pais.json',
         layout: 'map-ranking'
       },
       {
         key: 'evolucion-tpe',
-        type: 'flourish-embed',
-        title: 'Dos de cada cinco mujeres participan en la economía en México',
-        subtitle: 'Evolución nacional histórica de la TPE (IMCO / INEGI)',
+        type: 'line',
+        title: 'La participación de las mujeres en el mercado laboral ha cambiado poco en los últimos 20 años',
+        subtitle: 'Evolución nacional histórica de la tasa de participación económica por sexo',
         file: 'data/dashboard-nacional/participacion-mexico-historica.json',
-        flourishId: '27259121'
+        source: 'Fuente: Elaborado por el IMCO con datos del 3T 2005-2025 de la ENOE, INEGI.'
       },
       {
         key: 'brecha-salarial-genero',
         type: 'line',
-        title: 'Evolución de la brecha salarial por género en México',
-        subtitle: 'Evolución porcentual nacional 2005 - 2025',
+        title: 'Por cada 100 pesos que gana un hombre, una mujer percibe 87',
+        subtitle: 'Evolución de la brecha salarial por género en México',
+        source: 'Fuente: ENOE del INEGI. Se considera el 3T de cada año.',
         file: 'data/dashboard-nacional/evolucion_brecha_salarial_genero_mexico_fuente.json',
         width: 'half',
-        chartHeightScale: 1.2
+        chartHeightScale: 1.35
       },
       {
         key: 'informalidad-laboral-sexo',
         type: 'line',
-        title: 'Evolución de la informalidad laboral por sexo',
-        subtitle: 'Tasas trimestrales de ocupación informal 2005 - 2025',
+        title: 'La diferencia entre hombres y mujeres en la informalidad se encuentra en niveles similares a 2005',
+        subtitle: 'Porcentaje de trabajadores en la informalidad por sexo',
+        source: 'Fuente: ENOE del INEGI, todos los trimestres de cada año. Considera la tasa de informalidad con respecto a la población ocupada no agropecuaria (TIL2).',
         file: 'data/dashboard-nacional/evolucion_informalidad_laboral_por_sexo_fuente.json',
         width: 'half',
-        chartHeightScale: 1.2
+        chartHeightScale: 1.25
       },
       {
         key: 'valor-cuidados',
         type: 'stacked-bars',
-        title: 'Las mujeres aportan casi tres veces más valor económico por trabajo de cuidados',
-        subtitle: 'Evolución de la equivalencia del trabajo no remunerado en el PIB por sexo',
+        title: ' El trabajo en el hogar equivale a casi una cuarta parte de la economía',
+        subtitle: 'Trabajo no remunerado en los hogares como porcentaje del PIB (pesos corrientes)',
         file: 'data/dashboard-nacional/valor_economico_cuidados_fuente.json'
       }
     ]
   },
   {
     id: 'estadisticas-entidad',
-    label: 'Estadísticas por Entidad',
-    title: 'Comparativo por Entidad Federativa',
-    subtitle: 'Indicadores clave para priorización territorial',
-    pill: 'Corte 2025',
+    label: 'Resultados por entidad',
+    title: 'Estados #ConLupaDeGénero 2025',
+    downloadLabel: 'Descarga boletas por entidad',
+    downloadHref: 'data/estadisticas-entidad/variables_monitor_entidad_enriched.json',
+    downloadFilename: 'boletas_nacionales.json',
     sections: [
       {
         key: 'mapa-indicadores-entidad',
         type: 'mexico-indicator-map',
-        title: 'Mapa de México por indicador',
-        subtitle: 'Selecciona un indicador y revisa su distribución por entidad federativa.',
+        title: 'Indicadores por entidad',
+        subtitle: 'Selecciona un indicador de la lista desplegable',
         file: 'data/estadisticas-entidad/variables_monitor_entidad_enriched.json',
         layout: 'indicator-map'
       }
@@ -72,16 +76,18 @@ const TABS = [
   },
   {
     id: 'cdmx-alcaldia',
-    label: 'CDMX por Alcaldía',
-    title: 'Panorama por Alcaldía en CDMX',
-    subtitle: 'Brecha e inclusión económica territorial',
+    label: 'Resultados CDMX',
+    title: 'Mujeres jóvenes en la CDMX',
     pill: 'Alcaldías CDMX',
+    downloadLabel: 'Descargar boletas por alcaldía',
+    downloadHref: 'data/cdmx-alcaldia/boletas_alcaldia.zip',
+    downloadFilename: 'boletas_alcaldia.zip',
     sections: [
       {
         key: 'mapa-indicadores-cdmx',
         type: 'cdmx-indicator-map',
-        title: 'Mapa de CDMX por indicador',
-        subtitle: 'Selecciona un indicador para visualizar su comportamiento por alcaldía.',
+        title: 'Indicadores por alcaldía',
+        subtitle: 'Selecciona un indicador de la lista desplegable.',
         file: 'data/cdmx-alcaldia/monitor_cdmx_indicadores.json',
         layout: 'indicator-map'
       }
@@ -97,6 +103,7 @@ const palette = {
   text: '#1f2340',
   grid: '#ece9f8'
 };
+const MAP_COLOR_STOPS = ['#e5e4fe', '#7f79fb'];
 
 // Fuentes de geometría para mapas (mundo, México y CDMX).
 const WORLD_GEOJSON_URL = 'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson';
@@ -213,8 +220,53 @@ init();
 
 // Punto de entrada de la app.
 function init() {
+  setupEmbedAutoResize();
   renderTabButtons();
   loadTab(activeTab);
+}
+
+// Si el dashboard está dentro de un iframe, notifica su altura al contenedor padre.
+// Esto evita la doble barra de scroll en integraciones tipo WordPress + iframe.
+function setupEmbedAutoResize() {
+  if (window.parent === window) return;
+
+  const notify = () => {
+    const root = document.querySelector('.app-shell');
+    const doc = document.documentElement;
+    const body = document.body;
+    const contentHeight = Math.max(
+      root?.scrollHeight || 0,
+      body?.scrollHeight || 0,
+      doc?.scrollHeight || 0
+    );
+    window.parent.postMessage({
+      type: 'mj:resize',
+      height: Math.ceil(contentHeight + 16)
+    }, '*');
+  };
+
+  const scheduleNotify = () => window.requestAnimationFrame(notify);
+
+  window.addEventListener('load', scheduleNotify, { passive: true });
+  window.addEventListener('resize', scheduleNotify, { passive: true });
+  document.addEventListener('DOMContentLoaded', scheduleNotify);
+
+  if (typeof ResizeObserver !== 'undefined') {
+    const ro = new ResizeObserver(scheduleNotify);
+    const root = document.querySelector('.app-shell');
+    if (root) ro.observe(root);
+    ro.observe(document.body);
+  }
+
+  if (typeof MutationObserver !== 'undefined') {
+    const mo = new MutationObserver(scheduleNotify);
+    mo.observe(document.body, { childList: true, subtree: true, attributes: true });
+  }
+
+  scheduleNotify();
+  window.setTimeout(scheduleNotify, 250);
+  window.setTimeout(scheduleNotify, 1000);
+  window.setTimeout(scheduleNotify, 2500);
 }
 
 // Renderiza navegación superior de pestañas.
@@ -243,7 +295,7 @@ async function loadTab(tabId) {
 
   viewTitle.textContent = tab.title;
   viewSubtitle.textContent = tab.subtitle;
-  viewPill.textContent = tab.pill;
+  renderViewPill(tab);
 
   dashboard.innerHTML = '<article class="section card">Cargando secciones...</article>';
 
@@ -262,6 +314,32 @@ async function loadTab(tabId) {
   } catch (error) {
     dashboard.innerHTML = `<article class="section card">Error al cargar los datos: ${error.message}</article>`;
   }
+}
+
+// Renderiza el badge superior derecho:
+// - Pestañas normales: texto tipo pill.
+// - CDMX: botón de descarga de boletas.
+function renderViewPill(tab) {
+  const hasDownload = Boolean(tab.downloadHref);
+  if (!hasDownload) {
+    viewPill.className = 'pill';
+    viewPill.textContent = tab.pill || '';
+    return;
+  }
+
+  viewPill.className = 'pill pill-download-wrap';
+  viewPill.innerHTML = `
+    <a
+      class="pill-download-btn"
+      href="${escapeHtml(tab.downloadHref)}"
+      download="${escapeHtml(tab.downloadFilename || 'boletas_alcaldia.zip')}"
+      title="${escapeHtml(tab.downloadLabel || 'Descargar boletas por alcaldía')}"
+      aria-label="${escapeHtml(tab.downloadLabel || 'Descargar boletas por alcaldía')}"
+    >
+      <span class="pill-download-icon" aria-hidden="true">⬇</span>
+      <span>${escapeHtml(tab.downloadLabel || 'Descargar boletas por alcaldía')}</span>
+    </a>
+  `;
 }
 
 // Fabrica visual de cada tipo de sección.
@@ -306,7 +384,10 @@ async function renderSection(section, data) {
   }
 
   if (section.type === 'line') {
-    body.innerHTML = renderLineChart(data, { heightScale: section.chartHeightScale });
+    body.innerHTML = renderLineChart(data, {
+      heightScale: section.chartHeightScale,
+      source: section.source || data?.source || ''
+    });
     attachLineChartTooltip(body);
   }
 
@@ -395,6 +476,7 @@ async function renderWorldMapRanking(data) {
         <div></div>
         <span>100%</span>
       </div>
+      <p class="map-source">Fuente: Elaboración propia con datos del Banco Mundial, último dato disponible para 184 países.</p>
     </div>
     <aside class="ranking">
       <h4>Ranking Internacional</h4>
@@ -1018,15 +1100,22 @@ function renderBarsStage(container, items, selectedKey, onSelect) {
   container.innerHTML = `
     <p class="bars-scroll-hint" aria-hidden="true">Desliza para ver el gráfico completo →</p>
     <div class="vbars-scroll">
-      <div class="vbars-plot" style="--bar-count:${items.length}">
-        ${items.map((item, index) => {
+      <div class="vbars-plot">
+        ${items.map((item) => {
           const pct = (item.value / max) * 100;
           const active = item.key === selectedKey ? 'active' : '';
-          const label = compactBarLabel(item.label);
-          return `<button type="button" class="vbar-col ${active}" data-key="${escapeHtml(item.key)}" title="${escapeHtml(item.label)}">
+          const label = String(item.label || '').trim();
+          const tooltipText = `${item.label}: ${item.value.toFixed(1)}${item.unitSymbol}`;
+          return `<button
+            type="button"
+            class="vbar-col ${active}"
+            data-key="${escapeHtml(item.key)}"
+            data-tooltip="${escapeHtml(tooltipText)}"
+            title="${escapeHtml(tooltipText)}"
+          >
+            <span class="vbar-label">${escapeHtml(label)}</span>
+            <span class="vbar-track"><span class="vbar-fill" style="width:${pct}%"></span></span>
             <strong class="vbar-value">${item.value.toFixed(1)}${escapeHtml(item.unitSymbol)}</strong>
-            <span class="vbar-track"><span class="vbar-fill" style="height:${pct}%"></span></span>
-            <span class="vbar-label">${index + 1}. ${escapeHtml(label)}</span>
           </button>`;
         }).join('')}
       </div>
@@ -1040,20 +1129,17 @@ function renderBarsStage(container, items, selectedKey, onSelect) {
   });
 }
 
-function compactBarLabel(label) {
-  const normalized = String(label || '').trim();
-  if (normalized.length <= 14) return normalized;
-  const tokens = normalized.split(/\s+/).filter(Boolean);
-  if (tokens.length >= 2) return `${tokens[0]} ${tokens[1]}`;
-  return normalized.slice(0, 14);
-}
-
 // Alterna visualización "Mapa" <-> "Barras", renderizando una sola a la vez.
 function setIndicatorStageView(svg, barsStage, mapVisible) {
   svg.hidden = !mapVisible;
   barsStage.hidden = mapVisible;
   svg.style.display = mapVisible ? 'block' : 'none';
   barsStage.style.display = mapVisible ? 'none' : 'grid';
+
+  const mapWrap = svg.closest('.mexico-map-wrap');
+  if (mapWrap) {
+    mapWrap.classList.toggle('bars-view', !mapVisible);
+  }
 }
 
 // Utilidad para obtener un nombre de feature compatible con varios geojson.
@@ -1230,9 +1316,32 @@ function canonicalCountry(name) {
 }
 
 function colorFromValue(value, min, max) {
-  const ratio = (value - min) / ((max - min) || 1);
-  const alpha = 0.2 + ratio * 0.75;
-  return `rgba(111, 79, 232, ${alpha.toFixed(3)})`;
+  const rawRatio = (value - min) / ((max - min) || 1);
+  const ratio = Math.max(0, Math.min(1, rawRatio));
+  return mixHex(MAP_COLOR_STOPS[0], MAP_COLOR_STOPS[1], ratio);
+}
+
+function mixHex(hexA, hexB, t) {
+  const a = hexToRgb(hexA);
+  const b = hexToRgb(hexB);
+  const clamp = Math.max(0, Math.min(1, t));
+  const r = Math.round(a.r + (b.r - a.r) * clamp);
+  const g = Math.round(a.g + (b.g - a.g) * clamp);
+  const bCh = Math.round(a.b + (b.b - a.b) * clamp);
+  return `rgb(${r}, ${g}, ${bCh})`;
+}
+
+function hexToRgb(hex) {
+  const clean = String(hex || '').replace('#', '');
+  const normalized = clean.length === 3
+    ? clean.split('').map((ch) => ch + ch).join('')
+    : clean;
+  const int = Number.parseInt(normalized, 16);
+  return {
+    r: (int >> 16) & 255,
+    g: (int >> 8) & 255,
+    b: int & 255
+  };
 }
 
 // Sanitiza texto para insertar en HTML sin riesgos de inyección.
@@ -1324,18 +1433,18 @@ function renderLineChart(data, options = {}) {
         data-cx="${x(i)}"
       />
     `).join('');
-    const labelIdx = line.values.length - 1;
     return `
       <path d="${path}" fill="none" stroke="${line.color}" stroke-width="3" stroke-linecap="round"/>
       ${points}
-      <text x="${x(labelIdx) + 8}" y="${y(line.values[labelIdx])}" fill="${line.color}" font-size="12" font-weight="700">${line.name} ${line.values[labelIdx].toFixed(1)}${unit}</text>
     `;
   }).join('');
 
   const legend = series.map((line) => `<span><span class="legend-dot" style="background:${line.color}"></span>${line.name}</span>`).join('');
+  const source = options.source || data.source || '';
 
   return `
     <div class="chart-wrap line-chart-wrap" data-chart-kind="line">
+      <div class="chart-legend">${legend}</div>
       <svg
         viewBox="0 0 ${width} ${height}"
         class="chart-svg"
@@ -1349,7 +1458,7 @@ function renderLineChart(data, options = {}) {
         ${xTicks}
       </svg>
     </div>
-    <div class="chart-legend">${legend}</div>
+    ${source ? `<p class="chart-source">${escapeHtml(source)}</p>` : ''}
   `;
 }
 
@@ -1427,10 +1536,10 @@ function renderStackedBars(data, options = {}) {
   const legend = series.map((s) => `<span><span class="legend-dot" style="background:${s.color}"></span>${s.name}</span>`).join('');
   const topLegend = options.variant === 'care'
     ? `<div class="care-top-legend">${series.map((s) => `<span><span class="legend-dot square" style="background:${s.color}"></span>${s.name.replace('Aporte ', '').toUpperCase()}</span>`).join('')}</div>`
-    : '';
+    : `<div class="chart-legend">${legend}</div>`;
   const footer = options.variant === 'care'
     ? `<div class="care-footer"><small>${escapeHtml(options.source || '')}</small></div>`
-    : `<div class="chart-legend">${legend}</div>`;
+    : '';
 
   return `
     <div class="chart-wrap ${options.variant === 'care' ? 'care-stacked-wrap' : ''}">
@@ -1640,6 +1749,43 @@ async function fetchJSON(path) {
 // Normaliza formato de fuentes tipo "Excel exportado" a la estructura de chart interna.
 // Si cambia la estructura de un JSON de origen, normalmente el ajuste va aquí.
 function normalizeSectionData(section, data) {
+  if (section.key === 'evolucion-tpe') {
+    const sourceRows = Array.isArray(data)
+      ? data
+      : data?.sheets?.Hoja1;
+
+    if (Array.isArray(sourceRows)) {
+      const rows = sourceRows
+        .map((row) => ({
+          year: Number(row?.Año ?? row?.Ano ?? row?.Anio ?? row?.year),
+          mujeres: normalizeRateToPercent(row?.Mujeres ?? row?.mujeres),
+          hombres: normalizeRateToPercent(row?.Hombres ?? row?.hombres)
+        }))
+        .filter((row) => Number.isFinite(row.year) && Number.isFinite(row.mujeres) && Number.isFinite(row.hombres))
+        .sort((a, b) => a.year - b.year);
+
+      return {
+        unit: '%',
+        min: 35,
+        max: 85,
+        source: section.source || '',
+        labels: rows.map((row) => String(row.year)),
+        series: [
+          {
+            name: 'Mujeres',
+            color: '#7f79fb',
+            values: rows.map((row) => +row.mujeres.toFixed(2))
+          },
+          {
+            name: 'Hombres',
+            color: '#6d6e70',
+            values: rows.map((row) => +row.hombres.toFixed(2))
+          }
+        ]
+      };
+    }
+  }
+
   if (section.key === 'brecha-salarial-genero' && data?.sheets?.Hoja1) {
     const rows = data.sheets.Hoja1.filter((row) => Number.isFinite(row?.Año) && Number.isFinite(row?.Brecha));
     return {
@@ -1650,7 +1796,7 @@ function normalizeSectionData(section, data) {
       series: [
         {
           name: 'Brecha Salarial',
-          color: '#ec4899',
+          color: '#8cded1',
           values: rows.map((row) => +(row.Brecha * 100).toFixed(2))
         }
       ]
@@ -1688,17 +1834,17 @@ function normalizeSectionData(section, data) {
     return {
       unit: '%',
       max: 32,
-      source: 'Fuente: Cuentas Satélite de Trabajo No Remunerado (INEGI)',
+      source: 'Nota: Se utilizan las cifras brutas del método hibrido. La suma de los parciales puede no coincidir con el total por el redondeo. Para el año 2023 y 2024 se usan datos preliminares. Fuente: Elaborado por el IMCO con datos de la Cuenta Satélite del Trabajo No Remunerado de los Hogares de México 2024 del INEGI.',
       labels: rows.map((row) => String(row.Año)),
       series: [
         {
           name: 'Aporte Mujeres',
-          color: '#6f4fe8',
+          color: '#7f79fb',
           values: rows.map((row) => +(row.Mujeres * 100).toFixed(2))
         },
         {
           name: 'Aporte Hombres',
-          color: '#ff7b53',
+          color: '#6d6e70',
           values: rows.map((row) => +(row.Hombres * 100).toFixed(2))
         }
       ]
@@ -1706,6 +1852,12 @@ function normalizeSectionData(section, data) {
   }
 
   return data;
+}
+
+function normalizeRateToPercent(value) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return NaN;
+  return n <= 1 ? n * 100 : n;
 }
 
 function renderFlourishEmbed(section) {
@@ -1717,6 +1869,7 @@ function renderFlourishEmbed(section) {
           <img src="https://public.flourish.studio/visualisation/${flourishId}/thumbnail" width="100%" alt="chart visualization" />
         </noscript>
       </div>
+      ${section.source ? `<p class="chart-source">${escapeHtml(section.source)}</p>` : ''}
     </div>
   `;
 }

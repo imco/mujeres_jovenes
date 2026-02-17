@@ -1,0 +1,113 @@
+{
+  "sources": [
+    {
+      "id": "participacion-global",
+      "enabled": false,
+      "description": "Participación económica de mujeres por país",
+      "source": {
+        "sheetUrl": "https://docs.google.com/spreadsheets/d/18I_XYerve-1L6NVIRNiHkvbw6EudJ1DpB-5gBUOY4n0/edit?gid=0#gid=0",
+        "spreadsheetId": "18I_XYerve-1L6NVIRNiHkvbw6EudJ1DpB-5gBUOY4n0",
+        "gid": "0"
+      },
+      "transform": {
+        "type": "array"
+      },
+      "output": "public/data/dashboard-nacional/participacion_economica_mujeres_por_pais.json"
+    },
+    {
+      "id": "tpe-historica-linea",
+      "enabled": false,
+      "description": "Serie histórica TPE México (líneas y puntos)",
+      "source": {
+        "localJsonPath": "scripts/sources/TPE.json"
+      },
+      "transform": {
+        "type": "tpe-line",
+        "min": 35,
+        "max": 85,
+        "source": "Fuente: Elaborado por el IMCO con datos del 3T 2005-2025 de la ENOE, INEGI."
+      },
+      "output": "public/data/dashboard-nacional/participacion-mexico-historica.json"
+    },
+    {
+      "id": "brecha-salarial-hoja1",
+      "enabled": false,
+      "description": "Serie histórica de brecha salarial",
+      "source": {
+        "sheetUrl": "https://docs.google.com/spreadsheets/d/18I_XYerve-1L6NVIRNiHkvbw6EudJ1DpB-5gBUOY4n0/edit?gid=253482696#gid=253482696",
+        "spreadsheetId": "18I_XYerve-1L6NVIRNiHkvbw6EudJ1DpB-5gBUOY4n0",
+        "gid": "253482696"
+      },
+      "transform": {
+        "type": "sheet-wrapper",
+        "sheetName": "Hoja1",
+        "sourceFile": "evolucion de la brecha salarial por genero en mexico.xlsx"
+      },
+      "output": "public/data/dashboard-nacional/evolucion_brecha_salarial_genero_mexico_fuente.json"
+    },
+    {
+      "id": "informalidad-hoja1",
+      "enabled": false,
+      "description": "Serie trimestral informalidad por sexo",
+      "source": {
+        "sheetUrl": "https://docs.google.com/spreadsheets/d/18I_XYerve-1L6NVIRNiHkvbw6EudJ1DpB-5gBUOY4n0/edit?gid=761524869#gid=761524869",
+        "spreadsheetId": "18I_XYerve-1L6NVIRNiHkvbw6EudJ1DpB-5gBUOY4n0",
+        "gid": "761524869"
+      },
+      "transform": {
+        "type": "sheet-wrapper",
+        "sheetName": "Hoja1",
+        "sourceFile": "Evolución de la informalidad laboral por sexo.xlsx"
+      },
+      "output": "public/data/dashboard-nacional/evolucion_informalidad_laboral_por_sexo_fuente.json"
+    },
+    {
+      "id": "valor-cuidados-hoja1",
+      "enabled": false,
+      "description": "Evolución del trabajo no remunerado en PIB por sexo",
+      "source": {
+        "sheetUrl": "https://docs.google.com/spreadsheets/d/18I_XYerve-1L6NVIRNiHkvbw6EudJ1DpB-5gBUOY4n0/edit?gid=1495501902#gid=1495501902",
+        "spreadsheetId": "18I_XYerve-1L6NVIRNiHkvbw6EudJ1DpB-5gBUOY4n0",
+        "gid": "1495501902"
+      },
+      "transform": {
+        "type": "sheet-wrapper",
+        "sheetName": "Hoja1",
+        "sourceFile": "tnr pib.xlsx"
+      },
+      "output": "public/data/dashboard-nacional/valor_economico_cuidados_fuente.json"
+    },
+    {
+      "id": "entidad-enriched",
+      "enabled": false,
+      "description": "Datos por entidad con metadata enriquecida",
+      "source": {
+        "sheetUrl": "https://docs.google.com/spreadsheets/d/18I_XYerve-1L6NVIRNiHkvbw6EudJ1DpB-5gBUOY4n0/edit?gid=1208416458#gid=1208416458",
+        "spreadsheetId": "18I_XYerve-1L6NVIRNiHkvbw6EudJ1DpB-5gBUOY4n0",
+        "gid": "1208416458"
+      },
+      "transform": {
+        "type": "entity-enriched",
+        "sheetName": "Sheet1",
+        "sourceFile": "Variables_Monitor_Entidad_Tableau_FINAL.xlsx"
+      },
+      "output": "public/data/estadisticas-entidad/variables_monitor_entidad_enriched.json"
+    },
+    {
+      "id": "cdmx-indicadores",
+      "enabled": false,
+      "description": "Indicadores por alcaldía (CDMX)",
+      "source": {
+        "sheetUrl": "https://docs.google.com/spreadsheets/d/18I_XYerve-1L6NVIRNiHkvbw6EudJ1DpB-5gBUOY4n0/edit?gid=207678363#gid=207678363",
+        "spreadsheetId": "18I_XYerve-1L6NVIRNiHkvbw6EudJ1DpB-5gBUOY4n0",
+        "gid": "207678363"
+      },
+      "transform": {
+        "type": "scope-data-wrapper",
+        "scope": "cdmx_alcaldia",
+        "sourceFile": "Monitor_pestaña cdmx.xlsx"
+      },
+      "output": "public/data/cdmx-alcaldia/monitor_cdmx_indicadores.json"
+    }
+  ]
+}

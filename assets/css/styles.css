@@ -851,6 +851,10 @@ h2 {
   background: linear-gradient(90deg, #C7F1EA 0%, #208070 100%);
 }
 
+.mexico-map-wrap.bars-view .map-gradient {
+  display: none;
+}
+
 .map-source {
   margin: .28rem 0 0;
   color: #6b708a;

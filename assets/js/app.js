@@ -8,8 +8,8 @@ const TABS = [
     label: 'Resultados nacionales',
     title: 'Datos nacionales',
     downloadLabel: 'Descarga Resultados',
-    downloadHref: 'data/dashboard-nacional/participacion_economica_mujeres_por_pais.json',
-    downloadFilename: 'resultados_nacionales.json',
+    downloadHref: 'https://imco.org.mx/monitor/wp-content/uploads/2026/02/Monitor_pestana_resultados_nacionales.xlsx',
+    downloadFilename: 'Monitor_pestana_resultados_nacionales.xlsx',
     sections: [
       {
         key: 'participacion-global',
@@ -32,7 +32,7 @@ const TABS = [
         type: 'line',
         title: 'Por cada 100 pesos que gana un hombre, una mujer percibe 87',
         subtitle: 'Evolución de la brecha salarial por género en México',
-        source: 'Fuente: ENOE del INEGI. Se considera el 3T de cada año.',
+        source: 'Fuente: Elaborado por el IMCO con el promedio de los cuatro trimestres de la ENOE del INEGI de 2005 a 2025. Nota: Para 2025 se consideran los primeros trimestres del año.',
         file: 'data/dashboard-nacional/evolucion_brecha_salarial_genero_mexico_fuente.json',
         width: 'half',
         chartHeightScale: 1.35
@@ -61,8 +61,8 @@ const TABS = [
     label: 'Resultados por entidad',
     title: 'Estados #ConLupaDeGénero 2025',
     downloadLabel: 'Descarga boletas por entidad',
-    downloadHref: 'data/estadisticas-entidad/variables_monitor_entidad_enriched.json',
-    downloadFilename: 'boletas_nacionales.json',
+    downloadHref: 'https://imco.org.mx/monitor/wp-content/uploads/2026/02/Boletas_Estados-ConLupaDeGenero-2025.pdf',
+    downloadFilename: 'Boletas_Estados-ConLupaDeGenero-2025.pdf',
     sections: [
       {
         key: 'mapa-indicadores-entidad',
@@ -80,8 +80,8 @@ const TABS = [
     title: 'Mujeres jóvenes en la CDMX',
     pill: 'Alcaldías CDMX',
     downloadLabel: 'Descargar boletas por alcaldía',
-    downloadHref: 'data/cdmx-alcaldia/boletas_alcaldia.zip',
-    downloadFilename: 'boletas_alcaldia.zip',
+    downloadHref: 'https://imco.org.mx/monitor/wp-content/uploads/2026/02/Boletas_Mujeres-CDMX-2025_22092025.pdf',
+    downloadFilename: 'Boletas_Mujeres-CDMX-2025_22092025.pdf',
     sections: [
       {
         key: 'mapa-indicadores-cdmx',

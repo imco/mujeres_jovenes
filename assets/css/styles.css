@@ -12,6 +12,7 @@
   --accent: #ff7b53;
   --good: #2f9e88;
   --shadow: 0 8px 24px rgba(31, 35, 64, 0.06);
+  --map-section-max-height: 750px;
 }
 
 * {
@@ -108,6 +109,10 @@ h1 {
   font-size: 1.4rem;
 }
 
+.topbar-title {
+  font-size: 30px;
+}
+
 h2 {
   margin: 0;
   font-family: 'Manrope', sans-serif;
@@ -177,6 +182,7 @@ h2 {
   display: inline-flex;
   align-items: center;
   gap: .5rem;
+  font-family: 'Manrope', sans-serif;
   background: linear-gradient(135deg, #7a5af4 0%, #6f4fe8 65%, #5b3fe0 100%);
   color: #fff;
   border: 1px solid rgba(99, 72, 225, 0.8);
@@ -231,6 +237,18 @@ h2 {
 .section {
   grid-column: span 12;
   padding: 1rem;
+}
+
+/* Limita la altura total de secciones con mapas para evitar recortes en iframes. */
+.section.section-map {
+  max-height: var(--map-section-max-height);
+  display: flex;
+  flex-direction: column;
+}
+
+.section.section-map .section-body {
+  flex: 1;
+  min-height: 0;
 }
 
 .section.half {
@@ -374,8 +392,14 @@ h2 {
 
 .map-panel {
   display: grid;
+  grid-template-rows: minmax(0, 1fr) auto auto;
   gap: .7rem;
   position: relative;
+  min-height: 0;
+}
+
+.section.section-map-world .world-map-svg {
+  max-height: 500px;
 }
 
 /* Shell compartido de mapa por indicador (Entidad/CDMX). */
@@ -388,6 +412,7 @@ h2 {
 
 .mexico-map-wrap {
   display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
   gap: .75rem;
   border-color: #e4def7;
 }
@@ -446,7 +471,7 @@ h2 {
   border-radius: 14px;
   background: #f9f7ff;
   padding: .35rem;
-  height: clamp(360px, 52vw, 620px);
+  height: clamp(320px, 45vw, 520px);
   overflow: hidden;
 }
 
@@ -655,7 +680,8 @@ h2 {
 
 .mexico-map-svg path.selected-state {
   stroke: #2f2564;
-  stroke-width: 2.1;
+  stroke-width: 1;
+  filter: none;
 }
 
 .indicator-side {
@@ -663,8 +689,8 @@ h2 {
   border-radius: 14px;
   padding: .9rem;
   background: #ffffff;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto auto auto auto minmax(0, 2fr) minmax(0, 3fr);
   gap: .8rem;
   min-height: 0;
   overflow: hidden;
@@ -727,7 +753,8 @@ h2 {
   list-style: none;
   display: grid;
   gap: .38rem;
-  max-height: 200px;
+  height: auto;
+  max-height: none;
   overflow: auto;
   min-height: 0;
 }
@@ -755,7 +782,7 @@ h2 {
 }
 
 .entity-profile-box {
-  margin-top: .3rem;
+  margin-top: 0;
   border: 1px solid #ddd6fb;
   border-radius: 14px;
   background: linear-gradient(180deg, #fcfbff 0%, #f8f5ff 100%);
@@ -764,8 +791,8 @@ h2 {
   color: #1f2340;
   display: flex;
   flex-direction: column;
+  height: auto;
   min-height: 0;
-  flex: 1;
   align-items: center;
 }
 
@@ -776,7 +803,7 @@ h2 {
 
 .entity-profile-name {
   margin: .15rem 0 .8rem;
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 700;
   color: #1f2340;
@@ -855,18 +882,20 @@ h2 {
   display: none;
 }
 
-.map-source {
-  margin: .28rem 0 0;
+.map-source,
+.chart-source,
+.care-footer small {
   color: #6b708a;
   font-size: calc(.74rem + 2px);
   line-height: 1.35;
 }
 
+.map-source {
+  margin: .28rem 0 0;
+}
+
 .chart-source {
   margin: .5rem 0 0;
-  color: #6b708a;
-  font-size: calc(.62rem + 2px);
-  line-height: 1.35;
 }
 
 /* Tooltip del mapa mundial. */
@@ -1144,6 +1173,11 @@ h2 {
   .section-body.map-ranking-body,
   .two-col {
     grid-template-columns: 1fr;
+  }
+
+  .section.section-map {
+    max-height: none;
+    display: block;
   }
 
   .mexico-map-layout {

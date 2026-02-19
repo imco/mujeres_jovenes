@@ -15,7 +15,7 @@ const TABS = [
         key: 'participacion-global',
         type: 'world-map-ranking',
         title: 'El país está por debajo del promedio mundial en participación económica de mujeres',
-        subtitle: 'Participación económica de las mujeres por país',
+        subtitle: 'Participación económica de las mujeres por país - % de mujeres con trabajo o en busca de uno respecto al total de mujeres de 15 años o más',
         file: 'data/dashboard-nacional/participacion_economica_mujeres_por_pais.json',
         layout: 'map-ranking'
       },
@@ -25,14 +25,15 @@ const TABS = [
         title: 'La participación de las mujeres en el mercado laboral ha cambiado poco en los últimos 20 años',
         subtitle: 'Evolución nacional histórica de la tasa de participación económica por sexo',
         file: 'data/dashboard-nacional/participacion-mexico-historica.json',
-        source: 'Fuente: Elaborado por el IMCO con datos del 3T 2005-2025 de la ENOE, INEGI.'
+        source: 'Fuente: Elaborado por el IMCO con datos del 3T 2005-2025 de la ENOE, INEGI.',
+        chartHeightScale: .8
       },
       {
         key: 'brecha-salarial-genero',
         type: 'line',
-        title: 'Por cada 100 pesos que gana un hombre, una mujer percibe 87',
+        title: 'En México en promedio por cada 100 pesos que gana un hombre una mujer percibe 87',
         subtitle: 'Evolución de la brecha salarial por género en México',
-        source: 'Fuente: Elaborado por el IMCO con el promedio de los cuatro trimestres de la ENOE del INEGI de 2005 a 2025. Nota: Para 2025 se consideran los primeros trimestres del año.',
+        source: 'Fuente: Elaborado por el IMCO con el promedio de los cuatro trimestres de la ENOE del INEGI de 2005 a 2025.',
         file: 'data/dashboard-nacional/evolucion_brecha_salarial_genero_mexico_fuente.json',
         width: 'half',
         chartHeightScale: 1.35
@@ -40,12 +41,12 @@ const TABS = [
       {
         key: 'informalidad-laboral-sexo',
         type: 'line',
-        title: 'La diferencia entre hombres y mujeres en la informalidad se encuentra en niveles similares a 2005',
+        title: 'Actualmente la diferencia entre hombres y mujeres en la informalidad se encuentra a niveles similares a 2005',
         subtitle: 'Porcentaje de trabajadores en la informalidad por sexo',
-        source: 'Fuente: ENOE del INEGI, todos los trimestres de cada año. Considera la tasa de informalidad con respecto a la población ocupada no agropecuaria (TIL2).',
+        source: 'Fuente: Elaborado por el IMCO con el dato trimestral de la Encuesta Nacional de Ocupación y Empleo (ENOE) del INEGI de 2005 a 2025.',
         file: 'data/dashboard-nacional/evolucion_informalidad_laboral_por_sexo_fuente.json',
         width: 'half',
-        chartHeightScale: 1.25
+        chartHeightScale: 1.28
       },
       {
         key: 'valor-cuidados',
@@ -207,6 +208,47 @@ const SPANISH_DATASET_ALIASES = {
   'timor oriental': 'timor oriental'
 };
 
+// Sentido de ranking por variable (true: más alto es mejor, false: más bajo es mejor).
+// Fuente: tablas "¿Más es mejor?" de Variables_Monitor_Entidad.xlsx y Monitor_pestaña cdmx.xlsx.
+const VARIABLE_BETTER_DIRECTION = new Map([
+  // Entidad
+  ['tasa de participacion economica de mujeres', true],
+  ['mujeres preparadas', true],
+  ['embarazo adolescente', false],
+  ['desigualdad en trabajo no remunerado', false],
+  ['inseguridad en el transporte publico', false],
+  ['homicidios dolosos de mujeres', false],
+  ['mujeres que quieren trabajar y no pueden', false],
+  ['brecha de ingresos por genero', false],
+  ['informalidad', false],
+  ['cobertura de cuidados en la primera infancia', true],
+  ['oferta de cuidados de adultos mayores', true],
+  ['permisos de paternidad', true],
+  ['delitos sexuales', false],
+  ['pobreza laboral', false],
+  ['dependencia de ingresos', false],
+  ['emprendedoras formales', true],
+  ['propiedad de la vivienda', true],
+  // CDMX
+  ['poblacion de mujeres jovenes', true],
+  ['porcentaje de mujeres con hijos', true],
+  ['mujeres jovenes que hablan una lengua indigena', true],
+  ['mujeres con discapacidad', true],
+  ['rezago educativo', false],
+  ['mujeres fuera del sistema educativo y del mercado de trabajo', false],
+  ['acceso a servicios de salud', false],
+  ['mujeres con programas sociales', false],
+  ['feminicidios', false],
+  ['horas promedio destinadas a las tareas del hogar', false],
+  ['horas promedio destinadas a los cuidados', false],
+  ['tasa de participacion economica de las mujeres', true],
+  ['duracion de la jornada laboral', true],
+  ['brecha de ingresos', false],
+  ['mujeres jovenes con trabajo precario', false],
+  ['inclusion financiera', false],
+  ['emprendedoras', true]
+]);
+
 const tabNav = document.getElementById('tab-nav');
 const dashboard = document.getElementById('dashboard');
 const viewTitle = document.getElementById('view-title');
@@ -364,17 +406,20 @@ async function renderSection(section, data) {
   }
 
   if (section.type === 'world-map-ranking') {
+    node.classList.add('section-map', 'section-map-world');
     body.innerHTML = await renderWorldMapRanking(data);
     syncRankingHeightToMap(body);
     attachWorldMapTooltip(body);
   }
 
   if (section.type === 'mexico-indicator-map') {
+    node.classList.add('section-map', 'section-map-indicator');
     body.innerHTML = renderMexicoIndicatorMapShell();
     await attachMexicoIndicatorMap(body, data);
   }
 
   if (section.type === 'cdmx-indicator-map') {
+    node.classList.add('section-map', 'section-map-indicator');
     body.innerHTML = renderMexicoIndicatorMapShell();
     await attachCdmxIndicatorMap(body, data);
   }
@@ -476,10 +521,10 @@ async function renderWorldMapRanking(data) {
         <div></div>
         <span>100%</span>
       </div>
-      <p class="map-source">Fuente: Elaboración propia con datos del Banco Mundial, último dato disponible para 184 países.</p>
+      <p class="map-source">Fuente: Elaboración por el IMCO con datos del Banco Mundial, último dato disponible para 184 países.</p>
     </div>
     <aside class="ranking">
-      <h4>Ranking Internacional</h4>
+      <h4>Ranking internacional</h4>
       <ol class="rank-list">${rankingMarkup}</ol>
     </aside>
   `;
@@ -552,7 +597,7 @@ function attachWorldMapTooltip(container) {
     const value = target.dataset.value;
     tooltip.innerHTML = `
       <div class="map-tooltip-country">${escapeHtml(country)}</div>
-      <div class="map-tooltip-metric">Participación Económica (Global)</div>
+      <div class="map-tooltip-metric">Participación económica de mujeres</div>
       <div class="map-tooltip-value">${value ? `${value}%` : 'Sin dato'}</div>
     `;
     tooltip.hidden = false;
@@ -727,6 +772,12 @@ async function attachMexicoIndicatorMap(container, payload) {
   let selectedView = 'map';
 
   const renderIndicator = (variable) => {
+    const normalizedVariable = normalizeCountry(variable);
+    const isSexualOffenses = normalizedVariable.includes('delitos sexuales');
+    const showIntegerValues = normalizedVariable.includes('permiso de paternidad')
+      || normalizedVariable.includes('permisos de paternidad');
+    const formatIndicatorValue = (value) => showIntegerValues ? String(Math.round(value)) : value.toFixed(1);
+    const formatMapValue = (value) => showIntegerValues ? String(Math.round(value)) : value.toFixed(2);
     const subset = rows.filter((r) => r.Variable === variable);
     const byEntity = new Map(subset.map((r) => [normalizeStateName(r.Entidad), Number(r.Valor)]));
     const values = subset.map((r) => Number(r.Valor));
@@ -735,8 +786,12 @@ async function attachMexicoIndicatorMap(container, payload) {
     const description = subset.find((r) => typeof r.Que_mide === 'string' && r.Que_mide.trim())?.Que_mide || 'Sin descripción.';
     const unit = subset.find((r) => typeof r.Unidad === 'string' && r.Unidad.trim())?.Unidad || 'Porcentaje';
     const source = subset.find((r) => typeof r.Fuente === 'string' && r.Fuente.trim())?.Fuente || '';
-    const unitSymbol = unit.toLowerCase().includes('porcent') ? '%' : unit;
-    const sortedEntities = subset.slice().sort((a, b) => b.Valor - a.Valor);
+    const normalizedUnit = unit.toLowerCase();
+    const unitSymbol = isSexualOffenses
+      ? ''
+      : (normalizedUnit.includes('porcent') || normalizedUnit.includes('tasa')) ? '%' : unit;
+    const higherIsBetter = isHigherValueBetter(variable);
+    const sortedEntities = subset.slice().sort((a, b) => higherIsBetter ? b.Valor - a.Valor : a.Valor - b.Valor);
 
     if (!selectedStateKey || !byEntity.has(selectedStateKey)) {
       selectedStateKey = sortedEntities.length ? normalizeStateName(sortedEntities[0].Entidad) : '';
@@ -758,11 +813,11 @@ async function attachMexicoIndicatorMap(container, payload) {
           d="${d}"
           fill="${fill}"
           stroke="#ffffff"
-          stroke-width="${stateKey === selectedStateKey ? 2.1 : 1}"
+          stroke-width="1"
           class="${stateKey === selectedStateKey ? 'selected-state' : ''}"
           data-state-key="${escapeHtml(stateKey)}"
           data-label="${escapeHtml(resolveStateDisplayName(name, subset))}"
-          data-value="${Number.isFinite(value) ? value.toFixed(2) : ''}"
+          data-value="${Number.isFinite(value) ? formatMapValue(value) : ''}"
           data-unit="${escapeHtml(unitSymbol)}"
         ></path>`;
       }).join('');
@@ -776,6 +831,7 @@ async function attachMexicoIndicatorMap(container, payload) {
           key: normalizeStateName(r.Entidad),
           label: r.Entidad,
           value: Number(r.Valor),
+          displayValue: formatIndicatorValue(Number(r.Valor)),
           unitSymbol
         })),
         selectedStateKey,
@@ -791,17 +847,18 @@ async function attachMexicoIndicatorMap(container, payload) {
     sideDesc.textContent = description;
     sideMeta.textContent = `Cobertura: ${subset.length} entidades | Unidad: ${unit}`;
     if (source) {
-      indicatorSource.textContent = /^fuente:/i.test(source.trim()) ? source.trim() : `Fuente: ${source.trim()}`;
+      const sourceText = /^fuente:/i.test(source.trim()) ? source.trim() : `Fuente: ${source.trim()}`;
+      indicatorSource.innerHTML = formatSourceWithNoteBreak(sourceText);
       indicatorSource.hidden = false;
     } else {
-      indicatorSource.textContent = '';
+      indicatorSource.innerHTML = '';
       indicatorSource.hidden = true;
     }
     sideTop.innerHTML = sortedEntities
       .map((r, i) => {
         const key = normalizeStateName(r.Entidad);
         const activeClass = key === selectedStateKey ? 'active' : '';
-        return `<li class="${activeClass}" data-state-key="${escapeHtml(key)}"><span>${i + 1}. ${r.Entidad}</span><strong>${Number(r.Valor).toFixed(1)}${unitSymbol}</strong></li>`;
+        return `<li class="${activeClass}" data-state-key="${escapeHtml(key)}"><span>${i + 1}. ${r.Entidad}</span><strong>${formatIndicatorValue(Number(r.Valor))}${unitSymbol}</strong></li>`;
       })
       .join('');
 
@@ -813,8 +870,13 @@ async function attachMexicoIndicatorMap(container, payload) {
     entityProfileName.textContent = selectedStateName;
     entityProfileList.innerHTML = selectedStateRows
       .map((r) => {
-        const u = (r.Unidad || '').toLowerCase().includes('porcent') ? '%' : (r.Unidad || '');
-        return `<li><span class="entity-indicator-name">${r.Variable}</span><strong class="entity-indicator-value">${Number(r.Valor).toFixed(1)}${escapeHtml(u)}</strong></li>`;
+        const rowVariable = normalizeCountry(r.Variable);
+        const uRaw = (r.Unidad || '');
+        const uNormalized = uRaw.toLowerCase();
+        const u = rowVariable.includes('delitos sexuales')
+          ? ''
+          : (uNormalized.includes('porcent') || uNormalized.includes('tasa')) ? '%' : uRaw;
+        return `<li><span class="entity-indicator-name">${r.Variable}</span><strong class="entity-indicator-value">${formatIndicatorValue(Number(r.Valor))}${escapeHtml(u)}</strong></li>`;
       })
       .join('');
 
@@ -928,6 +990,12 @@ async function attachCdmxIndicatorMap(container, payload) {
   let selectedView = 'map';
 
   const renderIndicator = (variable) => {
+    const normalizedVariable = normalizeCountry(variable);
+    const isSexualOffenses = normalizedVariable.includes('delitos sexuales');
+    const showIntegerValues = normalizedVariable.includes('permiso de paternidad')
+      || normalizedVariable.includes('permisos de paternidad');
+    const formatIndicatorValue = (value) => showIntegerValues ? String(Math.round(value)) : value.toFixed(1);
+    const formatMapValue = (value) => showIntegerValues ? String(Math.round(value)) : value.toFixed(2);
     const subset = rows.filter((r) => r.Variable === variable);
     const byEntity = new Map(subset.map((r) => [normalizeAlcaldiaName(r.Entidad), Number(r.Valor)]));
     const values = subset.map((r) => Number(r.Valor));
@@ -936,8 +1004,12 @@ async function attachCdmxIndicatorMap(container, payload) {
     const description = subset.find((r) => typeof r.Que_mide === 'string' && r.Que_mide.trim())?.Que_mide || 'Sin descripción.';
     const unit = subset.find((r) => typeof r.Unidad === 'string' && r.Unidad.trim())?.Unidad || 'Valor';
     const source = subset.find((r) => typeof r.Fuente === 'string' && r.Fuente.trim())?.Fuente || '';
-    const unitSymbol = unit.toLowerCase().includes('porcent') ? '%' : '';
-    const sortedItems = subset.slice().sort((a, b) => b.Valor - a.Valor);
+    const normalizedUnit = unit.toLowerCase();
+    const unitSymbol = isSexualOffenses
+      ? ''
+      : (normalizedUnit.includes('porcent') || normalizedUnit.includes('tasa')) ? '%' : '';
+    const higherIsBetter = isHigherValueBetter(variable);
+    const sortedItems = subset.slice().sort((a, b) => higherIsBetter ? b.Valor - a.Valor : a.Valor - b.Valor);
 
     if (!selectedKey || !byEntity.has(selectedKey)) {
       selectedKey = sortedItems.length ? normalizeAlcaldiaName(sortedItems[0].Entidad) : '';
@@ -958,11 +1030,11 @@ async function attachCdmxIndicatorMap(container, payload) {
           d="${d}"
           fill="${fill}"
           stroke="#ffffff"
-          stroke-width="${key === selectedKey ? 2.1 : 1}"
+          stroke-width="1"
           class="${key === selectedKey ? 'selected-state' : ''}"
           data-state-key="${escapeHtml(key)}"
           data-label="${escapeHtml(resolveAlcaldiaDisplayName(name, subset))}"
-          data-value="${Number.isFinite(value) ? value.toFixed(2) : ''}"
+          data-value="${Number.isFinite(value) ? formatMapValue(value) : ''}"
           data-unit="${escapeHtml(unitSymbol)}"
         ></path>`;
       }).join('');
@@ -976,6 +1048,7 @@ async function attachCdmxIndicatorMap(container, payload) {
           key: normalizeAlcaldiaName(r.Entidad),
           label: r.Entidad,
           value: Number(r.Valor),
+          displayValue: formatIndicatorValue(Number(r.Valor)),
           unitSymbol
         })),
         selectedKey,
@@ -991,17 +1064,18 @@ async function attachCdmxIndicatorMap(container, payload) {
     sideDesc.textContent = description;
     sideMeta.textContent = `Cobertura: ${subset.length} alcaldías | Unidad: ${unit}`;
     if (source) {
-      indicatorSource.textContent = /^fuente:/i.test(source.trim()) ? source.trim() : `Fuente: ${source.trim()}`;
+      const sourceText = /^fuente:/i.test(source.trim()) ? source.trim() : `Fuente: ${source.trim()}`;
+      indicatorSource.innerHTML = formatSourceWithNoteBreak(sourceText);
       indicatorSource.hidden = false;
     } else {
-      indicatorSource.textContent = '';
+      indicatorSource.innerHTML = '';
       indicatorSource.hidden = true;
     }
     sideTop.innerHTML = sortedItems
       .map((r, i) => {
         const key = normalizeAlcaldiaName(r.Entidad);
         const activeClass = key === selectedKey ? 'active' : '';
-        return `<li class="${activeClass}" data-state-key="${escapeHtml(key)}"><span>${i + 1}. ${r.Entidad}</span><strong>${Number(r.Valor).toFixed(1)}${unitSymbol}</strong></li>`;
+        return `<li class="${activeClass}" data-state-key="${escapeHtml(key)}"><span>${i + 1}. ${r.Entidad}</span><strong>${formatIndicatorValue(Number(r.Valor))}${unitSymbol}</strong></li>`;
       })
       .join('');
 
@@ -1013,8 +1087,13 @@ async function attachCdmxIndicatorMap(container, payload) {
     entityProfileName.textContent = selectedName;
     entityProfileList.innerHTML = selectedRows
       .map((r) => {
-        const u = (r.Unidad || '').toLowerCase().includes('porcent') ? '%' : '';
-        return `<li><span class="entity-indicator-name">${r.Variable}</span><strong class="entity-indicator-value">${Number(r.Valor).toFixed(1)}${escapeHtml(u)}</strong></li>`;
+        const rowVariable = normalizeCountry(r.Variable);
+        const uRaw = (r.Unidad || '');
+        const uNormalized = uRaw.toLowerCase();
+        const u = rowVariable.includes('delitos sexuales')
+          ? ''
+          : (uNormalized.includes('porcent') || uNormalized.includes('tasa')) ? '%' : '';
+        return `<li><span class="entity-indicator-name">${r.Variable}</span><strong class="entity-indicator-value">${formatIndicatorValue(Number(r.Valor))}${escapeHtml(u)}</strong></li>`;
       })
       .join('');
 
@@ -1124,7 +1203,8 @@ function renderBarsStage(container, items, selectedKey, onSelect) {
           const pct = (item.value / max) * 100;
           const active = item.key === selectedKey ? 'active' : '';
           const label = String(item.label || '').trim();
-          const tooltipText = `${item.label}: ${item.value.toFixed(1)}${item.unitSymbol}`;
+          const displayValue = typeof item.displayValue === 'string' ? item.displayValue : item.value.toFixed(1);
+          const tooltipText = `${item.label}: ${displayValue}${item.unitSymbol}`;
           return `<button
             type="button"
             class="vbar-col ${active}"
@@ -1134,7 +1214,7 @@ function renderBarsStage(container, items, selectedKey, onSelect) {
           >
             <span class="vbar-label">${escapeHtml(label)}</span>
             <span class="vbar-track"><span class="vbar-fill" style="width:${pct}%"></span></span>
-            <strong class="vbar-value">${item.value.toFixed(1)}${escapeHtml(item.unitSymbol)}</strong>
+            <strong class="vbar-value">${displayValue}${escapeHtml(item.unitSymbol)}</strong>
           </button>`;
         }).join('')}
       </div>
@@ -1308,6 +1388,11 @@ function normalizeCountry(name) {
     .trim();
 }
 
+function isHigherValueBetter(variableName) {
+  const key = normalizeCountry(variableName);
+  return VARIABLE_BETTER_DIRECTION.has(key) ? VARIABLE_BETTER_DIRECTION.get(key) : true;
+}
+
 // Construye diccionario inglés->español de países usando Intl.DisplayNames.
 function buildEnglishToSpanishRegionMap() {
   const map = new Map();
@@ -1371,6 +1456,31 @@ function escapeHtml(text) {
     .replaceAll('>', '&gt;')
     .replaceAll('\"', '&quot;')
     .replaceAll('\'', '&#039;');
+}
+
+// Estandariza fuentes: deja "Nota:" en una nueva línea y, si viene antes de "Fuente:", la mueve después.
+function formatSourceWithNoteBreak(text) {
+  const normalized = String(text || '')
+    .replace(/<br\s*\/?>/gi, ' ')
+    .replace(/\s*\n+\s*/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (!normalized) return '';
+
+  const lower = normalized.toLowerCase();
+  const notaIndex = lower.indexOf('nota:');
+  const fuenteIndex = lower.indexOf('fuente:');
+
+  if (notaIndex !== -1 && fuenteIndex !== -1 && notaIndex < fuenteIndex) {
+    const beforeNota = normalized.slice(0, notaIndex).trim();
+    const notaText = normalized.slice(notaIndex, fuenteIndex).trim().replace(/[.;\s]+$/, '');
+    const fuenteText = normalized.slice(fuenteIndex).trim();
+    const mainText = `${beforeNota ? `${beforeNota} ` : ''}${fuenteText}`.trim();
+    return `${escapeHtml(mainText)}<br>${escapeHtml(notaText)}`;
+  }
+
+  const escaped = escapeHtml(normalized);
+  return escaped.replace(/\s+(Nota:)/gi, '<br>$1');
 }
 
 function renderHeatRanking(data) {
@@ -1477,7 +1587,7 @@ function renderLineChart(data, options = {}) {
         ${xTicks}
       </svg>
     </div>
-    ${source ? `<p class="chart-source">${escapeHtml(source)}</p>` : ''}
+    ${source ? `<p class="chart-source">${formatSourceWithNoteBreak(source)}</p>` : ''}
   `;
 }
 
@@ -1552,12 +1662,15 @@ function renderStackedBars(data, options = {}) {
       <text x="6" y="${yPos + 4}" font-size="11" fill="#7b809a">${v.toFixed(0)}${data.unit || ''}</text>`;
   }).join('');
 
-  const legend = series.map((s) => `<span><span class="legend-dot" style="background:${s.color}"></span>${s.name}</span>`).join('');
-  const topLegend = options.variant === 'care'
-    ? `<div class="care-top-legend">${series.map((s) => `<span><span class="legend-dot square" style="background:${s.color}"></span>${s.name.replace('Aporte ', '').toUpperCase()}</span>`).join('')}</div>`
-    : `<div class="chart-legend">${legend}</div>`;
+  const legend = series.map((s) => {
+    const label = options.variant === 'care'
+      ? s.name.replace(/^Aporte\s+/i, '')
+      : s.name;
+    return `<span><span class="legend-dot" style="background:${s.color}"></span>${label}</span>`;
+  }).join('');
+  const topLegend = `<div class="chart-legend">${legend}</div>`;
   const footer = options.variant === 'care'
-    ? `<div class="care-footer"><small>${escapeHtml(options.source || '')}</small></div>`
+    ? `<p class="chart-source">${formatSourceWithNoteBreak(options.source || '')}</p>`
     : '';
 
   return `
@@ -1814,7 +1927,7 @@ function normalizeSectionData(section, data) {
       labels: rows.map((row) => String(row.Año)),
       series: [
         {
-          name: 'Brecha Salarial',
+          name: 'Brecha salarial',
           color: '#8cded1',
           values: rows.map((row) => +(row.Brecha * 100).toFixed(2))
         }
@@ -1888,7 +2001,7 @@ function renderFlourishEmbed(section) {
           <img src="https://public.flourish.studio/visualisation/${flourishId}/thumbnail" width="100%" alt="chart visualization" />
         </noscript>
       </div>
-      ${section.source ? `<p class="chart-source">${escapeHtml(section.source)}</p>` : ''}
+      ${section.source ? `<p class="chart-source">${formatSourceWithNoteBreak(section.source)}</p>` : ''}
     </div>
   `;
 }

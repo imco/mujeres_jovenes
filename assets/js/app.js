@@ -25,7 +25,7 @@ const TABS = [
         title: 'La participación de las mujeres en el mercado laboral ha cambiado poco en los últimos 20 años',
         subtitle: 'Evolución nacional histórica de la tasa de participación económica por sexo',
         file: 'data/dashboard-nacional/participacion-mexico-historica.json',
-        source: 'Fuente: Elaborado por el IMCO con datos del 3T 2005-2025 de la ENOE, INEGI.',
+        source: 'Nota: Se condiera el 3T de cada año. Fuente: Elaborado por el IMCO con el promedio de los cuatro trimestres de la Encuesta Nacional de Ocupación y Empleo (ENOE) del INEGI de 2005 a 2025.',
         chartHeightScale: .8
       },
       {
@@ -33,7 +33,7 @@ const TABS = [
         type: 'line',
         title: 'En México en promedio por cada 100 pesos que gana un hombre una mujer percibe 87',
         subtitle: 'Evolución de la brecha salarial por género en México',
-        source: 'Fuente: Elaborado por el IMCO con el promedio de los cuatro trimestres de la ENOE del INEGI de 2005 a 2025.',
+        source: 'Nota: Para 2025 se consideran los primeros trimestres del año. Fuente: Elaborado por el IMCO con el promedio de los cuatro trimestres de la Encuesta Nacional de Ocupación y Empleo (ENOE) del INEGI de 2005 a 2025.',
         file: 'data/dashboard-nacional/evolucion_brecha_salarial_genero_mexico_fuente.json',
         width: 'half',
         chartHeightScale: 1.35
@@ -43,7 +43,7 @@ const TABS = [
         type: 'line',
         title: 'Actualmente la diferencia entre hombres y mujeres en la informalidad se encuentra a niveles similares a 2005',
         subtitle: 'Porcentaje de trabajadores en la informalidad por sexo',
-        source: 'Fuente: Elaborado por el IMCO con el dato trimestral de la Encuesta Nacional de Ocupación y Empleo (ENOE) del INEGI de 2005 a 2025.',
+        source: 'Nota: Se considera la tasa de informalidad con respecto a la población ocupada no agropecuaria (TIL2). Fuente: Elaborado por el IMCO con el dato trimestral de la Encuesta Nacional de Ocupación y Empleo (ENOE) del INEGI de 2005 a 2025.',
         file: 'data/dashboard-nacional/evolucion_informalidad_laboral_por_sexo_fuente.json',
         width: 'half',
         chartHeightScale: 1.28

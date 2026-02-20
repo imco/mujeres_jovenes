@@ -12,7 +12,7 @@
  *  6 – CTA final
  */
 
-import { geoNaturalEarth1, geoPath } from 'd3-geo';
+import { geoNaturalEarth1, geoPath } from 'https://cdn.jsdelivr.net/npm/d3-geo@3/+esm';
 
 /* ─── Rutas de datos ─────────────────────────────────────── */
 const BASE = '/data/dashboard-nacional/';

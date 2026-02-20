@@ -7,7 +7,7 @@ const TABS = [
     id: 'dashboard-nacional',
     label: 'Resultados nacionales',
     title: 'Datos nacionales',
-    downloadLabel: 'Descarga Resultados',
+    downloadLabel: 'Descarga datos',
     downloadHref: 'https://imco.org.mx/monitor/wp-content/uploads/2026/02/Monitor_pestana_resultados_nacionales.xlsx',
     downloadFilename: 'Monitor_pestana_resultados_nacionales.xlsx',
     sections: [
@@ -61,7 +61,7 @@ const TABS = [
     id: 'estadisticas-entidad',
     label: 'Resultados por entidad',
     title: 'Estados #ConLupaDeGénero 2025',
-    downloadLabel: 'Descarga boletas por entidad',
+    downloadLabel: 'Descarga datos',
     downloadHref: 'https://imco.org.mx/monitor/wp-content/uploads/2026/02/Boletas_Estados-ConLupaDeGenero-2025.pdf',
     downloadFilename: 'Boletas_Estados-ConLupaDeGenero-2025.pdf',
     sections: [
@@ -80,7 +80,7 @@ const TABS = [
     label: 'Resultados CDMX',
     title: 'Mujeres jóvenes en la CDMX',
     pill: 'Alcaldías CDMX',
-    downloadLabel: 'Descargar boletas por alcaldía',
+    downloadLabel: 'Descarga datos',
     downloadHref: 'https://imco.org.mx/monitor/wp-content/uploads/2026/02/Boletas_Mujeres-CDMX-2025_22092025.pdf',
     downloadFilename: 'Boletas_Mujeres-CDMX-2025_22092025.pdf',
     sections: [
@@ -248,6 +248,25 @@ const VARIABLE_BETTER_DIRECTION = new Map([
   ['inclusion financiera', false],
   ['emprendedoras', true]
 ]);
+const VARIABLE_DIRECTION_ALIASES = {
+  'tasa de participacion economica femenina': 'tasa de participacion economica de mujeres',
+  'tasa de participacion economica de la mujer': 'tasa de participacion economica de mujeres',
+  'tasa de participacion economica de mujeres': 'tasa de participacion economica de mujeres',
+  'tasa de participacion economica de las mujeres': 'tasa de participacion economica de las mujeres',
+  'brecha de ingreso por genero': 'brecha de ingresos por genero',
+  'brecha de ingreso': 'brecha de ingresos',
+  'permiso de paternidad': 'permisos de paternidad',
+  'mujeres jovenes que hablan lengua indigena': 'mujeres jovenes que hablan una lengua indigena'
+};
+const NO_PERCENT_SYMBOL_VARIABLES = new Set([
+  'homicidios dolosos de mujeres',
+  'oferta de cuidados de adultos mayores',
+  'oferta de cuidados para adultos mayores',
+  'feminicidios',
+  'duracion de la jornada laboral',
+  'horas promedio destinadas a las tareas del hogar',
+  'horas promedio destinadas a los cuidados'
+]);
 
 const tabNav = document.getElementById('tab-nav');
 const dashboard = document.getElementById('dashboard');
@@ -375,11 +394,11 @@ function renderViewPill(tab) {
       class="pill-download-btn"
       href="${escapeHtml(tab.downloadHref)}"
       download="${escapeHtml(tab.downloadFilename || 'boletas_alcaldia.zip')}"
-      title="${escapeHtml(tab.downloadLabel || 'Descargar boletas por alcaldía')}"
-      aria-label="${escapeHtml(tab.downloadLabel || 'Descargar boletas por alcaldía')}"
+      title="${escapeHtml(tab.downloadLabel || 'Descarga datos')}"
+      aria-label="${escapeHtml(tab.downloadLabel || 'Descarga datos')}"
     >
       <span class="pill-download-icon" aria-hidden="true">⬇</span>
-      <span>${escapeHtml(tab.downloadLabel || 'Descargar boletas por alcaldía')}</span>
+      <span>${escapeHtml(tab.downloadLabel || 'Descarga datos')}</span>
     </a>
   `;
 }
@@ -702,7 +721,7 @@ function renderMexicoIndicatorMapShell() {
           <p class="indicator-side-desc"></p>
         </div>
         <p class="indicator-side-meta"></p>
-        <h5 class="indicator-side-subtitle">Top entidades</h5>
+        <h5 class="indicator-side-subtitle">Entidades con mejor desempeño</h5>
         <ol class="indicator-side-top"></ol>
         <section class="entity-profile-box">
           <p class="entity-profile-name"></p>
@@ -787,8 +806,11 @@ async function attachMexicoIndicatorMap(container, payload) {
     const unit = subset.find((r) => typeof r.Unidad === 'string' && r.Unidad.trim())?.Unidad || 'Porcentaje';
     const source = subset.find((r) => typeof r.Fuente === 'string' && r.Fuente.trim())?.Fuente || '';
     const normalizedUnit = unit.toLowerCase();
+    const hidePercentSymbol = shouldHidePercentSymbol(variable);
     const unitSymbol = isSexualOffenses
       ? ''
+      : hidePercentSymbol
+        ? ''
       : (normalizedUnit.includes('porcent') || normalizedUnit.includes('tasa')) ? '%' : unit;
     const higherIsBetter = isHigherValueBetter(variable);
     const sortedEntities = subset.slice().sort((a, b) => higherIsBetter ? b.Valor - a.Valor : a.Valor - b.Valor);
@@ -829,7 +851,7 @@ async function attachMexicoIndicatorMap(container, payload) {
         barsStage,
         sortedEntities.map((r) => ({
           key: normalizeStateName(r.Entidad),
-          label: r.Entidad,
+          label: formatStateDisplayName(r.Entidad),
           value: Number(r.Valor),
           displayValue: formatIndicatorValue(Number(r.Valor)),
           unitSymbol
@@ -858,7 +880,7 @@ async function attachMexicoIndicatorMap(container, payload) {
       .map((r, i) => {
         const key = normalizeStateName(r.Entidad);
         const activeClass = key === selectedStateKey ? 'active' : '';
-        return `<li class="${activeClass}" data-state-key="${escapeHtml(key)}"><span>${i + 1}. ${r.Entidad}</span><strong>${formatIndicatorValue(Number(r.Valor))}${unitSymbol}</strong></li>`;
+        return `<li class="${activeClass}" data-state-key="${escapeHtml(key)}"><span>${i + 1}. ${formatStateDisplayName(r.Entidad)}</span><strong>${formatIndicatorValue(Number(r.Valor))}${unitSymbol}</strong></li>`;
       })
       .join('');
 
@@ -866,14 +888,15 @@ async function attachMexicoIndicatorMap(container, payload) {
       .filter((r) => normalizeStateName(r.Entidad) === selectedStateKey)
       .slice()
       .sort((a, b) => a.Variable.localeCompare(b.Variable, 'es'));
-    const selectedStateName = selectedStateRows[0]?.Entidad || sortedEntities[0]?.Entidad || 'Entidad';
+    const selectedStateName = formatStateDisplayName(selectedStateRows[0]?.Entidad || sortedEntities[0]?.Entidad || 'Entidad');
     entityProfileName.textContent = selectedStateName;
     entityProfileList.innerHTML = selectedStateRows
       .map((r) => {
         const rowVariable = normalizeCountry(r.Variable);
+        const hideRowPercentSymbol = shouldHidePercentSymbol(r.Variable);
         const uRaw = (r.Unidad || '');
         const uNormalized = uRaw.toLowerCase();
-        const u = rowVariable.includes('delitos sexuales')
+        const u = rowVariable.includes('delitos sexuales') || hideRowPercentSymbol
           ? ''
           : (uNormalized.includes('porcent') || uNormalized.includes('tasa')) ? '%' : uRaw;
         return `<li><span class="entity-indicator-name">${r.Variable}</span><strong class="entity-indicator-value">${formatIndicatorValue(Number(r.Valor))}${escapeHtml(u)}</strong></li>`;
@@ -1005,8 +1028,11 @@ async function attachCdmxIndicatorMap(container, payload) {
     const unit = subset.find((r) => typeof r.Unidad === 'string' && r.Unidad.trim())?.Unidad || 'Valor';
     const source = subset.find((r) => typeof r.Fuente === 'string' && r.Fuente.trim())?.Fuente || '';
     const normalizedUnit = unit.toLowerCase();
+    const hidePercentSymbol = shouldHidePercentSymbol(variable);
     const unitSymbol = isSexualOffenses
       ? ''
+      : hidePercentSymbol
+        ? ''
       : (normalizedUnit.includes('porcent') || normalizedUnit.includes('tasa')) ? '%' : '';
     const higherIsBetter = isHigherValueBetter(variable);
     const sortedItems = subset.slice().sort((a, b) => higherIsBetter ? b.Valor - a.Valor : a.Valor - b.Valor);
@@ -1088,9 +1114,10 @@ async function attachCdmxIndicatorMap(container, payload) {
     entityProfileList.innerHTML = selectedRows
       .map((r) => {
         const rowVariable = normalizeCountry(r.Variable);
+        const hideRowPercentSymbol = shouldHidePercentSymbol(r.Variable);
         const uRaw = (r.Unidad || '');
         const uNormalized = uRaw.toLowerCase();
-        const u = rowVariable.includes('delitos sexuales')
+        const u = rowVariable.includes('delitos sexuales') || hideRowPercentSymbol
           ? ''
           : (uNormalized.includes('porcent') || uNormalized.includes('tasa')) ? '%' : '';
         return `<li><span class="entity-indicator-name">${r.Variable}</span><strong class="entity-indicator-value">${formatIndicatorValue(Number(r.Valor))}${escapeHtml(u)}</strong></li>`;
@@ -1156,7 +1183,12 @@ function normalizeStateName(name) {
 function resolveStateDisplayName(featureName, subsetRows) {
   const normalized = normalizeStateName(featureName);
   const row = subsetRows.find((r) => normalizeStateName(r.Entidad) === normalized);
-  return row ? row.Entidad : featureName;
+  return formatStateDisplayName(row ? row.Entidad : featureName);
+}
+
+function formatStateDisplayName(name) {
+  const value = String(name || '').trim();
+  return normalizeCountry(value) === 'veracruz de ignacio de la llave' ? 'Veracruz' : value;
 }
 
 function normalizeAlcaldiaName(name) {
@@ -1389,8 +1421,13 @@ function normalizeCountry(name) {
 }
 
 function isHigherValueBetter(variableName) {
-  const key = normalizeCountry(variableName);
+  const normalized = normalizeCountry(variableName);
+  const key = VARIABLE_DIRECTION_ALIASES[normalized] || normalized;
   return VARIABLE_BETTER_DIRECTION.has(key) ? VARIABLE_BETTER_DIRECTION.get(key) : true;
+}
+
+function shouldHidePercentSymbol(variableName) {
+  return NO_PERCENT_SYMBOL_VARIABLES.has(normalizeCountry(variableName));
 }
 
 // Construye diccionario inglés->español de países usando Intl.DisplayNames.
@@ -1458,7 +1495,7 @@ function escapeHtml(text) {
     .replaceAll('\'', '&#039;');
 }
 
-// Estandariza fuentes: deja "Nota:" en una nueva línea y, si viene antes de "Fuente:", la mueve después.
+// Estandariza fuentes: cuando existan "Nota:" y "Fuente:", siempre muestra Nota arriba de Fuente.
 function formatSourceWithNoteBreak(text) {
   const normalized = String(text || '')
     .replace(/<br\s*\/?>/gi, ' ')
@@ -1471,12 +1508,23 @@ function formatSourceWithNoteBreak(text) {
   const notaIndex = lower.indexOf('nota:');
   const fuenteIndex = lower.indexOf('fuente:');
 
-  if (notaIndex !== -1 && fuenteIndex !== -1 && notaIndex < fuenteIndex) {
-    const beforeNota = normalized.slice(0, notaIndex).trim();
-    const notaText = normalized.slice(notaIndex, fuenteIndex).trim().replace(/[.;\s]+$/, '');
-    const fuenteText = normalized.slice(fuenteIndex).trim();
-    const mainText = `${beforeNota ? `${beforeNota} ` : ''}${fuenteText}`.trim();
-    return `${escapeHtml(mainText)}<br>${escapeHtml(notaText)}`;
+  if (notaIndex !== -1 && fuenteIndex !== -1) {
+    let notaText = '';
+    let fuenteText = '';
+    let prefixText = '';
+
+    if (notaIndex < fuenteIndex) {
+      prefixText = normalized.slice(0, notaIndex).trim();
+      notaText = normalized.slice(notaIndex, fuenteIndex).trim().replace(/[.;\s]+$/, '');
+      fuenteText = normalized.slice(fuenteIndex).trim();
+    } else {
+      prefixText = normalized.slice(0, fuenteIndex).trim();
+      fuenteText = normalized.slice(fuenteIndex, notaIndex).trim().replace(/[.;\s]+$/, '');
+      notaText = normalized.slice(notaIndex).trim();
+    }
+
+    const fullFuente = `${prefixText ? `${prefixText} ` : ''}${fuenteText}`.trim();
+    return `${escapeHtml(notaText)}<br>${escapeHtml(fullFuente)}`;
   }
 
   const escaped = escapeHtml(normalized);

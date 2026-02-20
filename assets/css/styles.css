@@ -76,7 +76,7 @@ body {
   padding-right: 14rem;
 }
 
-.view-header > div {
+.view-header>div {
   margin: 0 auto;
 }
 
@@ -123,6 +123,13 @@ h2 {
   margin: 0.3rem 0 0;
   color: var(--muted);
   font-size: 1rem;
+}
+
+.topbar-nav-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .tab-nav {
@@ -865,7 +872,7 @@ h2 {
   font-size: .76rem;
 }
 
-.map-gradient > div {
+.map-gradient>div {
   height: 8px;
   flex: 1;
   border-radius: 999px;
@@ -873,7 +880,7 @@ h2 {
   background: linear-gradient(90deg, #e5e4fe 0%, #7f79fb 100%);
 }
 
-.mexico-map-wrap.bars-view .map-gradient > div {
+.mexico-map-wrap.bars-view .map-gradient>div {
   border-color: #9fd7cd;
   background: linear-gradient(90deg, #C7F1EA 0%, #208070 100%);
 }
@@ -1279,7 +1286,7 @@ h2 {
     max-width: none;
   }
 
-  .line-chart-wrap + .chart-legend {
+  .line-chart-wrap+.chart-legend {
     font-size: .9rem;
   }
 

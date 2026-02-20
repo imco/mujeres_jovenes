@@ -24,6 +24,13 @@ const DATA = {
   cuidados:      BASE + 'valor_economico_cuidados_fuente.json',
   worldGeoJSON:  'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson',
 };
+const REGION_NAMES_ES = typeof Intl !== 'undefined' && Intl.DisplayNames
+  ? new Intl.DisplayNames(['es'], { type: 'region' })
+  : null;
+const REGION_NAMES_EN = typeof Intl !== 'undefined' && Intl.DisplayNames
+  ? new Intl.DisplayNames(['en'], { type: 'region' })
+  : null;
+const ENGLISH_TO_SPANISH_REGION = buildEnglishToSpanishRegionMap();
 
 /* ─── Paleta ────────────────────────────────────────────── */
 const C = {
@@ -201,11 +208,13 @@ async function renderCh1() {
 
     const min = Math.min(...items.map((d) => d.value));
     const max = Math.max(...items.map((d) => d.value));
-    const valueMap = new Map(items.map((d) => [normalizeStr(d.name), d.value]));
-    const labelMap = new Map(items.map((d) => [normalizeStr(d.name), d.name]));
+    const valuesByName = new Map(items.map((d) => [normalizeCountry(d.name), d.value]));
+    const valuesByCanonical = new Map(items.map((d) => [canonicalCountry(d.name), d.value]));
+    const labelsByName = new Map(items.map((d) => [normalizeCountry(d.name), d.name]));
+    const labelsByCanonical = new Map(items.map((d) => [canonicalCountry(d.name), d.name]));
 
     const features = (geo.features || []).filter((f) => {
-      const n = normalizeStr(getFeatureName(f));
+      const n = normalizeCountry(getFeatureName(f));
       return n !== 'antarctica' && n !== 'antartida';
     });
 
@@ -243,11 +252,19 @@ async function renderCh1() {
     features.forEach((f) => {
       const d = pathGen(f);
       if (!d) return;
-      const norm = normalizeStr(getFeatureName(f));
-      const value = valueMap.get(norm) ?? null;
-      const label = labelMap.get(norm) || getFeatureName(f);
+      const countryName = getFeatureName(f);
+      const match = resolveCountryMatch(
+        countryName,
+        f,
+        valuesByName,
+        valuesByCanonical,
+        labelsByName,
+        labelsByCanonical
+      );
+      const value = match?.value ?? null;
+      const label = match?.label || getSpanishCountryName(f, countryName);
       const fill = value === null ? '#eceaf5' : colorFromValue(value, min, max);
-      const isMexico = norm === 'mexico' || norm === 'méxico';
+      const isMexico = normalizeCountry(label) === 'mexico' || normalizeCountry(countryName) === 'mexico';
 
       const path = makeSvgEl('path', {
         d,
@@ -671,29 +688,217 @@ async function renderCh5() {
 }
 
 /* ─── COUNTRY HELPERS (for world map) ──────────────────── */
-function normalizeStr(s) {
-  return String(s).toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9 ]/g, '')
+function normalizeCountry(name) {
+  return String(name || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, '')
+    .replace(/\s+/g, ' ')
     .trim();
 }
 
-const COUNTRY_ALIAS = {
-  'mexico': 'mexico',
-  'mxico': 'mexico',
+const COUNTRY_ALIASES = {
   'brazil': 'brasil',
-  'united states of america': 'estados unidos',
   'united states': 'estados unidos',
+  'united states of america': 'estados unidos',
+  'usa': 'estados unidos',
+  'us': 'estados unidos',
   'russia': 'rusia',
   'russian federation': 'rusia',
   'czechia': 'republica checa',
   'czech republic': 'republica checa',
+  'ivory coast': 'costa de marfil',
+  'democratic republic of the congo': 'republica democratica del congo',
+  'republic of the congo': 'republica del congo',
   'south korea': 'corea del sur',
   'north korea': 'corea del norte',
+  'lao pdr': 'laos',
+  'lao peoples democratic republic': 'laos',
+  'iran, islamic republic of': 'iran',
+  'syrian arab republic': 'siria',
+  'venezuela, bolivarian republic of': 'venezuela',
+  'bolivia, plurinational state of': 'bolivia',
+  'tanzania, united republic of': 'tanzania',
+  'moldova, republic of': 'moldavia',
+  'myanmar': 'birmania',
+  'eswatini': 'suazilandia',
+  'cape verde': 'cabo verde',
+  'the bahamas': 'bahamas',
+  'slovakia': 'eslovaquia',
+  'timor-leste': 'timor oriental',
+  'brunei darussalam': 'brunei',
+  'sao tome and principe': 'santo tome y principe',
+  'north macedonia': 'macedonia del norte',
+  'viet nam': 'vietnam',
 };
 
-function getFeatureName(f) {
-  return f?.properties?.name || f?.properties?.NAME || '';
+const SPANISH_DATASET_ALIASES = {
+  'china': 'republica popular china',
+  'chequia': 'republica checa',
+  'estados unidos de america': 'estados unidos',
+  'corea': 'corea del sur',
+  'myanmar': 'birmania',
+  'esuatini': 'suazilandia',
+  'lao': 'laos',
+};
+
+function getFeatureName(feature) {
+  return feature?.properties?.name
+    || feature?.properties?.NAME
+    || feature?.properties?.NOMGEO
+    || feature?.properties?.nomgeo
+    || feature?.properties?.NOM_MUN
+    || feature?.properties?.ADMIN
+    || feature?.properties?.admin
+    || feature?.properties?.sovereignt
+    || feature?.id
+    || 'País';
+}
+
+function resolveCountryMatch(countryName, feature, valuesByName, valuesByCanonical, labelsByName, labelsByCanonical) {
+  const candidates = new Set();
+  const seedCandidates = [countryName, ...collectFeatureNameCandidates(feature)];
+  for (const seed of seedCandidates) {
+    const normalized = normalizeCountry(seed);
+    if (!normalized) continue;
+    candidates.add(normalized);
+    const englishAlias = COUNTRY_ALIASES[normalized];
+    if (englishAlias) candidates.add(normalizeCountry(englishAlias));
+    const translatedSpanish = ENGLISH_TO_SPANISH_REGION.get(normalized);
+    if (translatedSpanish) candidates.add(translatedSpanish);
+  }
+
+  const iso2 = getIso2(feature);
+  if (iso2 && REGION_NAMES_ES) {
+    const spanishName = REGION_NAMES_ES.of(iso2);
+    if (spanishName) {
+      const normalizedSpanish = normalizeCountry(spanishName);
+      candidates.add(normalizedSpanish);
+      if (SPANISH_DATASET_ALIASES[normalizedSpanish]) {
+        candidates.add(normalizeCountry(SPANISH_DATASET_ALIASES[normalizedSpanish]));
+      }
+    }
+  }
+
+  for (const candidate of candidates) {
+    if (valuesByName.has(candidate)) {
+      return {
+        value: valuesByName.get(candidate),
+        label: labelsByName.get(candidate) || countryName,
+      };
+    }
+    const remap = SPANISH_DATASET_ALIASES[candidate];
+    if (remap && valuesByName.has(normalizeCountry(remap))) {
+      const key = normalizeCountry(remap);
+      return {
+        value: valuesByName.get(key),
+        label: labelsByName.get(key) || remap,
+      };
+    }
+    const canonical = canonicalCountry(candidate);
+    if (valuesByCanonical.has(canonical)) {
+      return {
+        value: valuesByCanonical.get(canonical),
+        label: labelsByCanonical.get(canonical) || countryName,
+      };
+    }
+  }
+
+  return null;
+}
+
+function collectFeatureNameCandidates(feature) {
+  const props = feature?.properties || {};
+  const keys = [
+    'name',
+    'NAME',
+    'ADMIN',
+    'admin',
+    'sovereignt',
+    'SOVEREIGNT',
+    'name_long',
+    'NAME_LONG',
+    'formal_en',
+    'FORMAL_EN',
+    'name_sort',
+    'NAME_SORT',
+    'abbrev',
+    'ABBREV',
+    'postal',
+    'POSTAL',
+    'brk_name',
+    'BRK_NAME',
+  ];
+
+  const result = [];
+  for (const key of keys) {
+    const value = props[key];
+    if (typeof value === 'string' && value.trim()) {
+      result.push(value.trim());
+    }
+  }
+  return result;
+}
+
+function getSpanishCountryName(feature, fallbackName) {
+  const iso2 = getIso2(feature);
+  if (iso2 && REGION_NAMES_ES) {
+    const spanish = REGION_NAMES_ES.of(iso2);
+    if (spanish) {
+      const normalized = normalizeCountry(spanish);
+      const remap = SPANISH_DATASET_ALIASES[normalized];
+      return remap || spanish;
+    }
+  }
+
+  const normalizedFallback = normalizeCountry(fallbackName);
+  const aliasFallback = COUNTRY_ALIASES[normalizedFallback];
+  return aliasFallback || fallbackName;
+}
+
+function getIso2(feature) {
+  const props = feature?.properties || {};
+  const candidates = [
+    props.iso_a2,
+    props.ISO_A2,
+    props.iso2,
+    props.ISO2,
+    props['iso-a2'],
+  ];
+
+  for (const code of candidates) {
+    if (typeof code === 'string' && /^[A-Z]{2}$/.test(code.toUpperCase())) {
+      return code.toUpperCase();
+    }
+  }
+
+  return null;
+}
+
+function buildEnglishToSpanishRegionMap() {
+  const map = new Map();
+  if (!REGION_NAMES_EN || !REGION_NAMES_ES) return map;
+
+  for (let i = 0; i < 26; i += 1) {
+    for (let j = 0; j < 26; j += 1) {
+      const code = String.fromCharCode(65 + i) + String.fromCharCode(65 + j);
+      const en = REGION_NAMES_EN.of(code);
+      const es = REGION_NAMES_ES.of(code);
+      if (!en || !es) continue;
+      map.set(normalizeCountry(en), normalizeCountry(es));
+    }
+  }
+
+  return map;
+}
+
+function canonicalCountry(name) {
+  return normalizeCountry(name)
+    .replace(/\b(the|of|and|republic|islamic|democratic|federal|state|states|kingdom|people|peoples|plurinational)\b/g, ' ')
+    .replace(/\b(el|la|los|las|de|del|y|republica|popular|democratica|federacion|estado|estados|unida|unidas)\b/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 /* ─── SCROLL LISTENER ───────────────────────────────────── */

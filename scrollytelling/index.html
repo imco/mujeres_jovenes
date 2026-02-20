@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mujeres en la Economía | Historia de datos</title>
+  <meta name="description" content="Un recorrido visual por los datos del Monitor de Mujeres en la Economía del IMCO. Participación económica, brecha salarial, informalidad y trabajo de cuidados en México." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Barra de progreso de scroll -->
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true">
+    <div class="scroll-progress-bar" id="scroll-progress-bar"></div>
+  </div>
+
+  <!-- Navegación fija de capítulos -->
+  <nav class="chapter-nav" id="chapter-nav" aria-label="Capítulos">
+    <button class="nav-home" id="nav-home" aria-label="Ir al inicio">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+    </button>
+    <div class="nav-dots" id="nav-dots">
+      <button class="nav-dot active" data-chapter="0" data-label="Inicio" aria-label="Ir al inicio" title="Inicio"></button>
+      <button class="nav-dot" data-chapter="1" data-label="México en el mundo" aria-label="Capítulo 1" title="México en el mundo"></button>
+      <button class="nav-dot" data-chapter="2" data-label="20 años sin moverse" aria-label="Capítulo 2" title="20 años sin moverse"></button>
+      <button class="nav-dot" data-chapter="3" data-label="La brecha salarial" aria-label="Capítulo 3" title="La brecha salarial"></button>
+      <button class="nav-dot" data-chapter="4" data-label="La trampa informal" aria-label="Capítulo 4" title="La trampa informal"></button>
+      <button class="nav-dot" data-chapter="5" data-label="El trabajo invisible" aria-label="Capítulo 5" title="El trabajo invisible"></button>
+      <button class="nav-dot" data-chapter="6" data-label="Conclusión" aria-label="Capítulo 6" title="Conclusión"></button>
+    </div>
+    <span class="nav-label-pill" id="nav-label-pill" aria-live="polite"></span>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" id="chapter-0" data-chapter-idx="0">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-grid"></div>
+      <div class="hero-orb orb-1"></div>
+      <div class="hero-orb orb-2"></div>
+      <div class="hero-orb orb-3"></div>
+    </div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">
+        <span class="eyebrow-logo">IMCO</span>
+        Monitor de Mujeres en la Economía · 2025
+      </p>
+      <h1 class="hero-title">
+        <span class="word-reveal">Las mujeres</span>
+        <span class="word-reveal delay-1">mueven<br/>México.</span>
+        <span class="word-reveal delay-2 hero-accent">México no<br/>las deja avanzar.</span>
+      </h1>
+      <p class="hero-body">
+        Cinco datos que explican por qué la participación económica femenina en México sigue siendo de las más bajas del mundo.
+      </p>
+      <button class="hero-cta" id="hero-cta" aria-label="Comenzar el recorrido">
+        Comenzar
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/>
+        </svg>
+      </button>
+    </div>
+    <div class="hero-stats" aria-hidden="true">
+      <div class="hero-stat">
+        <span class="hero-stat-num" id="stat-1">42.3%</span>
+        <span class="hero-stat-label">Participación económica de mujeres en México</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-num accent" id="stat-2">$0.87</span>
+        <span class="hero-stat-label">Por cada peso que gana un hombre</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-num good" id="stat-3">~25%</span>
+        <span class="hero-stat-label">Del PIB generado por cuidados no remunerados</span>
+      </div>
+    </div>
+    <div class="hero-scroll-hint" aria-hidden="true">
+      <span>Desliza para explorar</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ===================== CAPÍTULO 1: México en el mundo ===================== -->
+  <section class="chapter" id="chapter-1" data-chapter-idx="1">
+    <div class="chapter-sticky">
+      <div class="chapter-num-badge">01</div>
+      <div class="visual-panel" id="visual-ch1">
+        <div class="visual-loading">Cargando visualización…</div>
+      </div>
+    </div>
+    <div class="chapter-scroll-body">
+      <div class="narrative-block active" data-step="0">
+        <span class="chapter-tag">México en el mundo</span>
+        <h2>El país está <em>por debajo</em> del promedio mundial</h2>
+        <p>Solo <strong>42.3%</strong> de las mujeres mayores de 15 años en México trabajan o buscan trabajo activamente.</p>
+        <p>El promedio mundial supera el <strong>50%</strong>. Países como Islandia, Suiza o Suecia alcanzan el 65–70%.</p>
+      </div>
+      <div class="narrative-block" data-step="1">
+        <span class="chapter-tag">Contexto regional</span>
+        <h2>Por debajo de América Latina</h2>
+        <p>Brasil (52.8%), Colombia (~54%) y Argentina (~51%) superan a México.</p>
+        <p>En el ranking global de 184 países, México se ubica en el tercio inferior.</p>
+      </div>
+      <div class="narrative-block" data-step="2">
+        <span class="chapter-tag">El costo</span>
+        <h2>Un potencial económico sin explotar</h2>
+        <p>Según estimaciones del FMI, si México igualara la participación femenina promedio de América Latina, el PIB podría <strong>crecer hasta 5%</strong>.</p>
+        <p class="narrative-source">Fuente: Elaborado por el IMCO con datos del Banco Mundial, último dato disponible para 184 países.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CAPÍTULO 2: 20 años sin moverse ===================== -->
+  <section class="chapter chapter-dark" id="chapter-2" data-chapter-idx="2">
+    <div class="chapter-sticky">
+      <div class="chapter-num-badge">02</div>
+      <div class="visual-panel" id="visual-ch2">
+        <div class="visual-loading">Cargando visualización…</div>
+      </div>
+    </div>
+    <div class="chapter-scroll-body">
+      <div class="narrative-block active" data-step="0">
+        <span class="chapter-tag">Participación económica</span>
+        <h2>Veinte años de estancamiento</h2>
+        <p>En 2005, el <strong>41.4%</strong> de las mujeres mexicanas participaban en el mercado laboral.</p>
+        <p>En 2025, la cifra es <strong>45.7%</strong> — un avance de apenas 4 puntos en dos décadas.</p>
+      </div>
+      <div class="narrative-block" data-step="1">
+        <span class="chapter-tag">La brecha de género</span>
+        <h2>Los hombres casi doblan la participación femenina</h2>
+        <p>Mientras los hombres participan al <strong>75%</strong>, las mujeres lo hacen al <strong>46%</strong>. Una brecha de casi <strong>30 puntos porcentuales</strong>.</p>
+        <p>Esta diferencia no ha mejorado de forma significativa en ningún punto del período.</p>
+      </div>
+      <div class="narrative-block" data-step="2">
+        <span class="chapter-tag">Pandemia</span>
+        <h2>Covid-19 retrocedió décadas en meses</h2>
+        <p>En 2020, la participación femenina cayó a <strong>39.9%</strong> — el nivel más bajo del período. Las mujeres fueron quienes más abandonaron el mercado laboral para atender el hogar.</p>
+        <p class="narrative-source">Fuente: IMCO con datos ENOE, INEGI, 3T 2005–2025.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CAPÍTULO 3: Brecha salarial ===================== -->
+  <section class="chapter" id="chapter-3" data-chapter-idx="3">
+    <div class="chapter-sticky">
+      <div class="chapter-num-badge">03</div>
+      <div class="visual-panel" id="visual-ch3">
+        <div class="visual-loading">Cargando visualización…</div>
+      </div>
+    </div>
+    <div class="chapter-scroll-body">
+      <div class="narrative-block active" data-step="0">
+        <span class="chapter-tag">Brecha salarial</span>
+        <h2>Por cada $ 100 que gana un hombre, una mujer percibe $ 87</h2>
+        <p>La brecha salarial de género en México ha oscilado entre el <strong>14% y el 20%</strong> desde 2005.</p>
+        <p>En el mejor año registrado (2020, pandemia), la brecha bajó al <strong>11%</strong> — pero por el efecto de pérdida de empleos masculinos, no por mejora real.</p>
+      </div>
+      <div class="narrative-block" data-step="1">
+        <span class="chapter-tag">Sin mejora real</span>
+        <h2>La tendencia casi no cambia</h2>
+        <p>A pesar de más mujeres con educación universitaria que hombres, la brecha salarial se mantiene sin reducción estructural.</p>
+        <p>En 2025, la brecha es del <strong>~13.8%</strong>, similar a la de 2012.</p>
+      </div>
+      <div class="narrative-block" data-step="2">
+        <span class="chapter-tag">Las causas</span>
+        <h2>Segregación ocupacional y trabajo no remunerado</h2>
+        <p>Las mujeres se concentran en sectores de menor salario (educación, salud, comercio) y dedican más horas al trabajo no remunerado en el hogar, limitando su crecimiento profesional.</p>
+        <p class="narrative-source">Fuente: IMCO con promedio de cuatro trimestres ENOE, INEGI, 2005–2025.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CAPÍTULO 4: Informalidad ===================== -->
+  <section class="chapter chapter-dark" id="chapter-4" data-chapter-idx="4">
+    <div class="chapter-sticky">
+      <div class="chapter-num-badge">04</div>
+      <div class="visual-panel" id="visual-ch4">
+        <div class="visual-loading">Cargando visualización…</div>
+      </div>
+    </div>
+    <div class="chapter-scroll-body">
+      <div class="narrative-block active" data-step="0">
+        <span class="chapter-tag">Informalidad laboral</span>
+        <h2>Más de la mitad de las mujeres que trabajan, lo hacen en la informalidad</h2>
+        <p>El <strong>54%</strong> de las mujeres trabajadoras en México están en el sector informal (2025), frente al <strong>48%</strong> de los hombres.</p>
+        <p>Sin seguridad social, sin aguinaldo, sin acceso a guarderías del IMSS.</p>
+      </div>
+      <div class="narrative-block" data-step="1">
+        <span class="chapter-tag">Una trampa estructural</span>
+        <h2>La informalidad sube en crisis y no baja del todo</h2>
+        <p>La pandemia empujó la informalidad. Aunque bajó después de 2020, en las mujeres sigue siendo sistemáticamente mayor que en los hombres a lo largo de todo el período.</p>
+      </div>
+      <div class="narrative-block" data-step="2">
+        <span class="chapter-tag">El círculo vicioso</span>
+        <h2>Sin cuidados formales, sin trabajo formal</h2>
+        <p>La falta de guarderías asequibles empuja a las mujeres al mercado informal — el único compatible con el cuidado de hijos e integrantes del hogar sin apoyo externo.</p>
+        <p class="narrative-source">Fuente: IMCO con datos trimestrales ENOE, INEGI, 2005–2025.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CAPÍTULO 5: Trabajo invisible ===================== -->
+  <section class="chapter" id="chapter-5" data-chapter-idx="5">
+    <div class="chapter-sticky">
+      <div class="chapter-num-badge">05</div>
+      <div class="visual-panel" id="visual-ch5">
+        <div class="visual-loading">Cargando visualización…</div>
+      </div>
+    </div>
+    <div class="chapter-scroll-body">
+      <div class="narrative-block active" data-step="0">
+        <span class="chapter-tag">Economía del cuidado</span>
+        <h2>El trabajo en el hogar equivale a casi una cuarta parte de la economía</h2>
+        <p>El trabajo no remunerado — limpiar, cocinar, cuidar hijos y adultos mayores — representa entre el <strong>18% y el 26% del PIB</strong> de México.</p>
+        <p>Y el <strong>75% de ese trabajo lo hacen mujeres</strong>.</p>
+      </div>
+      <div class="narrative-block" data-step="1">
+        <span class="chapter-tag">Durante la pandemia</span>
+        <h2>El valor disparó al 26% del PIB en 2020</h2>
+        <p>Con escuelas cerradas y adultos mayores en casa, el trabajo de cuidados aumentó drásticamente. Las mujeres absorbieron la mayor parte de esa carga adicional.</p>
+      </div>
+      <div class="narrative-block" data-step="2">
+        <span class="chapter-tag">Qué se puede hacer</span>
+        <h2>Sin reconocer el cuidado, no hay igualdad laboral</h2>
+        <p>Permisos de paternidad reales, guarderías públicas y redistribución del trabajo doméstico son condiciones necesarias para que las mujeres puedan participar plenamente en la economía.</p>
+        <p class="narrative-source">Fuente: IMCO con datos de INEGI Cuenta Satélite del Trabajo No Remunerado, 2003–2024.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CAPÍTULO 6: CTA Final ===================== -->
+  <section class="chapter-cta" id="chapter-6" data-chapter-idx="6">
+    <div class="cta-bg" aria-hidden="true">
+      <div class="cta-orb orb-1"></div>
+      <div class="cta-orb orb-2"></div>
+    </div>
+    <div class="cta-content">
+      <p class="cta-eyebrow">Monitor de Mujeres en la Economía · IMCO 2025</p>
+      <h2 class="cta-title">Cinco datos. Una conclusión.</h2>
+      <p class="cta-body">México no puede crecer de espaldas a la mitad de su población. La evidencia está en los datos. Explóralos por entidad y alcaldía en el dashboard interactivo.</p>
+      <div class="cta-actions">
+        <a href="../" class="cta-btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+          </svg>
+          Explorar el dashboard completo
+        </a>
+        <a href="https://imco.org.mx" target="_blank" rel="noopener noreferrer" class="cta-btn-secondary">
+          imco.org.mx
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+        </a>
+      </div>
+      <div class="cta-summary">
+        <div class="summary-card">
+          <span class="summary-num">42.3%</span>
+          <span class="summary-label">TPE de mujeres en México</span>
+        </div>
+        <div class="summary-card accent">
+          <span class="summary-num">$0.87</span>
+          <span class="summary-label">Por cada peso de un hombre</span>
+        </div>
+        <div class="summary-card good">
+          <span class="summary-num">54%</span>
+          <span class="summary-label">Mujeres en informalidad</span>
+        </div>
+        <div class="summary-card teal">
+          <span class="summary-num">~25%</span>
+          <span class="summary-label">PIB en cuidados no remunerados</span>
+        </div>
+      </div>
+      <p class="cta-footer">
+        Instituto Mexicano para la Competitividad (IMCO) · 
+        <a href="../" class="cta-footer-link">Ver el Dashboard</a>
+      </p>
+    </div>
+  </section>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>

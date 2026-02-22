@@ -14,7 +14,7 @@ const TABS = [
       {
         key: 'participacion-global',
         type: 'world-map-ranking',
-        title: 'El país está por debajo del promedio mundial en participación económica de mujeres',
+        title: 'La participación económica de las mujeres en México es menor al promedio mundial (49%).',
         subtitle: 'Participación económica de las mujeres por país - % de mujeres con trabajo o en busca de uno respecto al total de mujeres de 15 años o más',
         file: 'data/dashboard-nacional/participacion_economica_mujeres_por_pais.json',
         layout: 'map-ranking'

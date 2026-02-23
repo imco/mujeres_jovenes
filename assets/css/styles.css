@@ -605,6 +605,7 @@ h2 {
 }
 
 .vbar-fill {
+  width: var(--bar-pct, 0%);
   height: 100%;
   display: inline-block;
   border-radius: 8px;
@@ -626,48 +627,6 @@ h2 {
   word-break: normal;
   white-space: nowrap;
   hyphens: none;
-}
-
-.vbar-col::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  left: 50%;
-  bottom: calc(100% + 8px);
-  transform: translateX(-50%);
-  background: rgba(31, 35, 64, 0.95);
-  color: #fff;
-  font-size: .7rem;
-  line-height: 1.2;
-  padding: .35rem .45rem;
-  border-radius: 6px;
-  white-space: normal;
-  max-width: 180px;
-  width: max-content;
-  z-index: 8;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 120ms ease;
-}
-
-.vbar-col::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: calc(100% + 2px);
-  transform: translateX(-50%);
-  border: 6px solid transparent;
-  border-top-color: rgba(31, 35, 64, 0.95);
-  z-index: 8;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 120ms ease;
-}
-
-.vbar-col:hover::after,
-.vbar-col:hover::before,
-.vbar-col:focus-visible::after,
-.vbar-col:focus-visible::before {
-  opacity: 1;
 }
 
 .mexico-map-svg path {
@@ -1066,6 +1025,92 @@ h2 {
 .horizontal-bars-wrap {
   max-height: 560px;
   overflow: auto;
+}
+
+/* Barras verticales solo en escritorio para mapas de Entidad/CDMX. */
+@media (min-width: 1025px) {
+  .mexico-map-stage .bars-stage {
+    padding: .25rem;
+  }
+
+  .mexico-map-stage .vbars-scroll {
+    overflow: hidden;
+    height: 100%;
+  }
+
+  .mexico-map-stage .vbars-plot {
+    height: 100%;
+    min-height: 0;
+    grid-template-columns: repeat(var(--bar-count, 1), minmax(0, 1fr));
+    gap: .06rem;
+    align-items: end;
+    padding: 1.2rem .06rem .08rem;
+  }
+
+  .mexico-map-stage .vbar-col {
+    height: 100%;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 96px;
+    gap: .2rem;
+    padding: .12rem .04rem;
+    border-radius: 8px;
+    align-items: stretch;
+    overflow: visible;
+  }
+
+  .mexico-map-stage .vbar-value {
+    display: none;
+  }
+
+  .mexico-map-stage .vbar-track {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    border-radius: 6px;
+    background: transparent;
+    align-items: end;
+    overflow: visible;
+  }
+
+  .mexico-map-stage .vbar-fill {
+    width: 100%;
+    height: var(--bar-pct, 0%);
+    border-radius: 6px;
+    background: linear-gradient(180deg, #208070 0%, #C7F1EA 100%);
+    position: relative;
+  }
+
+  .mexico-map-stage .vbar-fill::after {
+    content: attr(data-value);
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 4px);
+    transform: translateX(-50%);
+    font-size: .74rem;
+    font-weight: 700;
+    color: #1f2340;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75);
+    white-space: nowrap;
+  }
+
+  .mexico-map-stage .vbar-label {
+    grid-column: 1;
+    grid-row: 2;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-size: .68rem;
+    line-height: 1.05;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    justify-content: center;
+    text-align: center;
+    align-self: center;
+    justify-self: center;
+  }
 }
 
 /* Escala tipográfica global para todas las secciones del dashboard. */

@@ -8,7 +8,7 @@ const TABS = [
     label: 'Resultados nacionales',
     title: 'Datos nacionales',
     downloadLabel: 'Descarga datos',
-    downloadHref: 'https://imco.org.mx/monitor/wp-content/uploads/2026/02/Monitor_pestana_resultados_nacionales.xlsx',
+    downloadHref: 'https://imco.org.mx/monitor/wp-content/uploads/2026/02/Monitor_pestana_resultados_nacionales-8.xlsx',
     downloadFilename: 'Monitor_pestana_resultados_nacionales.xlsx',
     sections: [
       {
@@ -61,7 +61,7 @@ const TABS = [
     id: 'estadisticas-entidad',
     label: 'Resultados por entidad',
     title: 'Estados #ConLupaDeGénero 2025',
-    downloadLabel: 'Descarga datos',
+    downloadLabel: 'Descargas las boletas',
     downloadHref: 'https://imco.org.mx/monitor/wp-content/uploads/2026/02/Boletas_Estados-ConLupaDeGenero-2025.pdf',
     downloadFilename: 'Boletas_Estados-ConLupaDeGenero-2025.pdf',
     sections: [
@@ -80,7 +80,7 @@ const TABS = [
     label: 'Resultados CDMX',
     title: 'Mujeres jóvenes en la CDMX',
     pill: 'Alcaldías CDMX',
-    downloadLabel: 'Descarga datos',
+    downloadLabel: 'Descargas las boletas',
     downloadHref: 'https://imco.org.mx/monitor/wp-content/uploads/2026/02/Boletas_Mujeres-CDMX-2025_22092025.pdf',
     downloadFilename: 'Boletas_Mujeres-CDMX-2025_22092025.pdf',
     sections: [
@@ -105,6 +105,7 @@ const palette = {
   grid: '#ece9f8'
 };
 const MAP_COLOR_STOPS = ['#e5e4fe', '#7f79fb'];
+const CDMX_COMMON_NOTE = 'Nota: No se presentan estimaciones para algunas alcaldías debido a que los resultados no son estadísticamente significativos (margen de error superior a 7% con un nivel de confianza de 80%).';
 
 // Fuentes de geometría para mapas (mundo, México y CDMX).
 const WORLD_GEOJSON_URL = 'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson';
@@ -754,6 +755,7 @@ async function attachMexicoIndicatorMap(container, payload) {
   const sideMeta = container.querySelector('.indicator-side-meta');
   const sideTop = container.querySelector('.indicator-side-top');
   const indicatorSource = container.querySelector('.indicator-chart-source');
+  const mapGradientLabels = container.querySelectorAll('.map-gradient span');
   const entityProfileName = container.querySelector('.entity-profile-name');
   const entityProfileList = container.querySelector('.entity-profile-list');
   if (!rows.length || !select || !svg || !barsStage || !mapWrap || !indicatorSide || !sideTitle || !sideDesc || !sideMeta || !sideTop || !indicatorSource || !entityProfileName || !entityProfileList) {
@@ -794,10 +796,6 @@ async function attachMexicoIndicatorMap(container, payload) {
   const renderIndicator = (variable) => {
     const normalizedVariable = normalizeCountry(variable);
     const isSexualOffenses = normalizedVariable.includes('delitos sexuales');
-    const showIntegerValues = normalizedVariable.includes('permiso de paternidad')
-      || normalizedVariable.includes('permisos de paternidad');
-    const formatIndicatorValue = (value) => showIntegerValues ? String(Math.round(value)) : value.toFixed(1);
-    const formatMapValue = (value) => showIntegerValues ? String(Math.round(value)) : value.toFixed(2);
     const subset = rows.filter((r) => r.Variable === variable);
     const byEntity = new Map(subset.map((r) => [normalizeStateName(r.Entidad), Number(r.Valor)]));
     const values = subset.map((r) => Number(r.Valor));
@@ -805,14 +803,22 @@ async function attachMexicoIndicatorMap(container, payload) {
     const max = Math.max(...values);
     const description = subset.find((r) => typeof r.Que_mide === 'string' && r.Que_mide.trim())?.Que_mide || 'Sin descripción.';
     const unit = subset.find((r) => typeof r.Unidad === 'string' && r.Unidad.trim())?.Unidad || 'Porcentaje';
-    const source = subset.find((r) => typeof r.Fuente === 'string' && r.Fuente.trim())?.Fuente || '';
     const normalizedUnit = unit.toLowerCase();
+    const showIntegerValues = normalizedVariable.includes('permiso de paternidad')
+      || normalizedVariable.includes('permisos de paternidad');
+    const formatIndicatorValue = (value) => showIntegerValues ? String(Math.round(value)) : value.toFixed(1);
+    const formatMapValue = (value) => showIntegerValues ? String(Math.round(value)) : value.toFixed(2);
+    const source = subset.find((r) => typeof r.Fuente === 'string' && r.Fuente.trim())?.Fuente || '';
     const hidePercentSymbol = shouldHidePercentSymbol(variable);
     const unitSymbol = isSexualOffenses
       ? ''
       : hidePercentSymbol
         ? ''
       : (normalizedUnit.includes('porcent') || normalizedUnit.includes('tasa')) ? '%' : unit;
+    if (mapGradientLabels.length >= 2 && Number.isFinite(min) && Number.isFinite(max)) {
+      mapGradientLabels[0].textContent = `${formatIndicatorValue(min)}${unitSymbol}`;
+      mapGradientLabels[1].textContent = `${formatIndicatorValue(max)}${unitSymbol}`;
+    }
     const higherIsBetter = isHigherValueBetter(variable);
     const sortedEntities = subset.slice().sort((a, b) => higherIsBetter ? b.Valor - a.Valor : a.Valor - b.Valor);
 
@@ -894,13 +900,16 @@ async function attachMexicoIndicatorMap(container, payload) {
     entityProfileList.innerHTML = selectedStateRows
       .map((r) => {
         const rowVariable = normalizeCountry(r.Variable);
+        const rowIntegerValue = rowVariable.includes('permiso de paternidad')
+          || rowVariable.includes('permisos de paternidad');
         const hideRowPercentSymbol = shouldHidePercentSymbol(r.Variable);
         const uRaw = (r.Unidad || '');
         const uNormalized = uRaw.toLowerCase();
         const u = rowVariable.includes('delitos sexuales') || hideRowPercentSymbol
           ? ''
           : (uNormalized.includes('porcent') || uNormalized.includes('tasa')) ? '%' : uRaw;
-        return `<li><span class="entity-indicator-name">${r.Variable}</span><strong class="entity-indicator-value">${formatIndicatorValue(Number(r.Valor))}${escapeHtml(u)}</strong></li>`;
+        const rowValue = rowIntegerValue ? String(Math.round(Number(r.Valor))) : formatIndicatorValue(Number(r.Valor));
+        return `<li><span class="entity-indicator-name">${r.Variable}</span><strong class="entity-indicator-value">${rowValue}${escapeHtml(u)}</strong></li>`;
       })
       .join('');
 
@@ -969,6 +978,7 @@ async function attachCdmxIndicatorMap(container, payload) {
   const sideMeta = container.querySelector('.indicator-side-meta');
   const sideTop = container.querySelector('.indicator-side-top');
   const indicatorSource = container.querySelector('.indicator-chart-source');
+  const mapGradientLabels = container.querySelectorAll('.map-gradient span');
   const sideTopTitle = container.querySelector('.indicator-side-subtitle');
   const entityProfileName = container.querySelector('.entity-profile-name');
   const entityProfileList = container.querySelector('.entity-profile-list');
@@ -1016,10 +1026,6 @@ async function attachCdmxIndicatorMap(container, payload) {
   const renderIndicator = (variable) => {
     const normalizedVariable = normalizeCountry(variable);
     const isSexualOffenses = normalizedVariable.includes('delitos sexuales');
-    const showIntegerValues = normalizedVariable.includes('permiso de paternidad')
-      || normalizedVariable.includes('permisos de paternidad');
-    const formatIndicatorValue = (value) => showIntegerValues ? String(Math.round(value)) : value.toFixed(1);
-    const formatMapValue = (value) => showIntegerValues ? String(Math.round(value)) : value.toFixed(2);
     const subset = rows.filter((r) => r.Variable === variable);
     const byEntity = new Map(subset.map((r) => [normalizeAlcaldiaName(r.Entidad), Number(r.Valor)]));
     const values = subset.map((r) => Number(r.Valor));
@@ -1027,14 +1033,22 @@ async function attachCdmxIndicatorMap(container, payload) {
     const max = Math.max(...values);
     const description = subset.find((r) => typeof r.Que_mide === 'string' && r.Que_mide.trim())?.Que_mide || 'Sin descripción.';
     const unit = subset.find((r) => typeof r.Unidad === 'string' && r.Unidad.trim())?.Unidad || 'Valor';
-    const source = subset.find((r) => typeof r.Fuente === 'string' && r.Fuente.trim())?.Fuente || '';
     const normalizedUnit = unit.toLowerCase();
+    const showIntegerValues = normalizedVariable.includes('permiso de paternidad')
+      || normalizedVariable.includes('permisos de paternidad');
+    const formatIndicatorValue = (value) => showIntegerValues ? String(Math.round(value)) : value.toFixed(1);
+    const formatMapValue = (value) => showIntegerValues ? String(Math.round(value)) : value.toFixed(2);
+    const source = subset.find((r) => typeof r.Fuente === 'string' && r.Fuente.trim())?.Fuente || '';
     const hidePercentSymbol = shouldHidePercentSymbol(variable);
     const unitSymbol = isSexualOffenses
       ? ''
       : hidePercentSymbol
         ? ''
       : (normalizedUnit.includes('porcent') || normalizedUnit.includes('tasa')) ? '%' : '';
+    if (mapGradientLabels.length >= 2 && Number.isFinite(min) && Number.isFinite(max)) {
+      mapGradientLabels[0].textContent = `${formatIndicatorValue(min)}${unitSymbol}`;
+      mapGradientLabels[1].textContent = `${formatIndicatorValue(max)}${unitSymbol}`;
+    }
     const higherIsBetter = isHigherValueBetter(variable);
     const sortedItems = subset.slice().sort((a, b) => higherIsBetter ? b.Valor - a.Valor : a.Valor - b.Valor);
 
@@ -1090,14 +1104,12 @@ async function attachCdmxIndicatorMap(container, payload) {
     sideTitle.textContent = variable;
     sideDesc.textContent = description;
     sideMeta.textContent = `Cobertura: ${subset.length} alcaldías | Unidad: ${unit}`;
-    if (source) {
-      const sourceText = /^fuente:/i.test(source.trim()) ? source.trim() : `Fuente: ${source.trim()}`;
-      indicatorSource.innerHTML = formatSourceWithNoteBreak(sourceText);
-      indicatorSource.hidden = false;
-    } else {
-      indicatorSource.innerHTML = '';
-      indicatorSource.hidden = true;
-    }
+    const sourceText = source
+      ? (/^fuente:/i.test(source.trim()) ? source.trim() : `Fuente: ${source.trim()}`)
+      : '';
+    const cdmxSourceWithNote = sourceText ? `${CDMX_COMMON_NOTE} ${sourceText}` : CDMX_COMMON_NOTE;
+    indicatorSource.innerHTML = formatSourceWithNoteBreak(cdmxSourceWithNote);
+    indicatorSource.hidden = false;
     sideTop.innerHTML = sortedItems
       .map((r, i) => {
         const key = normalizeAlcaldiaName(r.Entidad);
@@ -1231,22 +1243,21 @@ function renderBarsStage(container, items, selectedKey, onSelect) {
   container.innerHTML = `
     <p class="bars-scroll-hint" aria-hidden="true">Desliza para ver el gráfico completo →</p>
     <div class="vbars-scroll">
-      <div class="vbars-plot">
+      <div class="vbars-plot" style="--bar-count:${items.length};">
         ${items.map((item) => {
           const pct = (item.value / max) * 100;
           const active = item.key === selectedKey ? 'active' : '';
           const label = String(item.label || '').trim();
           const displayValue = typeof item.displayValue === 'string' ? item.displayValue : item.value.toFixed(1);
-          const tooltipText = `${item.label}: ${displayValue}${item.unitSymbol}`;
           return `<button
             type="button"
             class="vbar-col ${active}"
             data-key="${escapeHtml(item.key)}"
-            data-tooltip="${escapeHtml(tooltipText)}"
-            title="${escapeHtml(tooltipText)}"
+            data-label="${escapeHtml(label)}"
+            data-value-text="${escapeHtml(`${displayValue}${item.unitSymbol}`)}"
           >
             <span class="vbar-label">${escapeHtml(label)}</span>
-            <span class="vbar-track"><span class="vbar-fill" style="width:${pct}%"></span></span>
+            <span class="vbar-track"><span class="vbar-fill" data-value="${escapeHtml(`${displayValue}${item.unitSymbol}`)}" style="--bar-pct:${pct}%;"></span></span>
             <strong class="vbar-value">${displayValue}${escapeHtml(item.unitSymbol)}</strong>
           </button>`;
         }).join('')}
@@ -1254,9 +1265,26 @@ function renderBarsStage(container, items, selectedKey, onSelect) {
     </div>
   `;
 
+  const tooltip = getSharedChartTooltip();
   container.querySelectorAll('button[data-key]').forEach((btn) => {
+    btn.addEventListener('mousemove', (event) => {
+      const label = btn.dataset.label || 'Entidad';
+      const valueText = btn.dataset.valueText || 'Sin dato';
+      tooltip.innerHTML = `
+        <div class="chart-tooltip-title">${escapeHtml(label)}</div>
+        <div class="chart-tooltip-row">
+          <span class="chart-tooltip-dot" style="background:#208070"></span>
+          <span>${escapeHtml(valueText)}</span>
+        </div>
+      `;
+      tooltip.hidden = false;
+      positionSharedTooltip(tooltip, event.clientX, event.clientY);
+    });
     btn.addEventListener('click', () => {
       onSelect(btn.dataset.key || '');
+    });
+    btn.addEventListener('mouseleave', () => {
+      tooltip.hidden = true;
     });
   });
 }
@@ -1668,6 +1696,7 @@ function renderStackedBars(data, options = {}) {
 
   const bars = labels.map((label, i) => {
     const xPos = margin.left + (innerWidth / labels.length) * i + (innerWidth / labels.length - barWidth) / 2;
+    const total = series.reduce((sum, s) => sum + Number(s.values[i] || 0), 0);
     let acc = 0;
 
     const stackParts = series.map((s) => {
@@ -1687,6 +1716,7 @@ function renderStackedBars(data, options = {}) {
         data-label="${escapeHtml(label)}"
         data-series="${escapeHtml(s.name)}"
         data-value="${v.toFixed(2)}"
+        data-total="${total.toFixed(2)}"
         data-unit="${escapeHtml(data.unit || '')}"
         data-color="${s.color}"
       />`;
@@ -1862,6 +1892,7 @@ function attachStackedCombinedTooltip(container) {
 
       const sameLabelSegments = Array.from(svg.querySelectorAll('.stack-segment'))
         .filter((node) => node.dataset.label === label);
+      const totalValue = Number(segment.dataset.total || 0);
 
       const rows = sameLabelSegments.map((node) => {
         const series = node.dataset.series || '';
@@ -1878,6 +1909,10 @@ function attachStackedCombinedTooltip(container) {
       tooltip.innerHTML = `
         <div class="chart-tooltip-title">${escapeHtml(label)}</div>
         ${rows}
+        <div class="chart-tooltip-row">
+          <span class="chart-tooltip-dot" style="background:#1f2340"></span>
+          <span>Total: ${totalValue.toFixed(1)}${escapeHtml(unit)}</span>
+        </div>
       `;
       tooltip.hidden = false;
       positionSharedTooltip(tooltip, event.clientX, event.clientY);

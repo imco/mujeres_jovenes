@@ -14,8 +14,8 @@ const TABS = [
       {
         key: 'participacion-global',
         type: 'world-map-ranking',
-        title: ' La participación económica de las mujeres en México se ubica por debajo del 49% mundial',
-        subtitle: 'Participación económica de las mujeres por país - % de mujeres con trabajo o en busca de uno respecto al total de mujeres de 15 años o más',
+        title: ' La participación económica de las mujeres en México se ubica por debajo del nivel mundial',
+        subtitle: 'Tasa de participación económica de las mujeres por país',
         file: 'data/dashboard-nacional/participacion_economica_mujeres_por_pais.json',
         layout: 'map-ranking'
       },
@@ -23,17 +23,17 @@ const TABS = [
         key: 'evolucion-tpe',
         type: 'line',
         title: 'La participación de las mujeres en el mercado laboral ha cambiado poco en los últimos 20 años',
-        subtitle: 'Evolución nacional histórica de la tasa de participación económica por sexo',
+        subtitle: 'Evolución nacional de la tasa de participación económica por sexo',
         file: 'data/dashboard-nacional/participacion-mexico-historica.json',
-        source: 'Nota: Se condiera el 3T de cada año. Fuente: Elaborado por el IMCO con el promedio de los cuatro trimestres de la Encuesta Nacional de Ocupación y Empleo (ENOE) del INEGI de 2005 a 2025.',
+        source: 'Fuente: Elaborado por el IMCO con datos del tercer trimestre de la Encuesta Nacional de Ocupación y Empleo (ENOE) del INEGI de 2005 a 2025.',
         chartHeightScale: .8
       },
       {
         key: 'brecha-salarial-genero',
         type: 'line',
-        title: 'En México en promedio por cada 100 pesos que gana un hombre una mujer percibe 87',
+        title: 'Por cada 100 pesos que gana un hombre, una mujer percibe en promedio 86 pesos',
         subtitle: 'Evolución de la brecha salarial por género en México',
-        source: 'Nota: Para 2025 se consideran los primeros trimestres del año. Fuente: Elaborado por el IMCO con el promedio de los cuatro trimestres de la Encuesta Nacional de Ocupación y Empleo (ENOE) del INEGI de 2005 a 2025.',
+        source: 'Fuente: Elaborado por el IMCO con el promedio de los cuatro trimestres de la Encuesta Nacional de Ocupación y Empleo (ENOE) del INEGI de 2005 a 2025.',
         file: 'data/dashboard-nacional/evolucion_brecha_salarial_genero_mexico_fuente.json',
         width: 'half',
         chartHeightScale: 1.35
@@ -41,7 +41,7 @@ const TABS = [
       {
         key: 'informalidad-laboral-sexo',
         type: 'line',
-        title: 'Actualmente la diferencia entre hombres y mujeres en la informalidad se encuentra a niveles similares a 2005',
+        title: 'Actualmente la diferencia entre hombres y mujeres en la informalidad se encuentra en niveles similares a 2005',
         subtitle: 'Porcentaje de trabajadores en la informalidad por sexo',
         source: 'Nota: Se considera la tasa de informalidad con respecto a la población ocupada no agropecuaria (TIL2). Fuente: Elaborado por el IMCO con el dato trimestral de la Encuesta Nacional de Ocupación y Empleo (ENOE) del INEGI de 2005 a 2025.',
         file: 'data/dashboard-nacional/evolucion_informalidad_laboral_por_sexo_fuente.json',
@@ -51,8 +51,8 @@ const TABS = [
       {
         key: 'valor-cuidados',
         type: 'stacked-bars',
-        title: ' El trabajo en el hogar equivale a casi una cuarta parte de la economía',
-        subtitle: 'Trabajo no remunerado en los hogares como porcentaje del PIB (pesos corrientes)',
+        title: ' El trabajo del hogar y de cuidados equivale a 24% de la economía nacional',
+        subtitle: 'Trabajo no remunerado de los hogares como porcentaje del PIB (pesos corrientes)',
         file: 'data/dashboard-nacional/valor_economico_cuidados_fuente.json'
       }
     ]
@@ -540,10 +540,11 @@ async function renderWorldMapRanking(data) {
         <div></div>
         <span>100%</span>
       </div>
-      <p class="map-source">Fuente: Elaboración por el IMCO con datos del Banco Mundial, último dato disponible para 184 países.</p>
+      <p class="map-source">Nota: La tasa de participación de mujeres es el porcentaje de mujeres de 15 años o más que tienen un trabajo o buscan uno.<br>Fuente: Elaboración por el IMCO con datos del Banco Mundial 2024 o último dato disponible para 184 países.</p>
     </div>
     <aside class="ranking">
-      <h4>Ranking internacional</h4>
+      <h4>Ranking internacional </h4>
+      <h4>Nivel mundial: 49%</h4>
       <ol class="rank-list">${rankingMarkup}</ol>
     </aside>
   `;

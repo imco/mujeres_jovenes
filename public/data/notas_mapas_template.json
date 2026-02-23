@@ -1,0 +1,192 @@
+{
+  "formato": "Rellena el campo nota para cada variable. No cambies variable.",
+  "estadisticas_entidad": [
+    {
+      "variable": "Brecha de ingresos por género",
+      "fuente_actual": "ENOE, INEGI",
+      "nota": ""
+    },
+    {
+      "variable": "Cobertura de cuidados en la primera infancia",
+      "fuente_actual": "IMCO con formatos 911 de la SEP, Conapo e IMSS",
+      "nota": ""
+    },
+    {
+      "variable": "Delitos sexuales",
+      "fuente_actual": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo",
+      "nota": ""
+    },
+    {
+      "variable": "Dependencia de ingresos",
+      "fuente_actual": "ENIGH, INEGI",
+      "nota": ""
+    },
+    {
+      "variable": "Desigualdad en trabajo no remunerado",
+      "fuente_actual": "Cuenta Satélite del Trabajo No Remunerado de los Hogares de México, INEGI",
+      "nota": ""
+    },
+    {
+      "variable": "Embarazo adolescente",
+      "fuente_actual": "Estadísticas de Natalidad, INEGI",
+      "nota": ""
+    },
+    {
+      "variable": "Emprendedoras formales",
+      "fuente_actual": "ENOE, INEGI",
+      "nota": ""
+    },
+    {
+      "variable": "Homicidios dolosos de mujeres",
+      "fuente_actual": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo",
+      "nota": ""
+    },
+    {
+      "variable": "Informalidad",
+      "fuente_actual": "ENOE, INEGI",
+      "nota": ""
+    },
+    {
+      "variable": "Inseguridad en el transporte público",
+      "fuente_actual": "ENVIPE, INEGI",
+      "nota": ""
+    },
+    {
+      "variable": "Mujeres preparadas",
+      "fuente_actual": "ENOE, INEGI",
+      "nota": ""
+    },
+    {
+      "variable": "Mujeres que quieren trabajar y no pueden",
+      "fuente_actual": "ENOE, INEGI",
+      "nota": ""
+    },
+    {
+      "variable": "Oferta de cuidados de adultos mayores",
+      "fuente_actual": "IMCO con datos Denue, INEGI y Conapo",
+      "nota": ""
+    },
+    {
+      "variable": "Permisos de paternidad",
+      "fuente_actual": "IMCO con Leyes del Trabajo de los Servidores Públicos al Servicio del Estado vigentes",
+      "nota": ""
+    },
+    {
+      "variable": "Pobreza laboral",
+      "fuente_actual": "México, ¿Cómo Vamos? con datos del Índice de Tendencia Laboral de la Pobreza por Intervalo de Salarios del Coneval",
+      "nota": ""
+    },
+    {
+      "variable": "Propiedad de la vivienda",
+      "fuente_actual": "ENIGH, INEGI",
+      "nota": ""
+    },
+    {
+      "variable": "Tasa de participación económica de mujeres",
+      "fuente_actual": "ENOE, INEGI",
+      "nota": ""
+    }
+  ],
+  "cdmx_alcaldia": [
+    {
+      "variable": "Acceso a servicios de salud",
+      "fuente_actual": "Censo de Población y Vivienda",
+      "nota": ""
+    },
+    {
+      "variable": "Brecha de ingresos",
+      "fuente_actual": "Censo de Población y Vivienda",
+      "nota": ""
+    },
+    {
+      "variable": "Delitos sexuales",
+      "fuente_actual": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo",
+      "nota": ""
+    },
+    {
+      "variable": "Dependencia de ingresos",
+      "fuente_actual": "ENIGH, INEGI",
+      "nota": ""
+    },
+    {
+      "variable": "Duración de la jornada laboral",
+      "fuente_actual": "ENOE, INEGI",
+      "nota": ""
+    },
+    {
+      "variable": "Emprendedoras",
+      "fuente_actual": "ENOE, INEGI",
+      "nota": ""
+    },
+    {
+      "variable": "Feminicidios",
+      "fuente_actual": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo",
+      "nota": ""
+    },
+    {
+      "variable": "Horas promedio destinadas a las tareas del hogar",
+      "fuente_actual": "ENIGH, INEGI",
+      "nota": ""
+    },
+    {
+      "variable": "Horas promedio destinadas a los cuidados",
+      "fuente_actual": "ENIGH, INEGI",
+      "nota": ""
+    },
+    {
+      "variable": "Inclusión financiera",
+      "fuente_actual": "CNBV por Tukan",
+      "nota": ""
+    },
+    {
+      "variable": "Informalidad",
+      "fuente_actual": "ENOE, INEGI",
+      "nota": ""
+    },
+    {
+      "variable": "Mujeres con discapacidad",
+      "fuente_actual": "Censo de Población y Vivienda",
+      "nota": ""
+    },
+    {
+      "variable": "Mujeres con programas sociales",
+      "fuente_actual": "ENIGH, INEGI",
+      "nota": ""
+    },
+    {
+      "variable": "Mujeres fuera del sistema educativo y del mercado de trabajo",
+      "fuente_actual": "ENOE, INEGI",
+      "nota": ""
+    },
+    {
+      "variable": "Mujeres jóvenes con trabajo precario",
+      "fuente_actual": "ENOE por GOYN Ciudad de México",
+      "nota": ""
+    },
+    {
+      "variable": "Mujeres jóvenes que hablan una lengua indígena",
+      "fuente_actual": "Censo de población y vivienda",
+      "nota": ""
+    },
+    {
+      "variable": "Población de mujeres jóvenes",
+      "fuente_actual": "Censo de Población y Vivienda",
+      "nota": ""
+    },
+    {
+      "variable": "Porcentaje de mujeres con hijos",
+      "fuente_actual": "Censo de Población y Vivienda",
+      "nota": ""
+    },
+    {
+      "variable": "Rezago educativo",
+      "fuente_actual": "Censo de Población y Vivienda",
+      "nota": ""
+    },
+    {
+      "variable": "Tasa de participación económica de las mujeres",
+      "fuente_actual": "ENOE, INEGI",
+      "nota": ""
+    }
+  ]
+}

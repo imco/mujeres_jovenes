@@ -987,7 +987,7 @@ async function attachCdmxIndicatorMap(container, payload) {
     return;
   }
 
-  sideTopTitle.textContent = 'Lista de alcaldías';
+  sideTopTitle.textContent = 'Alcaldías con mejor desempeño';
 
   let geojson;
   try {

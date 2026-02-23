@@ -117,7 +117,7 @@
     {
       "Entidad": "Azcapotzalco",
       "Variable": "Inclusión financiera",
-      "Valor": -6.7,
+      "Valor": 6.7,
       "Que_mide": "Valor absoluto de la diferencia entre la media ponderada de los montos otorgados a hombres y mujeres entre 18 y 29 años para créditos de vivienda dividida entre el promedio de los montos otorgados a hombres",
       "Unidad": "Porcentaje",
       "Fuente": "Tukan con datos de la Comisión Nacional Bancaria y de Valores (2024)"
@@ -517,7 +517,7 @@
     {
       "Entidad": "Gustavo A. Madero",
       "Variable": "Inclusión financiera",
-      "Valor": -2.5,
+      "Valor": 2.5,
       "Que_mide": "Valor absoluto de la diferencia entre la media ponderada de los montos otorgados a hombres y mujeres entre 18 y 29 años para créditos de vivienda dividida entre el promedio de los montos otorgados a hombres",
       "Unidad": "Porcentaje",
       "Fuente": "Tukan con datos de la Comisión Nacional Bancaria y de Valores (2024)"
@@ -805,7 +805,7 @@
     {
       "Entidad": "Iztapalapa",
       "Variable": "Inclusión financiera",
-      "Valor": -2.2,
+      "Valor": 2.2,
       "Que_mide": "Valor absoluto de la diferencia entre la media ponderada de los montos otorgados a hombres y mujeres entre 18 y 29 años para créditos de vivienda dividida entre el promedio de los montos otorgados a hombres",
       "Unidad": "Porcentaje",
       "Fuente": "Tukan con datos de la Comisión Nacional Bancaria y de Valores (2024)"
@@ -933,7 +933,7 @@
     {
       "Entidad": "La Magdalena Contreras",
       "Variable": "Inclusión financiera",
-      "Valor": -45.3,
+      "Valor": 45.3,
       "Que_mide": "Valor absoluto de la diferencia entre la media ponderada de los montos otorgados a hombres y mujeres entre 18 y 29 años para créditos de vivienda dividida entre el promedio de los montos otorgados a hombres",
       "Unidad": "Porcentaje",
       "Fuente": "Tukan con datos de la Comisión Nacional Bancaria y de Valores (2024)"
@@ -1341,7 +1341,7 @@
     {
       "Entidad": "Tláhuac",
       "Variable": "Inclusión financiera",
-      "Valor": -42.6,
+      "Valor": 42.6,
       "Que_mide": "Valor absoluto de la diferencia entre la media ponderada de los montos otorgados a hombres y mujeres entre 18 y 29 años para créditos de vivienda dividida entre el promedio de los montos otorgados a hombres",
       "Unidad": "Porcentaje",
       "Fuente": "Tukan con datos de la Comisión Nacional Bancaria y de Valores (2024)"

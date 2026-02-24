@@ -1426,6 +1426,10 @@ h2 {
   backdrop-filter: blur(4px);
 }
 
+.breakout-overlay[hidden] {
+  display: none !important;
+}
+
 .breakout-dialog {
   width: min(860px, 100%);
   border-radius: 14px;

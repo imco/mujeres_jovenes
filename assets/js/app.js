@@ -269,6 +269,20 @@ const NO_PERCENT_SYMBOL_VARIABLES = new Set([
   'horas promedio destinadas a los cuidados'
 ]);
 const KONAMI_SEQUENCE = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+const BREAKOUT_BALL_IMAGE_CANDIDATES = [
+  `${import.meta.env.BASE_URL}data/easter-eggs/konami-ball.png`,
+  `${import.meta.env.BASE_URL}data/easter-eggs/konami-ball.jpg`,
+  `${import.meta.env.BASE_URL}data/easter-eggs/konami-ball.jpeg`,
+  `${import.meta.env.BASE_URL}data/easter-eggs/konami-ball.webp`,
+  '/data/easter-eggs/konami-ball.png',
+  '/data/easter-eggs/konami-ball.jpg',
+  '/data/easter-eggs/konami-ball.jpeg',
+  '/data/easter-eggs/konami-ball.webp',
+  'data/easter-eggs/konami-ball.png',
+  'data/easter-eggs/konami-ball.jpg',
+  'data/easter-eggs/konami-ball.jpeg',
+  'data/easter-eggs/konami-ball.webp'
+];
 
 const tabNav = document.getElementById('tab-nav');
 const dashboard = document.getElementById('dashboard');
@@ -419,23 +433,25 @@ function createBreakoutOverlay() {
     height: canvas.height,
     leftPressed: false,
     rightPressed: false,
-    paddleWidth: 120,
+    paddleWidth: 110,
     paddleHeight: 12,
     paddleX: 0,
     paddleY: 0,
-    paddleSpeed: 8,
+    paddleSpeed: 7,
     ballX: 0,
     ballY: 0,
     ballVx: 0,
     ballVy: 0,
-    ballRadius: 7,
+    ballRadius: 16,
+    ballImage: null,
+    ballImageLoaded: false,
     bricks: [],
-    brickRows: 5,
-    brickCols: 10,
+    brickRows: 4,
+    brickCols: 8,
     brickPadding: 8,
     brickOffsetTop: 64,
     brickOffsetLeft: 24,
-    brickHeight: 18,
+    brickHeight: 16,
     score: 0,
     lives: 3,
     launched: false,
@@ -443,6 +459,23 @@ function createBreakoutOverlay() {
     won: false,
     frameId: 0
   };
+
+  const ballImage = new Image();
+  const loadBallImageFromCandidates = (index = 0) => {
+    if (index >= BREAKOUT_BALL_IMAGE_CANDIDATES.length) {
+      game.ballImageLoaded = false;
+      return;
+    }
+    ballImage.onload = () => {
+      game.ballImageLoaded = true;
+    };
+    ballImage.onerror = () => {
+      loadBallImageFromCandidates(index + 1);
+    };
+    ballImage.src = BREAKOUT_BALL_IMAGE_CANDIDATES[index];
+  };
+  loadBallImageFromCandidates();
+  game.ballImage = ballImage;
 
   const resetBall = () => {
     game.ballX = game.paddleX + game.paddleWidth / 2;
@@ -483,6 +516,8 @@ function createBreakoutOverlay() {
   const close = () => {
     breakoutIsOpen = false;
     overlay.hidden = true;
+    game.leftPressed = false;
+    game.rightPressed = false;
     if (game.frameId) {
       window.cancelAnimationFrame(game.frameId);
       game.frameId = 0;
@@ -494,22 +529,36 @@ function createBreakoutOverlay() {
     ctx.fillStyle = '#151a30';
     ctx.fillRect(0, 0, game.width, game.height);
 
-    const brickColors = ['#f97316', '#fb7185', '#a78bfa', '#22d3ee', '#34d399'];
+    const brickColors = ['#f97316', '#a78bfa', '#22d3ee', '#34d399'];
     game.bricks.forEach((brick) => {
       if (!brick.alive) return;
       ctx.fillStyle = brickColors[brick.row % brickColors.length];
       ctx.fillRect(brick.x, brick.y, brick.w, brick.h);
-      ctx.strokeStyle = 'rgba(255,255,255,.1)';
-      ctx.strokeRect(brick.x, brick.y, brick.w, brick.h);
     });
 
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(game.paddleX, game.paddleY, game.paddleWidth, game.paddleHeight);
-    ctx.beginPath();
-    ctx.arc(game.ballX, game.ballY, game.ballRadius, 0, Math.PI * 2);
-    ctx.fillStyle = '#f8fafc';
-    ctx.fill();
-    ctx.closePath();
+    if (game.ballImageLoaded && game.ballImage) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(game.ballX, game.ballY, game.ballRadius, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.clip();
+      ctx.drawImage(
+        game.ballImage,
+        game.ballX - game.ballRadius,
+        game.ballY - game.ballRadius,
+        game.ballRadius * 2,
+        game.ballRadius * 2
+      );
+      ctx.restore();
+    } else {
+      ctx.beginPath();
+      ctx.arc(game.ballX, game.ballY, game.ballRadius, 0, Math.PI * 2);
+      ctx.fillStyle = '#f8fafc';
+      ctx.fill();
+      ctx.closePath();
+    }
 
     ctx.fillStyle = '#cbd5e1';
     ctx.font = '14px system-ui, sans-serif';
@@ -563,7 +612,7 @@ function createBreakoutOverlay() {
       && game.ballX <= game.paddleX + game.paddleWidth
       && game.ballVy > 0) {
       const hit = (game.ballX - (game.paddleX + game.paddleWidth / 2)) / (game.paddleWidth / 2);
-      game.ballVx = hit * 5.5;
+      game.ballVx = hit * 4.8;
       game.ballVy = -Math.max(3.7, Math.abs(game.ballVy));
     }
 
@@ -617,7 +666,7 @@ function createBreakoutOverlay() {
 
   const handleControlsKeydown = (event) => {
     if (!breakoutIsOpen) return;
-    if (event.key === 'Escape') {
+    if (event.key === 'Escape' || event.key === 'Esc') {
       event.preventDefault();
       close();
       return;
@@ -658,6 +707,13 @@ function createBreakoutOverlay() {
   closeBtn.addEventListener('click', close);
   restartBtn.addEventListener('click', resetGame);
   overlay.addEventListener('click', (event) => {
+    const closeTrigger = event.target instanceof Element
+      ? event.target.closest('.breakout-close-btn')
+      : null;
+    if (closeTrigger) {
+      close();
+      return;
+    }
     if (event.target === overlay) close();
   });
   document.addEventListener('keydown', handleControlsKeydown);

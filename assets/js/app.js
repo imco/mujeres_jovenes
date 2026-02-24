@@ -268,6 +268,7 @@ const NO_PERCENT_SYMBOL_VARIABLES = new Set([
   'horas promedio destinadas a las tareas del hogar',
   'horas promedio destinadas a los cuidados'
 ]);
+const KONAMI_SEQUENCE = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
 
 const tabNav = document.getElementById('tab-nav');
 const dashboard = document.getElementById('dashboard');
@@ -283,6 +284,7 @@ init();
 // Punto de entrada de la app.
 function init() {
   setupEmbedAutoResize();
+  initKonamiBreakout();
   renderTabButtons();
   loadTab(activeTab);
 }
@@ -329,6 +331,339 @@ function setupEmbedAutoResize() {
   window.setTimeout(scheduleNotify, 250);
   window.setTimeout(scheduleNotify, 1000);
   window.setTimeout(scheduleNotify, 2500);
+}
+
+let konamiProgress = 0;
+let breakoutIsOpen = false;
+let breakoutOverlayInstance = null;
+
+function initKonamiBreakout() {
+  if (!shouldEnableKonami()) return;
+  document.addEventListener('keydown', handleKonamiSequence);
+}
+
+function shouldEnableKonami() {
+  return !window.matchMedia('(max-width: 760px)').matches;
+}
+
+function handleKonamiSequence(event) {
+  if (breakoutIsOpen || isEditableTarget(event.target)) return;
+  const key = normalizeKonamiKey(event.key);
+  if (!key) {
+    konamiProgress = 0;
+    return;
+  }
+
+  if (key === KONAMI_SEQUENCE[konamiProgress]) {
+    konamiProgress += 1;
+    if (konamiProgress === KONAMI_SEQUENCE.length) {
+      konamiProgress = 0;
+      openBreakoutOverlay();
+      event.preventDefault();
+    }
+    return;
+  }
+
+  konamiProgress = key === KONAMI_SEQUENCE[0] ? 1 : 0;
+}
+
+function normalizeKonamiKey(key) {
+  if (key === 'ArrowUp' || key === 'ArrowDown' || key === 'ArrowLeft' || key === 'ArrowRight') return key;
+  if (typeof key === 'string' && key.length === 1) return key.toLowerCase();
+  return '';
+}
+
+function isEditableTarget(target) {
+  if (!(target instanceof HTMLElement)) return false;
+  if (target.isContentEditable) return true;
+  const tag = target.tagName;
+  return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT';
+}
+
+function openBreakoutOverlay() {
+  if (!breakoutOverlayInstance) {
+    breakoutOverlayInstance = createBreakoutOverlay();
+  }
+  breakoutOverlayInstance.open();
+}
+
+function createBreakoutOverlay() {
+  const overlay = document.createElement('section');
+  overlay.className = 'breakout-overlay';
+  overlay.hidden = true;
+  overlay.innerHTML = `
+    <div class="breakout-dialog" role="dialog" aria-modal="true" aria-label="Breakout secreto">
+      <div class="breakout-header">
+        <strong>Modo secreto: Breakout</strong>
+        <button type="button" class="breakout-close-btn" aria-label="Cerrar juego">Cerrar</button>
+      </div>
+      <canvas class="breakout-canvas" width="720" height="420"></canvas>
+      <div class="breakout-footer">
+        <span>Controles: <kbd>←</kbd> <kbd>→</kbd> o <kbd>A</kbd> <kbd>D</kbd>. Lanza con <kbd>Espacio</kbd>.</span>
+        <button type="button" class="breakout-restart-btn">Reiniciar</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  const canvas = overlay.querySelector('.breakout-canvas');
+  const closeBtn = overlay.querySelector('.breakout-close-btn');
+  const restartBtn = overlay.querySelector('.breakout-restart-btn');
+  const ctx = canvas.getContext('2d');
+  if (!ctx || !closeBtn || !restartBtn) {
+    return { open: () => {} };
+  }
+
+  const game = {
+    width: canvas.width,
+    height: canvas.height,
+    leftPressed: false,
+    rightPressed: false,
+    paddleWidth: 120,
+    paddleHeight: 12,
+    paddleX: 0,
+    paddleY: 0,
+    paddleSpeed: 8,
+    ballX: 0,
+    ballY: 0,
+    ballVx: 0,
+    ballVy: 0,
+    ballRadius: 7,
+    bricks: [],
+    brickRows: 5,
+    brickCols: 10,
+    brickPadding: 8,
+    brickOffsetTop: 64,
+    brickOffsetLeft: 24,
+    brickHeight: 18,
+    score: 0,
+    lives: 3,
+    launched: false,
+    ended: false,
+    won: false,
+    frameId: 0
+  };
+
+  const resetBall = () => {
+    game.ballX = game.paddleX + game.paddleWidth / 2;
+    game.ballY = game.paddleY - game.ballRadius - 1;
+    game.ballVx = (Math.random() > 0.5 ? 1 : -1) * 4;
+    game.ballVy = -4.5;
+    game.launched = false;
+  };
+
+  const createBricks = () => {
+    const brickWidth = (game.width - game.brickOffsetLeft * 2 - game.brickPadding * (game.brickCols - 1)) / game.brickCols;
+    game.bricks = [];
+    for (let r = 0; r < game.brickRows; r += 1) {
+      for (let c = 0; c < game.brickCols; c += 1) {
+        game.bricks.push({
+          x: game.brickOffsetLeft + c * (brickWidth + game.brickPadding),
+          y: game.brickOffsetTop + r * (game.brickHeight + game.brickPadding),
+          w: brickWidth,
+          h: game.brickHeight,
+          alive: true,
+          row: r
+        });
+      }
+    }
+  };
+
+  const resetGame = () => {
+    game.paddleY = game.height - 30;
+    game.paddleX = (game.width - game.paddleWidth) / 2;
+    game.score = 0;
+    game.lives = 3;
+    game.ended = false;
+    game.won = false;
+    createBricks();
+    resetBall();
+  };
+
+  const close = () => {
+    breakoutIsOpen = false;
+    overlay.hidden = true;
+    if (game.frameId) {
+      window.cancelAnimationFrame(game.frameId);
+      game.frameId = 0;
+    }
+  };
+
+  const draw = () => {
+    ctx.clearRect(0, 0, game.width, game.height);
+    ctx.fillStyle = '#151a30';
+    ctx.fillRect(0, 0, game.width, game.height);
+
+    const brickColors = ['#f97316', '#fb7185', '#a78bfa', '#22d3ee', '#34d399'];
+    game.bricks.forEach((brick) => {
+      if (!brick.alive) return;
+      ctx.fillStyle = brickColors[brick.row % brickColors.length];
+      ctx.fillRect(brick.x, brick.y, brick.w, brick.h);
+      ctx.strokeStyle = 'rgba(255,255,255,.1)';
+      ctx.strokeRect(brick.x, brick.y, brick.w, brick.h);
+    });
+
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(game.paddleX, game.paddleY, game.paddleWidth, game.paddleHeight);
+    ctx.beginPath();
+    ctx.arc(game.ballX, game.ballY, game.ballRadius, 0, Math.PI * 2);
+    ctx.fillStyle = '#f8fafc';
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '14px system-ui, sans-serif';
+    ctx.fillText(`Puntaje: ${game.score}`, 24, 28);
+    ctx.fillText(`Vidas: ${game.lives}`, game.width - 96, 28);
+
+    if (!game.launched && !game.ended) {
+      ctx.fillStyle = '#93c5fd';
+      ctx.font = '15px system-ui, sans-serif';
+      ctx.fillText('Presiona ESPACIO para lanzar', game.width / 2 - 100, game.height - 48);
+    }
+
+    if (game.ended) {
+      ctx.fillStyle = 'rgba(0, 0, 0, .55)';
+      ctx.fillRect(0, 0, game.width, game.height);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 28px system-ui, sans-serif';
+      ctx.fillText(game.won ? 'Ganaste' : 'Game Over', game.width / 2 - 76, game.height / 2 - 8);
+      ctx.font = '16px system-ui, sans-serif';
+      ctx.fillText('Presiona Enter o Reiniciar', game.width / 2 - 96, game.height / 2 + 24);
+    }
+  };
+
+  const update = () => {
+    if (game.leftPressed) {
+      game.paddleX = Math.max(0, game.paddleX - game.paddleSpeed);
+    }
+    if (game.rightPressed) {
+      game.paddleX = Math.min(game.width - game.paddleWidth, game.paddleX + game.paddleSpeed);
+    }
+
+    if (!game.launched) {
+      game.ballX = game.paddleX + game.paddleWidth / 2;
+      game.ballY = game.paddleY - game.ballRadius - 1;
+      return;
+    }
+
+    game.ballX += game.ballVx;
+    game.ballY += game.ballVy;
+
+    if (game.ballX - game.ballRadius <= 0 || game.ballX + game.ballRadius >= game.width) {
+      game.ballVx *= -1;
+    }
+    if (game.ballY - game.ballRadius <= 0) {
+      game.ballVy *= -1;
+    }
+
+    if (game.ballY + game.ballRadius >= game.paddleY
+      && game.ballY - game.ballRadius <= game.paddleY + game.paddleHeight
+      && game.ballX >= game.paddleX
+      && game.ballX <= game.paddleX + game.paddleWidth
+      && game.ballVy > 0) {
+      const hit = (game.ballX - (game.paddleX + game.paddleWidth / 2)) / (game.paddleWidth / 2);
+      game.ballVx = hit * 5.5;
+      game.ballVy = -Math.max(3.7, Math.abs(game.ballVy));
+    }
+
+    for (const brick of game.bricks) {
+      if (!brick.alive) continue;
+      const hitX = game.ballX + game.ballRadius > brick.x && game.ballX - game.ballRadius < brick.x + brick.w;
+      const hitY = game.ballY + game.ballRadius > brick.y && game.ballY - game.ballRadius < brick.y + brick.h;
+      if (!hitX || !hitY) continue;
+      brick.alive = false;
+      game.score += 10;
+      game.ballVy *= -1;
+      break;
+    }
+
+    if (game.bricks.every((brick) => !brick.alive)) {
+      game.ended = true;
+      game.won = true;
+      game.launched = false;
+      return;
+    }
+
+    if (game.ballY - game.ballRadius > game.height) {
+      game.lives -= 1;
+      if (game.lives <= 0) {
+        game.ended = true;
+        game.won = false;
+        game.launched = false;
+      } else {
+        resetBall();
+      }
+    }
+  };
+
+  const frame = () => {
+    if (!breakoutIsOpen) return;
+    if (!game.ended) update();
+    draw();
+    game.frameId = window.requestAnimationFrame(frame);
+  };
+
+  const open = () => {
+    breakoutIsOpen = true;
+    overlay.hidden = false;
+    resetGame();
+    draw();
+    if (!game.frameId) {
+      game.frameId = window.requestAnimationFrame(frame);
+    }
+    closeBtn.focus();
+  };
+
+  const handleControlsKeydown = (event) => {
+    if (!breakoutIsOpen) return;
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      close();
+      return;
+    }
+    if (isEditableTarget(event.target)) return;
+
+    if (event.key === 'ArrowLeft' || event.key === 'a' || event.key === 'A') {
+      event.preventDefault();
+      game.leftPressed = true;
+      return;
+    }
+    if (event.key === 'ArrowRight' || event.key === 'd' || event.key === 'D') {
+      event.preventDefault();
+      game.rightPressed = true;
+      return;
+    }
+    if ((event.key === ' ' || event.key === 'ArrowUp') && !game.ended) {
+      event.preventDefault();
+      game.launched = true;
+      return;
+    }
+    if (event.key === 'Enter' && game.ended) {
+      event.preventDefault();
+      resetGame();
+    }
+  };
+
+  const handleControlsKeyup = (event) => {
+    if (!breakoutIsOpen) return;
+    if (event.key === 'ArrowLeft' || event.key === 'a' || event.key === 'A') {
+      game.leftPressed = false;
+    }
+    if (event.key === 'ArrowRight' || event.key === 'd' || event.key === 'D') {
+      game.rightPressed = false;
+    }
+  };
+
+  closeBtn.addEventListener('click', close);
+  restartBtn.addEventListener('click', resetGame);
+  overlay.addEventListener('click', (event) => {
+    if (event.target === overlay) close();
+  });
+  document.addEventListener('keydown', handleControlsKeydown);
+  document.addEventListener('keyup', handleControlsKeyup);
+
+  return { open };
 }
 
 // Renderiza navegación superior de pestañas.

@@ -411,6 +411,11 @@
         "Trimestre": "3T 2025",
         "Hombres": 0.49246772,
         "Mujeres": 0.54811745
+      },
+      {
+        "Trimestre": "4T 2025",
+        "Hombres": 0.489,
+        "Mujeres": 0.548
       }
     ]
   }

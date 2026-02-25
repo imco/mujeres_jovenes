@@ -268,6 +268,8 @@ const NO_PERCENT_SYMBOL_VARIABLES = new Set([
   'horas promedio destinadas a las tareas del hogar',
   'horas promedio destinadas a los cuidados'
 ]);
+const MONITOR_SITE_URL = 'https://imco.org.mx/monitor/mujeres-en-la-economia/';
+const MONITOR_SITE_TITLE = 'Monitor Mujeres en la Economía';
 
 const tabNav = document.getElementById('tab-nav');
 const dashboard = document.getElementById('dashboard');
@@ -283,6 +285,7 @@ init();
 // Punto de entrada de la app.
 function init() {
   setupEmbedAutoResize();
+  setupViewPillActions();
   renderTabButtons();
   loadTab(activeTab);
 }
@@ -389,6 +392,7 @@ function renderViewPill(tab) {
     return;
   }
 
+  const citationText = buildMonitorWebsiteCitation();
   viewPill.className = 'pill pill-download-wrap';
   viewPill.innerHTML = `
     <a
@@ -401,7 +405,115 @@ function renderViewPill(tab) {
       <span class="pill-download-icon" aria-hidden="true">⬇</span>
       <span>${escapeHtml(tab.downloadLabel || 'Descarga datos')}</span>
     </a>
+    <div class="pill-cite-wrap">
+      <button
+        type="button"
+        class="pill-cite-btn"
+        data-action="toggle-cite-tooltip"
+        aria-label="Mostrar cómo citar el sitio"
+        aria-expanded="false"
+      >
+        Citar sitio
+      </button>
+      <div class="pill-cite-tooltip" data-role="cite-tooltip" hidden>
+        <p class="pill-cite-help">Cita sugerida para sitio web:</p>
+        <p class="pill-cite-text" data-role="cite-text">${escapeHtml(citationText)}</p>
+        <div class="pill-cite-actions">
+          <button type="button" class="pill-cite-copy-btn" data-action="copy-cite-text">Copiar cita</button>
+          <a class="pill-cite-link" href="${escapeHtml(MONITOR_SITE_URL)}" target="_blank" rel="noopener noreferrer">Abrir sitio</a>
+        </div>
+      </div>
+    </div>
   `;
+}
+
+function setupViewPillActions() {
+  const closeTooltip = () => {
+    const tooltip = viewPill.querySelector('[data-role="cite-tooltip"]');
+    const toggleBtn = viewPill.querySelector('[data-action="toggle-cite-tooltip"]');
+    if (!(tooltip instanceof HTMLElement) || !(toggleBtn instanceof HTMLButtonElement)) return;
+    tooltip.hidden = true;
+    toggleBtn.setAttribute('aria-expanded', 'false');
+  };
+
+  viewPill.addEventListener('click', async (event) => {
+    const actionNode = event.target instanceof Element ? event.target.closest('[data-action]') : null;
+    if (!actionNode) return;
+    const action = actionNode.getAttribute('data-action');
+
+    if (action === 'toggle-cite-tooltip') {
+      const wrap = actionNode.closest('.pill-cite-wrap');
+      const tooltip = wrap?.querySelector('[data-role="cite-tooltip"]');
+      const toggleBtn = actionNode instanceof HTMLButtonElement ? actionNode : null;
+      if (!(tooltip instanceof HTMLElement) || !toggleBtn) return;
+
+      const shouldOpen = tooltip.hidden;
+      tooltip.hidden = !shouldOpen;
+      toggleBtn.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+      return;
+    }
+
+    if (action === 'copy-cite-text') {
+      const wrap = actionNode.closest('.pill-cite-wrap');
+      const textNode = wrap?.querySelector('[data-role="cite-text"]');
+      const copyBtn = actionNode instanceof HTMLButtonElement ? actionNode : null;
+      if (!(textNode instanceof HTMLElement) || !copyBtn) return;
+
+      const copied = await copyTextToClipboard(textNode.textContent || '');
+      const originalLabel = copyBtn.textContent || 'Copiar cita';
+      copyBtn.textContent = copied ? 'Cita copiada' : 'No se pudo copiar';
+      window.setTimeout(() => {
+        copyBtn.textContent = originalLabel;
+      }, 1400);
+    }
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!(event.target instanceof Node)) return;
+    if (viewPill.contains(event.target)) return;
+    closeTooltip();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' || event.key === 'Esc') closeTooltip();
+  });
+}
+
+function buildMonitorWebsiteCitation() {
+  const accessDate = formatSpanishDate(new Date());
+  return `Instituto Mexicano para la Competitividad (IMCO). (s.f.). ${MONITOR_SITE_TITLE}. Recuperado el ${accessDate}, de ${MONITOR_SITE_URL}`;
+}
+
+function formatSpanishDate(date) {
+  return new Intl.DateTimeFormat('es-MX', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  }).format(date);
+}
+
+async function copyTextToClipboard(text) {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+  } catch (_error) {
+    // fallback below
+  }
+
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.setAttribute('readonly', '');
+  textarea.style.position = 'fixed';
+  textarea.style.opacity = '0';
+  textarea.style.pointerEvents = 'none';
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+  const copied = document.execCommand('copy');
+  document.body.removeChild(textarea);
+  return copied;
 }
 
 // Fabrica visual de cada tipo de sección.

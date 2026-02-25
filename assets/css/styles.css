@@ -171,6 +171,10 @@ h2 {
 }
 
 .pill-download-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  flex-wrap: wrap;
   padding: 0;
   border: 0;
   background: transparent;
@@ -213,6 +217,99 @@ h2 {
 
 .pill-download-btn:active {
   transform: translateY(0);
+}
+
+.pill-cite-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.pill-cite-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Manrope', sans-serif;
+  background: #ffffff;
+  color: #1f2340;
+  border: 1px solid #cdd5ea;
+  border-radius: 999px;
+  box-shadow: 0 4px 12px rgba(31, 35, 64, 0.12);
+  padding: .5rem .82rem;
+  font-size: .76rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
+}
+
+.pill-cite-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 7px 16px rgba(31, 35, 64, 0.2);
+  filter: brightness(1.02);
+}
+
+.pill-cite-btn:active {
+  transform: translateY(0);
+}
+
+.pill-cite-tooltip {
+  position: absolute;
+  top: calc(100% + .5rem);
+  right: 0;
+  width: min(420px, 92vw);
+  z-index: 30;
+  background: #ffffff;
+  color: #1f2340;
+  border: 1px solid #d6deef;
+  border-radius: 12px;
+  box-shadow: 0 16px 34px rgba(20, 30, 70, 0.22);
+  padding: .72rem .78rem;
+}
+
+.pill-cite-help {
+  margin: 0 0 .45rem;
+  font-size: .72rem;
+  color: #4a5372;
+}
+
+.pill-cite-text {
+  margin: 0;
+  font-size: .72rem;
+  line-height: 1.45;
+  color: #1f2340;
+}
+
+.pill-cite-actions {
+  margin-top: .58rem;
+  display: flex;
+  gap: .42rem;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.pill-cite-copy-btn,
+.pill-cite-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: .34rem .62rem;
+  font-size: .7rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.pill-cite-copy-btn {
+  border: 1px solid #ccd5ea;
+  background: #f8f9ff;
+  color: #1f2340;
+  cursor: pointer;
+}
+
+.pill-cite-link {
+  border: 1px solid #332e91;
+  background: #332e91;
+  color: #ffffff;
 }
 
 .pill-download-icon {
@@ -1306,6 +1403,17 @@ h2 {
     font-size: .72rem;
     padding: .48rem .74rem;
     gap: .38rem;
+  }
+
+  .pill-cite-btn {
+    font-size: .7rem;
+    padding: .48rem .7rem;
+  }
+
+  .pill-cite-tooltip {
+    right: auto;
+    left: 0;
+    width: min(92vw, 380px);
   }
 
   .chart-wrap {

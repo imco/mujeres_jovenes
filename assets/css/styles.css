@@ -287,8 +287,7 @@ h2 {
   justify-content: flex-end;
 }
 
-.pill-cite-copy-btn,
-.pill-cite-link {
+.pill-cite-copy-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -300,16 +299,10 @@ h2 {
 }
 
 .pill-cite-copy-btn {
-  border: 1px solid #ccd5ea;
-  background: #f8f9ff;
-  color: #1f2340;
-  cursor: pointer;
-}
-
-.pill-cite-link {
   border: 1px solid #332e91;
   background: #332e91;
   color: #ffffff;
+  cursor: pointer;
 }
 
 .pill-download-icon {

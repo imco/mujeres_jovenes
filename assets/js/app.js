@@ -416,11 +416,10 @@ function renderViewPill(tab) {
         Citar sitio
       </button>
       <div class="pill-cite-tooltip" data-role="cite-tooltip" hidden>
-        <p class="pill-cite-help">Cita sugerida para sitio web:</p>
+        <p class="pill-cite-help">Te sugerimos citarnos de la siguiente manera:</p>
         <p class="pill-cite-text" data-role="cite-text">${escapeHtml(citationText)}</p>
         <div class="pill-cite-actions">
           <button type="button" class="pill-cite-copy-btn" data-action="copy-cite-text">Copiar cita</button>
-          <a class="pill-cite-link" href="${escapeHtml(MONITOR_SITE_URL)}" target="_blank" rel="noopener noreferrer">Abrir sitio</a>
         </div>
       </div>
     </div>

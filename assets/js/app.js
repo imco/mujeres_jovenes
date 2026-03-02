@@ -480,7 +480,7 @@ function setupViewPillActions() {
 
 function buildMonitorWebsiteCitation() {
   const accessDate = formatSpanishDate(new Date());
-  return `Instituto Mexicano para la Competitividad (IMCO). (s.f.). ${MONITOR_SITE_TITLE}. Recuperado el ${accessDate}, de ${MONITOR_SITE_URL}`;
+  return `Con base en el monitor de Mujeres en la economía del IMCO ${MONITOR_SITE_TITLE}. Recuperado el ${accessDate}, de ${MONITOR_SITE_URL}`;
 }
 
 function formatSpanishDate(date) {
@@ -972,7 +972,8 @@ async function attachMexicoIndicatorMap(container, payload) {
           label: formatStateDisplayName(r.Entidad),
           value: Number(r.Valor),
           displayValue: formatIndicatorValue(Number(r.Valor)),
-          unitSymbol
+          unitSymbol,
+          unit
         })),
         selectedStateKey,
         (nextKey) => {
@@ -1201,7 +1202,8 @@ async function attachCdmxIndicatorMap(container, payload) {
           label: r.Entidad,
           value: Number(r.Valor),
           displayValue: formatIndicatorValue(Number(r.Valor)),
-          unitSymbol
+          unitSymbol,
+          unit
         })),
         selectedKey,
         (nextKey) => {
@@ -1350,6 +1352,7 @@ function syncIndicatorSideHeightToMap(mapWrap, indicatorSide) {
 // Este bloque controla también el hint de scroll en móvil.
 function renderBarsStage(container, items, selectedKey, onSelect) {
   const max = Math.max(...items.map((i) => i.value), 1);
+  const minVal = Math.min(...items.map((i) => i.value));
   container.className = 'bars-stage';
   container.innerHTML = `
     <p class="bars-scroll-hint" aria-hidden="true">Desliza para ver el gráfico completo →</p>
@@ -1360,15 +1363,17 @@ function renderBarsStage(container, items, selectedKey, onSelect) {
           const active = item.key === selectedKey ? 'active' : '';
           const label = String(item.label || '').trim();
           const displayValue = typeof item.displayValue === 'string' ? item.displayValue : item.value.toFixed(1);
+          const extremal = item.value === minVal || item.value === max ? ' data-extremal="1"' : '';
+          const unitText = item.unitSymbol || (item.unit ? ` ${item.unit}` : '');
           return `<button
             type="button"
             class="vbar-col ${active}"
             data-key="${escapeHtml(item.key)}"
             data-label="${escapeHtml(label)}"
-            data-value-text="${escapeHtml(`${displayValue}${item.unitSymbol}`)}"
+            data-value-text="${escapeHtml(`${displayValue}${unitText}`)}"
           >
             <span class="vbar-label">${escapeHtml(label)}</span>
-            <span class="vbar-track"><span class="vbar-fill" data-value="${escapeHtml(`${displayValue}${item.unitSymbol}`)}" style="--bar-pct:${pct}%;"></span></span>
+            <span class="vbar-track"><span class="vbar-fill"${extremal} data-value="${escapeHtml(`${displayValue}${item.unitSymbol}`)}" style="--bar-pct:${pct}%;"></span></span>
             <strong class="vbar-value">${displayValue}${escapeHtml(item.unitSymbol)}</strong>
           </button>`;
         }).join('')}

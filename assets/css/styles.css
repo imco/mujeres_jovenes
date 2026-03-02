@@ -1174,7 +1174,7 @@ h2 {
     position: relative;
   }
 
-  .mexico-map-stage .vbar-fill::after {
+  .mexico-map-stage .vbar-fill[data-extremal]::after {
     content: attr(data-value);
     position: absolute;
     left: 50%;
@@ -1192,6 +1192,7 @@ h2 {
     grid-row: 2;
     writing-mode: vertical-rl;
     text-orientation: mixed;
+    transform: rotate(180deg);
     font-size: .68rem;
     line-height: 1.05;
     white-space: normal;

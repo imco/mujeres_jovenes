@@ -14,6 +14,11 @@
 
 import { geoNaturalEarth1, geoPath } from 'd3-geo';
 
+/* ─── Google Analytics helper ────────────────────────────── */
+function track(eventName, params = {}) {
+  if (typeof gtag === 'function') gtag('event', eventName, params);
+}
+
 /* ─── Rutas de datos ─────────────────────────────────────── */
 const BASE = '/data/dashboard-nacional/';
 const DATA = {
@@ -96,11 +101,13 @@ const chapters   = document.querySelectorAll('[data-chapter-idx]');
 
 navHome.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 document.getElementById('hero-cta').addEventListener('click', () => {
+  track('hero_cta_click');
   document.getElementById('chapter-1').scrollIntoView({ behavior: 'smooth' });
 });
 navDots.forEach((dot) => {
   dot.addEventListener('click', () => {
     const idx = Number(dot.dataset.chapter);
+    track('chapter_nav_click', { chapter_idx: idx, chapter_label: dot.dataset.label || '' });
     const target = document.getElementById(`chapter-${idx}`);
     if (target) target.scrollIntoView({ behavior: 'smooth' });
   });
@@ -168,6 +175,7 @@ const chapterObs = new IntersectionObserver((entries) => {
     const id = entry.target.id;
     if (visualsLoaded.has(id)) return;
     visualsLoaded.add(id);
+    track('chapter_view', { chapter_id: id });
     loadChapterVisual(id);
   });
 }, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
@@ -702,3 +710,11 @@ window.addEventListener('scroll', updateProgress, { passive: true });
 /* ─── INIT ──────────────────────────────────────────────── */
 updateProgress();
 setupNarrativeObserver();
+
+// CTA final
+document.querySelector('.cta-btn-primary')?.addEventListener('click', () => {
+  track('cta_click', { cta_type: 'dashboard' });
+});
+document.querySelector('.cta-btn-secondary')?.addEventListener('click', () => {
+  track('cta_click', { cta_type: 'imco_website' });
+});

@@ -104,6 +104,11 @@ const palette = {
   text: '#1f2340',
   grid: '#ece9f8'
 };
+// ── Google Analytics helper ───────────────────────────────
+function track(eventName, params = {}) {
+  if (typeof gtag === 'function') gtag('event', eventName, params);
+}
+
 const MAP_COLOR_STOPS = ['#e5e4fe', '#7f79fb'];
 const CDMX_COMMON_NOTE = 'Nota: No se presentan estimaciones para algunas alcaldías debido a que los resultados no son estadísticamente significativos (margen de error superior a 7% con un nivel de confianza de 80%).';
 
@@ -348,6 +353,7 @@ function renderTabButtons() {
       activeTab = tab.id;
       renderTabButtons();
       loadTab(activeTab);
+      track('tab_view', { tab_id: tab.id, tab_label: tab.label });
     };
     tabNav.appendChild(button);
   });
@@ -424,6 +430,9 @@ function renderViewPill(tab) {
       </div>
     </div>
   `;
+  viewPill.querySelector('.pill-download-btn')?.addEventListener('click', () => {
+    track('file_download', { file_name: tab.downloadFilename || tab.downloadHref, section: tab.label });
+  });
 }
 
 function setupViewPillActions() {
@@ -449,6 +458,7 @@ function setupViewPillActions() {
       const shouldOpen = tooltip.hidden;
       tooltip.hidden = !shouldOpen;
       toggleBtn.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+      if (shouldOpen) track('citation_open');
       return;
     }
 
@@ -459,6 +469,7 @@ function setupViewPillActions() {
       if (!(textNode instanceof HTMLElement) || !copyBtn) return;
 
       const copied = await copyTextToClipboard(textNode.textContent || '');
+      track('citation_copy', { success: copied });
       const originalLabel = copyBtn.textContent || 'Copiar cita';
       copyBtn.textContent = copied ? 'Cita copiada' : 'No se pudo copiar';
       window.setTimeout(() => {
@@ -480,7 +491,7 @@ function setupViewPillActions() {
 
 function buildMonitorWebsiteCitation() {
   const accessDate = formatSpanishDate(new Date());
-  return `Con base en el monitor de Mujeres en la economía del IMCO ${MONITOR_SITE_TITLE}. Recuperado el ${accessDate}, de ${MONITOR_SITE_URL}`;
+  return `${MONITOR_SITE_TITLE} del IMCO, consultado ${accessDate}. ${MONITOR_SITE_URL}`;
 }
 
 function formatSpanishDate(date) {
@@ -1049,6 +1060,7 @@ async function attachMexicoIndicatorMap(container, payload) {
           positionSharedTooltip(tooltip, event.clientX, event.clientY);
         });
         node.addEventListener('click', () => {
+          track('entity_select', { entity: node.dataset.label || node.dataset.stateKey, section: 'entidad', variable });
           selectedStateKey = node.dataset.stateKey || selectedStateKey;
           renderIndicator(variable);
         });
@@ -1063,10 +1075,14 @@ async function attachMexicoIndicatorMap(container, payload) {
     btn.addEventListener('click', () => {
       selectedView = btn.dataset.view === 'bars' ? 'bars' : 'map';
       viewButtons.forEach((b) => b.classList.toggle('active', b === btn));
+      track('view_toggle', { view_type: selectedView, section: 'entidad', variable: select.value });
       renderIndicator(select.value);
     });
   });
-  select.addEventListener('change', () => renderIndicator(select.value));
+  select.addEventListener('change', () => {
+    track('indicator_select', { variable: select.value, section: 'entidad' });
+    renderIndicator(select.value);
+  });
   renderIndicator(defaultVar);
   syncIndicatorSideHeightToMap(mapWrap, indicatorSide);
 }
@@ -1274,6 +1290,7 @@ async function attachCdmxIndicatorMap(container, payload) {
           positionSharedTooltip(tooltip, event.clientX, event.clientY);
         });
         node.addEventListener('click', () => {
+          track('entity_select', { entity: node.dataset.label || node.dataset.stateKey, section: 'cdmx', variable });
           selectedKey = node.dataset.stateKey || selectedKey;
           renderIndicator(variable);
         });
@@ -1288,10 +1305,14 @@ async function attachCdmxIndicatorMap(container, payload) {
     btn.addEventListener('click', () => {
       selectedView = btn.dataset.view === 'bars' ? 'bars' : 'map';
       viewButtons.forEach((b) => b.classList.toggle('active', b === btn));
+      track('view_toggle', { view_type: selectedView, section: 'cdmx', variable: select.value });
       renderIndicator(select.value);
     });
   });
-  select.addEventListener('change', () => renderIndicator(select.value));
+  select.addEventListener('change', () => {
+    track('indicator_select', { variable: select.value, section: 'cdmx' });
+    renderIndicator(select.value);
+  });
   renderIndicator(defaultVar);
   syncIndicatorSideHeightToMap(mapWrap, indicatorSide);
 }

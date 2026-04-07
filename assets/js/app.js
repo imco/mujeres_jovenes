@@ -428,7 +428,8 @@ async function loadTab(tabId) {
   if (!tab) return;
 
   viewTitle.textContent = tab.title;
-  viewSubtitle.textContent = tab.subtitle;
+  viewSubtitle.textContent = tab.subtitle || '';
+  viewSubtitle.hidden = !tab.subtitle;
   renderViewPill(tab);
 
   dashboard.innerHTML = '<article class="section card">Cargando secciones...</article>';
@@ -2464,7 +2465,7 @@ function renderStemNivelMatematicas(data) {
   ).join('');
 
   return `
-    <p class="stem-scroll-hint">Desliza para ver →</p>
+    <p class="stem-scroll-hint" aria-hidden="true">Desliza para ver el gráfico completo →</p>
     <div class="stem-scroll-frame">
       <div class="chart-wrap stem-bar-scroll stem-hbars-wrap">
         <div class="chart-legend stem-hbars-legend">${legend}</div>
@@ -2474,7 +2475,7 @@ function renderStemNivelMatematicas(data) {
         </svg>
       </div>
     </div>
-    ${source ? `<p class="chart-source">${escapeHtml(source)}</p>` : ''}
+    ${source ? `<p class="chart-source">${formatSourceWithNoteBreak(source)}</p>` : ''}
   `;
 }
 
@@ -2544,7 +2545,7 @@ function renderStemMatriculaArea(data) {
   ).join('');
 
   return `
-    <p class="stem-scroll-hint">Desliza para ver →</p>
+    <p class="stem-scroll-hint" aria-hidden="true">Desliza para ver el gráfico completo →</p>
     <div class="stem-scroll-frame">
       <div class="chart-wrap stem-bar-scroll">
         <div class="chart-legend">${legend}</div>
@@ -2553,7 +2554,7 @@ function renderStemMatriculaArea(data) {
         </svg>
       </div>
     </div>
-    ${source ? `<p class="chart-source">${escapeHtml(source)}</p>` : ''}
+    ${source ? `<p class="chart-source">${formatSourceWithNoteBreak(source)}</p>` : ''}
   `;
 }
 
@@ -2788,7 +2789,7 @@ function renderStemMercadoLaboral(data) {
   ).join('');
 
   return `
-    <p class="stem-scroll-hint">Desliza para ver →</p>
+    <p class="stem-scroll-hint" aria-hidden="true">Desliza para ver el gráfico completo →</p>
     <div class="stem-scroll-frame">
       <div class="chart-wrap stem-market-wrap stem-bar-scroll">
         <div class="chart-legend">${legend}</div>
@@ -2797,6 +2798,6 @@ function renderStemMercadoLaboral(data) {
         </svg>
       </div>
     </div>
-    ${source ? `<p class="chart-source">${escapeHtml(source)}</p>` : ''}
+    ${source ? `<p class="chart-source">${formatSourceWithNoteBreak(source)}</p>` : ''}
   `;
 }

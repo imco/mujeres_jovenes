@@ -1,0 +1,204 @@
+{
+  "monitor": "Mujeres en STEM",
+  "subtitulo": "Ciencia, Tecnología, Ingeniería y Matemáticas",
+  "version": "1.0",
+  "fecha_datos": "2025",
+  "graficas": [
+    {
+      "id": "nivel_matematicas",
+      "titulo": "Nivel de desempeño en matemáticas por sexo",
+      "tipo": "barra_horizontal_agrupada",
+      "fuente": "Fuente: Elaborado por el IMCO con datos de PISA 2022.",
+      "unidad": "proporción",
+      "categorias": [
+        "No dominan operaciones matemáticas básicas\n(Nivel I y II)",
+        "Resuelven problemas matemáticos elementales\n(Nivel III y IV)",
+        "Dominan el razonamiento matemático a problemas complejos\n(Nivel V y VI)"
+      ],
+      "series": [
+        {
+          "nombre": "Hombres",
+          "color": "#A3A5A8",
+          "datos": [0.617, 0.38, 0.003]
+        },
+        {
+          "nombre": "Mujeres",
+          "color": "#7F79FB",
+          "datos": [0.695, 0.304, 0.001]
+        }
+      ]
+    },
+    {
+      "id": "historico_pisa",
+      "titulo": "Histórico de puntajes obtenidos por México entre 2003 y 2022",
+      "tipo": "linea_multiple",
+      "fuente": "Fuente: Elaborado por el IMCO con datos de PISA.",
+      "unidad": "puntaje",
+      "categorias": ["2003", "2006", "2009", "2012", "2015", "2018", "2022"],
+      "series": [
+        {
+          "nombre": "Comprensión Lectora",
+          "color": "#A3A5A8",
+          "datos": [400, 410, 425, 424, 423, 420, 415]
+        },
+        {
+          "nombre": "Matemáticas",
+          "color": "#7F79FB",
+          "datos": [385, 406, 419, 413, 408, 409, 395]
+        },
+        {
+          "nombre": "Ciencias",
+          "color": "#BDBAFF",
+          "datos": [null, 410, 416, 415, 416, 419, 410]
+        }
+      ]
+    },
+    {
+      "id": "matricula_por_area",
+      "titulo": "Distribución de matrícula de hombres y mujeres por área de estudio",
+      "tipo": "barra_apilada_horizontal_100",
+      "fuente": "Fuente: Elaborado por el IMCO con datos de los anuarios estadísticos de la ANUIES para el ciclo escolar 2024-2025.",
+      "unidad": "proporción",
+      "nota": "Ordenado de mayor a menor participación femenina",
+      "categorias": [
+        "Educación",
+        "Ciencias De La Salud",
+        "Ciencias Sociales Y Derecho",
+        "Artes Y Humanidades",
+        "Administración Y Negocios",
+        "Servicios",
+        "Ciencias Naturales, Matemáticas Y Estadística",
+        "Agronomía Y Veterinaria",
+        "Ingeniería, Manufactura Y Construcción",
+        "Tecnologías De La Información"
+      ],
+      "series": [
+        {
+          "nombre": "Mujeres",
+          "color": "#7F79FB",
+          "datos": [0.7496, 0.6863, 0.6143, 0.6032, 0.5714, 0.5206, 0.4992, 0.4507, 0.3194, 0.2444]
+        },
+        {
+          "nombre": "Hombres",
+          "color": "#A3A5A8",
+          "datos": [0.2504, 0.3137, 0.3857, 0.3968, 0.4286, 0.4794, 0.5008, 0.5493, 0.6806, 0.7556]
+        }
+      ]
+    },
+    {
+      "id": "mapa_matricula_stem",
+      "titulo": "Proporción de mujeres que estudian una carrera STEM respecto al total de alumnas",
+      "tipo": "mapa_choropleth_mexico",
+      "fuente": "Fuente: Elaborado por el IMCO con datos de los anuarios estadísticos de la ANUIES para el ciclo escolar 2024-2025.",
+      "unidad": "proporción",
+      "nota_destacada": "San Luis Potosí es la entidad donde más mujeres estudiantes eligen una carrera STEM",
+      "datos": [
+        { "entidad": "Aguascalientes", "codigo_iso": "MX-AGU", "alumnas_stem": 6151, "total_alumnas": 39575, "proporcion": 0.155426 },
+        { "entidad": "Baja California", "codigo_iso": "MX-BCN", "alumnas_stem": 14592, "total_alumnas": 81780, "proporcion": 0.17843 },
+        { "entidad": "Baja California Sur", "codigo_iso": "MX-BCS", "alumnas_stem": 2325, "total_alumnas": 14812, "proporcion": 0.156967 },
+        { "entidad": "Campeche", "codigo_iso": "MX-CAM", "alumnas_stem": 3689, "total_alumnas": 28457, "proporcion": 0.129634 },
+        { "entidad": "Chiapas", "codigo_iso": "MX-CHP", "alumnas_stem": 9009, "total_alumnas": 65503, "proporcion": 0.137536 },
+        { "entidad": "Chihuahua", "codigo_iso": "MX-CHH", "alumnas_stem": 15183, "total_alumnas": 79491, "proporcion": 0.191003 },
+        { "entidad": "Ciudad de México", "codigo_iso": "MX-CMX", "alumnas_stem": 83888, "total_alumnas": 549998, "proporcion": 0.152524 },
+        { "entidad": "Coahuila", "codigo_iso": "MX-COA", "alumnas_stem": 16095, "total_alumnas": 77678, "proporcion": 0.207202 },
+        { "entidad": "Colima", "codigo_iso": "MX-COL", "alumnas_stem": 2048, "total_alumnas": 16678, "proporcion": 0.122796 },
+        { "entidad": "Durango", "codigo_iso": "MX-DUR", "alumnas_stem": 5911, "total_alumnas": 35925, "proporcion": 0.164537 },
+        { "entidad": "Guanajuato", "codigo_iso": "MX-GUA", "alumnas_stem": 23511, "total_alumnas": 123896, "proporcion": 0.189764 },
+        { "entidad": "Guerrero", "codigo_iso": "MX-GRO", "alumnas_stem": 6191, "total_alumnas": 46951, "proporcion": 0.131861 },
+        { "entidad": "Hidalgo", "codigo_iso": "MX-HID", "alumnas_stem": 13212, "total_alumnas": 66166, "proporcion": 0.19968 },
+        { "entidad": "Jalisco", "codigo_iso": "MX-JAL", "alumnas_stem": 21887, "total_alumnas": 173844, "proporcion": 0.1259 },
+        { "entidad": "Estado de México", "codigo_iso": "MX-MEX", "alumnas_stem": 47975, "total_alumnas": 329508, "proporcion": 0.145596 },
+        { "entidad": "Michoacán", "codigo_iso": "MX-MIC", "alumnas_stem": 12829, "total_alumnas": 76204, "proporcion": 0.168351 },
+        { "entidad": "Morelos", "codigo_iso": "MX-MOR", "alumnas_stem": 7162, "total_alumnas": 43606, "proporcion": 0.164243 },
+        { "entidad": "Nayarit", "codigo_iso": "MX-NAY", "alumnas_stem": 2386, "total_alumnas": 29062, "proporcion": 0.0821 },
+        { "entidad": "Nuevo León", "codigo_iso": "MX-NLE", "alumnas_stem": 25489, "total_alumnas": 165701, "proporcion": 0.153825 },
+        { "entidad": "Oaxaca", "codigo_iso": "MX-OAX", "alumnas_stem": 7379, "total_alumnas": 50808, "proporcion": 0.145233 },
+        { "entidad": "Puebla", "codigo_iso": "MX-PUE", "alumnas_stem": 27590, "total_alumnas": 198515, "proporcion": 0.138982 },
+        { "entidad": "Querétaro", "codigo_iso": "MX-QUE", "alumnas_stem": 11436, "total_alumnas": 58780, "proporcion": 0.194556 },
+        { "entidad": "Quintana Roo", "codigo_iso": "MX-ROO", "alumnas_stem": 3204, "total_alumnas": 30387, "proporcion": 0.10544 },
+        { "entidad": "San Luis Potosí", "codigo_iso": "MX-SLP", "alumnas_stem": 11333, "total_alumnas": 49513, "proporcion": 0.228889 },
+        { "entidad": "Sinaloa", "codigo_iso": "MX-SIN", "alumnas_stem": 11280, "total_alumnas": 95483, "proporcion": 0.118136 },
+        { "entidad": "Sonora", "codigo_iso": "MX-SON", "alumnas_stem": 13707, "total_alumnas": 71190, "proporcion": 0.192541 },
+        { "entidad": "Tabasco", "codigo_iso": "MX-TAB", "alumnas_stem": 9924, "total_alumnas": 55959, "proporcion": 0.177344 },
+        { "entidad": "Tamaulipas", "codigo_iso": "MX-TAM", "alumnas_stem": 12633, "total_alumnas": 86772, "proporcion": 0.145588 },
+        { "entidad": "Tlaxcala", "codigo_iso": "MX-TLA", "alumnas_stem": 4127, "total_alumnas": 23066, "proporcion": 0.178921 },
+        { "entidad": "Veracruz", "codigo_iso": "MX-VER", "alumnas_stem": 27555, "total_alumnas": 145256, "proporcion": 0.1897 },
+        { "entidad": "Yucatán", "codigo_iso": "MX-YUC", "alumnas_stem": 7638, "total_alumnas": 48412, "proporcion": 0.157771 },
+        { "entidad": "Zacatecas", "codigo_iso": "MX-ZAC", "alumnas_stem": 5539, "total_alumnas": 29638, "proporcion": 0.186888 }
+      ]
+    },
+    {
+      "id": "mapa_profesionistas_stem",
+      "titulo": "Proporción de profesionistas STEM respecto al total de profesionistas por estado",
+      "tipo": "mapa_choropleth_mexico",
+      "fuente": "Fuente: Elaborado por el IMCO con datos de la ENOE al 3T de 2025 del INEGI.",
+      "unidad": "proporción",
+      "nota_destacada": "Coahuila y Querétaro lideran a nivel nacional, 18% de sus profesionistas se dedican a áreas STEM",
+      "datos": [
+        { "entidad": "Aguascalientes", "codigo_iso": "MX-AGU", "profesionistas_stem": 45476, "total_profesionistas": 248765, "proporcion": 0.182807 },
+        { "entidad": "Baja California", "codigo_iso": "MX-BCN", "profesionistas_stem": 38034, "total_profesionistas": 215564, "proporcion": 0.176439 },
+        { "entidad": "Baja California Sur", "codigo_iso": "MX-BCS", "profesionistas_stem": 81729, "total_profesionistas": 473109, "proporcion": 0.172749 },
+        { "entidad": "Campeche", "codigo_iso": "MX-CAM", "profesionistas_stem": 10467, "total_profesionistas": 66015, "proporcion": 0.158555 },
+        { "entidad": "Chiapas", "codigo_iso": "MX-CHP", "profesionistas_stem": 23857, "total_profesionistas": 150940, "proporcion": 0.158056 },
+        { "entidad": "Chihuahua", "codigo_iso": "MX-CHH", "profesionistas_stem": 28232, "total_profesionistas": 179874, "proporcion": 0.156954 },
+        { "entidad": "Ciudad de México", "codigo_iso": "MX-CMX", "profesionistas_stem": 43540, "total_profesionistas": 279097, "proporcion": 0.156003 },
+        { "entidad": "Coahuila", "codigo_iso": "MX-COA", "profesionistas_stem": 40344, "total_profesionistas": 260148, "proporcion": 0.155081 },
+        { "entidad": "Colima", "codigo_iso": "MX-COL", "profesionistas_stem": 20404, "total_profesionistas": 131589, "proporcion": 0.155059 },
+        { "entidad": "Durango", "codigo_iso": "MX-DUR", "profesionistas_stem": 171851, "total_profesionistas": 1170969, "proporcion": 0.14676 },
+        { "entidad": "Guanajuato", "codigo_iso": "MX-GUA", "profesionistas_stem": 18800, "total_profesionistas": 142296, "proporcion": 0.132119 },
+        { "entidad": "Guerrero", "codigo_iso": "MX-GRO", "profesionistas_stem": 16920, "total_profesionistas": 128260, "proporcion": 0.13192 },
+        { "entidad": "Hidalgo", "codigo_iso": "MX-HID", "profesionistas_stem": 12648, "total_profesionistas": 97654, "proporcion": 0.129519 },
+        { "entidad": "Jalisco", "codigo_iso": "MX-JAL", "profesionistas_stem": 14473, "total_profesionistas": 112118, "proporcion": 0.129087 },
+        { "entidad": "Estado de México", "codigo_iso": "MX-MEX", "profesionistas_stem": 10802, "total_profesionistas": 86952, "proporcion": 0.124229 },
+        { "entidad": "Michoacán", "codigo_iso": "MX-MIC", "profesionistas_stem": 58201, "total_profesionistas": 471138, "proporcion": 0.123533 },
+        { "entidad": "Morelos", "codigo_iso": "MX-MOR", "profesionistas_stem": 29278, "total_profesionistas": 239042, "proporcion": 0.122481 },
+        { "entidad": "Nayarit", "codigo_iso": "MX-NAY", "profesionistas_stem": 28028, "total_profesionistas": 230707, "proporcion": 0.121487 },
+        { "entidad": "Nuevo León", "codigo_iso": "MX-NLE", "profesionistas_stem": 32690, "total_profesionistas": 272895, "proporcion": 0.11979 },
+        { "entidad": "Oaxaca", "codigo_iso": "MX-OAX", "profesionistas_stem": 7004, "total_profesionistas": 58863, "proporcion": 0.118988 },
+        { "entidad": "Puebla", "codigo_iso": "MX-PUE", "profesionistas_stem": 19548, "total_profesionistas": 166078, "proporcion": 0.117704 },
+        { "entidad": "Querétaro", "codigo_iso": "MX-QUE", "profesionistas_stem": 29617, "total_profesionistas": 252270, "proporcion": 0.117402 },
+        { "entidad": "Quintana Roo", "codigo_iso": "MX-ROO", "profesionistas_stem": 64580, "total_profesionistas": 550428, "proporcion": 0.117327 },
+        { "entidad": "San Luis Potosí", "codigo_iso": "MX-SLP", "profesionistas_stem": 49447, "total_profesionistas": 428774, "proporcion": 0.115322 },
+        { "entidad": "Sinaloa", "codigo_iso": "MX-SIN", "profesionistas_stem": 149003, "total_profesionistas": 1298652, "proporcion": 0.114737 },
+        { "entidad": "Sonora", "codigo_iso": "MX-SON", "profesionistas_stem": 21593, "total_profesionistas": 189665, "proporcion": 0.113848 },
+        { "entidad": "Tabasco", "codigo_iso": "MX-TAB", "profesionistas_stem": 19640, "total_profesionistas": 172802, "proporcion": 0.113656 },
+        { "entidad": "Tamaulipas", "codigo_iso": "MX-TAM", "profesionistas_stem": 37491, "total_profesionistas": 356523, "proporcion": 0.105157 },
+        { "entidad": "Tlaxcala", "codigo_iso": "MX-TLA", "profesionistas_stem": 18028, "total_profesionistas": 177857, "proporcion": 0.101362 },
+        { "entidad": "Veracruz", "codigo_iso": "MX-VER", "profesionistas_stem": 24062, "total_profesionistas": 252269, "proporcion": 0.095382 },
+        { "entidad": "Yucatán", "codigo_iso": "MX-YUC", "profesionistas_stem": 7813, "total_profesionistas": 91255, "proporcion": 0.085617 },
+        { "entidad": "Zacatecas", "codigo_iso": "MX-ZAC", "profesionistas_stem": 4919, "total_profesionistas": 58411, "proporcion": 0.084214 }
+      ]
+    },
+    {
+      "id": "mercado_laboral_stem",
+      "titulo": "Indicadores del mercado laboral para mujeres por área de estudios",
+      "tipo": "barra_agrupada",
+      "fuente": "Fuente: Elaborado por el IMCO con datos de la ENOE al 3T de 2025 del INEGI.",
+      "unidad": "proporción",
+      "nota": "Mujeres egresadas de carreras STEM acceden a mejores beneficios laborales, con ingresos promedio de 16 mil 993 pesos mensuales",
+      "ingreso_promedio_stem": 16993,
+      "categorias": [
+        "Población económicamente activa",
+        "Formalidad",
+        "Brecha salarial"
+      ],
+      "series": [
+        {
+          "nombre": "Profesionistas STEM",
+          "color": "#7F79FB",
+          "datos": [0.74, 0.77, 0.15]
+        },
+        {
+          "nombre": "Profesionistas",
+          "color": "#BDBAFF",
+          "datos": [0.70, 0.74, 0.18]
+        },
+        {
+          "nombre": "Nacional",
+          "color": "#E5E4FE",
+          "datos": [0.46, 0.44, 0.14]
+        }
+      ]
+    }
+  ]
+}

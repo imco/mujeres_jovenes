@@ -103,7 +103,7 @@ const TABS = [
     downloadLabel: 'Descarga datos',
     downloadHref: 'data/stem/Datos_monitor_stem.xlsx',
     downloadFilename: 'Datos_monitor_stem.xlsx',
-    brandLogoSrc: 'Logotipo Movimiento STEM+_2021_RGB_Horizontal Blanco (3).png',
+    brandLogoSrc: '/logos/stem-plus-white-horizontal.png',
     brandLogoAlt: 'Movimiento STEM+',
     sections: [
       {

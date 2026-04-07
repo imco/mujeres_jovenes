@@ -1409,7 +1409,10 @@ h2 {
     top: auto;
     right: auto;
     transform: none;
-    margin-left: auto;
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
   }
 
   .tab-nav {
@@ -1459,18 +1462,14 @@ h2 {
   }
 
   .line-chart-wrap {
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
-    touch-action: pan-x;
     max-width: 100%;
+    overflow: hidden;
   }
 
   .line-chart-wrap .chart-svg {
-    min-width: 600px;
-    width: 600px;
-    max-width: none;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
     height: auto;
   }
 
@@ -1506,18 +1505,14 @@ h2 {
   }
 
   .care-stacked-wrap {
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
-    touch-action: pan-x;
     max-width: 100%;
+    overflow: hidden;
   }
 
   .care-stacked-wrap .chart-svg {
-    min-width: 740px;
-    width: 740px;
-    max-width: none;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
     height: auto;
   }
 
@@ -1562,7 +1557,7 @@ h2 {
 
   .bars-scroll-hint,
   .stem-scroll-hint {
-    display: block;
+    display: none;
   }
 
   .indicator-side {
@@ -1599,11 +1594,10 @@ h2 {
     margin-top: .45rem;
   }
 
-  /* Tap delay y overscroll en contenedores con scroll horizontal */
+  /* Scroll vertical fluido en el área de gráficas */
   .line-chart-wrap,
   .care-stacked-wrap {
-    overscroll-behavior-x: contain;
-    touch-action: pan-x;
+    touch-action: pan-y;
   }
 }
 
@@ -1761,45 +1755,16 @@ h2 {
     grid-column: span 12;
   }
 
-  /* Gráficas STEM de barras: scroll horizontal para mantener legibilidad */
+  /* Gráficas STEM de barras: escala al ancho del contenedor en móvil */
   .stem-bar-scroll {
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
-    touch-action: pan-x;
     max-width: 100%;
+    overflow: hidden;
   }
 
-  /* nivel-matemáticas (viewBox 1100) y matrícula (viewBox 1040) */
   .stem-bar-scroll .chart-svg {
-    min-width: 640px;
-    width: 640px;
-    max-width: none;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
     height: auto;
-  }
-
-  /* Mercado laboral (viewBox 920): más compacto */
-  .stem-market-wrap.stem-bar-scroll .chart-svg {
-    min-width: 560px;
-    width: 560px;
-  }
-
-  /* Indicador de fade derecho: sobre el contenedor (no dentro del scroll) */
-  .stem-scroll-frame {
-    position: relative;
-  }
-
-  .stem-scroll-frame::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 52px;
-    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.9));
-    border-radius: 0 13px 13px 0;
-    pointer-events: none;
-    z-index: 3;
   }
 }

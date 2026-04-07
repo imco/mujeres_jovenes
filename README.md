@@ -1,9 +1,10 @@
 # Mujeres en la Economía - Micrositio Dashboard
 
-Micrositio en **JavaScript + Vite** con 3 pestañas:
-- `Dashboard Nacional`
-- `Estadísticas por Entidad`
-- `CDMX por Alcaldía`
+Micrositio en **JavaScript + Vite** con 4 pestañas:
+- `Resultados nacionales`
+- `Resultados por entidad`
+- `Resultados CDMX`
+- `Resultados STEM` (Ciencia, Tecnología, Ingeniería y Matemáticas)
 
 El sitio consume datos JSON y renderiza mapas y gráficas interactivas.
 
@@ -21,7 +22,13 @@ El sitio consume datos JSON y renderiza mapas y gráficas interactivas.
 │   ├── css/styles.css        # Estilos globales, responsive y componentes de charts
 │   └── js/app.js             # Lógica completa del dashboard
 ├── public/
-│   └── data/                 # Todos los JSON y GeoJSON usados por fetch()
+│   └── data/
+│       ├── dashboard-nacional/   # JSON para pestaña nacional
+│       ├── estadisticas-entidad/ # JSON para pestaña entidad
+│       ├── cdmx-alcaldia/        # JSON y GeoJSON para CDMX
+│       └── stem/                 # JSON y Excel para pestaña STEM
+├── logos/
+│   └── stem-plus-white-horizontal.png  # Logo de Movimiento STEM+
 ├── index.html                # Shell principal
 ├── package.json
 └── vercel.json               # Config de build para Vercel
@@ -54,7 +61,11 @@ Editar `const TABS` en `assets/js/app.js`.
 
 Ejemplos de campos:
 - `label`: texto de la pestaña
-- `title` y `subtitle`: encabezado de la vista
+- `title`: encabezado principal de la vista
+- `subtitle`: subtítulo del encabezado (opcional; solo la pestaña STEM lo usa actualmente)
+- `pill`: texto del badge superior derecho
+- `brandLogoSrc` / `brandLogoAlt`: logo de marca partner junto al botón de descarga (opcional; usado en STEM)
+- `downloadHref` / `downloadLabel` / `downloadFilename`: archivo de descarga de datos
 - `sections[]`: bloques internos
 
 ## 2) Cambiar fuente de datos de una sección
@@ -67,7 +78,20 @@ Ejemplo:
 ## 3) Agregar una nueva sección
 
 1. Agrega un objeto en `TABS[].sections`.
-2. Define `type` existente (`line`, `stacked-bars`, `world-map-ranking`, etc.).
+2. Define `type` existente:
+
+| Tipo | Descripción |
+|------|-------------|
+| `line` | Gráfica de líneas temporales |
+| `stacked-bars` | Barras apiladas |
+| `world-map-ranking` | Mapa mundial + ranking |
+| `mexico-indicator-map` | Mapa de México por entidad |
+| `cdmx-indicator-map` | Mapa CDMX por alcaldía |
+| `stem-nivel-matematicas` | Barras horizontales agrupadas (STEM) |
+| `stem-matricula-area` | Barras 100% apiladas por área (STEM) |
+| `stem-map` | Mapa choropleth STEM con toggle mapa/barras |
+| `stem-mercado-laboral` | Barras verticales agrupadas (STEM) |
+
 3. Si necesitas un nuevo tipo:
    - agrega un bloque en `renderSection()`
    - crea función render dedicada.
@@ -105,6 +129,21 @@ En `assets/css/styles.css`:
 - `@media (max-width: 760px)`
 - `.tab-nav`, `.tab-scroll-hint`
 - `.vbars-scroll`, `.vbars-plot`, `.bars-scroll-hint`
+- `.stem-bar-scroll`, `.stem-scroll-hint` (barras STEM con scroll horizontal)
+- `.stem-maps-grid` (mapas STEM: desktop 2 columnas, móvil 1 columna)
+
+## 8) Agregar o modificar la pestaña STEM
+
+La pestaña STEM (`id: 'stem'`) tiene campos adicionales respecto a las otras pestañas:
+- `subtitle`: texto debajo del título en el encabezado de vista
+- `brandLogoSrc`: ruta al logo del partner (actualmente Movimiento STEM+)
+- `brandLogoAlt`: texto alternativo del logo
+
+Los mapas STEM usan `graphId` para identificar la gráfica dentro del JSON:
+- `graphId: 'mapa_matricula_stem'`
+- `graphId: 'mapa_profesionistas_stem'`
+
+Las fuentes de datos de todas las gráficas (incluidas las STEM) deben usar `formatSourceWithNoteBreak()` para normalizar el formato "Nota: / Fuente:".
 
 ## Secciones y funciones relevantes
 
@@ -112,8 +151,9 @@ En `assets/css/styles.css`:
   - `init()`
   - `loadTab()`
   - `renderSection()`
+  - `renderViewPill()`
 
-- Renderers:
+- Renderers generales:
   - `renderWorldMapRanking()`
   - `renderLineChart()`
   - `renderStackedBars()`
@@ -122,11 +162,18 @@ En `assets/css/styles.css`:
   - `attachMexicoIndicatorMap()`
   - `attachCdmxIndicatorMap()`
 
+- Renderers STEM:
+  - `renderStemNivelMatematicas()`
+  - `renderStemMatriculaArea()`
+  - `renderStemMapShell()` + `attachStemMap()`
+  - `renderStemMercadoLaboral()`
+
 - Utilidades:
   - `normalizeSectionData()`
   - `normalizeCountry()`
   - `fetchJSON()`
   - `escapeHtml()`
+  - `formatSourceWithNoteBreak()`
 
 ## Ejecutar local
 

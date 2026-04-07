@@ -53,6 +53,7 @@ body {
   margin: .75rem auto;
   display: grid;
   gap: 1rem;
+  min-width: 0;
 }
 
 /* Tarjeta base reutilizable. */
@@ -61,6 +62,7 @@ body {
   border: 1px solid var(--line);
   border-radius: 16px;
   box-shadow: var(--shadow);
+  min-width: 0;
 }
 
 /* Header superior y cabecera de vista activa. */
@@ -86,6 +88,7 @@ body {
 
 .view-header > div {
   margin: 0 auto;
+  min-width: 0;
 }
 
 .view-header #view-pill {
@@ -137,6 +140,8 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  min-width: 0;
+  max-width: 100%;
 }
 
 /* Botones de pestaña (desktop + móvil con scroll). */
@@ -338,11 +343,13 @@ h2 {
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(12, minmax(0, 1fr));
+  min-width: 0;
 }
 
 .section {
   grid-column: span 12;
   padding: 1rem;
+  min-width: 0;
 }
 
 /* Limita la altura total de secciones con mapas para evitar recortes en iframes. */
@@ -363,6 +370,7 @@ h2 {
 
 .section-head {
   margin-bottom: .85rem;
+  min-width: 0;
 }
 
 .section-title {
@@ -382,6 +390,7 @@ h2 {
   border-radius: 14px;
   padding: 0.75rem;
   background: linear-gradient(180deg, #fff, #fcfbff);
+  min-width: 0;
 }
 
 .chart-wrap:hover,
@@ -1366,6 +1375,32 @@ h2 {
   .section.half {
     grid-column: span 12;
   }
+
+  .line-chart-wrap,
+  .care-stacked-wrap,
+  .stem-bar-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .line-chart-wrap .chart-svg {
+    width: auto;
+    min-width: 760px;
+    max-width: none;
+  }
+
+  .care-stacked-wrap .chart-svg {
+    width: auto;
+    min-width: 920px;
+    max-width: none;
+  }
+
+  .stem-bar-scroll .chart-svg {
+    width: auto;
+    min-width: 920px;
+    max-width: none;
+  }
 }
 
 /* Móvil: ajustes de navegación, charts y layout. */
@@ -1402,6 +1437,7 @@ h2 {
   .view-header {
     flex-wrap: wrap;
     padding-right: .9rem;
+    overflow: hidden;
   }
 
   .view-header #view-pill {
@@ -1413,6 +1449,17 @@ h2 {
     width: 100%;
     justify-content: flex-start;
     flex-wrap: wrap;
+    gap: .5rem;
+  }
+
+  .view-header > div {
+    width: 100%;
+  }
+
+  .view-header h2,
+  .view-header #view-subtitle {
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 
   .tab-nav {
@@ -1444,11 +1491,18 @@ h2 {
     font-size: .72rem;
     padding: .48rem .74rem;
     gap: .38rem;
+    max-width: 100%;
   }
 
   .pill-cite-btn {
     font-size: .7rem;
     padding: .48rem .7rem;
+    max-width: 100%;
+  }
+
+  .view-brand-logo {
+    height: 28px;
+    max-width: min(138px, 42vw);
   }
 
   .pill-cite-tooltip {
@@ -1463,13 +1517,15 @@ h2 {
 
   .line-chart-wrap {
     max-width: 100%;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
   }
 
   .line-chart-wrap .chart-svg {
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
+    width: auto;
+    min-width: 680px;
+    max-width: none;
     height: auto;
   }
 
@@ -1506,13 +1562,15 @@ h2 {
 
   .care-stacked-wrap {
     max-width: 100%;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
   }
 
   .care-stacked-wrap .chart-svg {
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
+    width: auto;
+    min-width: 920px;
+    max-width: none;
     height: auto;
   }
 
@@ -1755,16 +1813,27 @@ h2 {
     grid-column: span 12;
   }
 
-  /* Gráficas STEM de barras: escala al ancho del contenedor en móvil */
+  /* Gráficas STEM de barras: scroll horizontal para preservar legibilidad */
   .stem-bar-scroll {
     max-width: 100%;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
   }
 
   .stem-bar-scroll .chart-svg {
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
+    width: auto;
+    min-width: 920px;
+    max-width: none;
     height: auto;
+  }
+
+  .stem-map-stage {
+    height: clamp(260px, 78vw, 380px);
+  }
+
+  .view-toggle {
+    width: 100%;
+    justify-content: flex-end;
   }
 }

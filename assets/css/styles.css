@@ -587,7 +587,8 @@ h2 {
   background: #f9f7ff;
   padding: .35rem;
   height: clamp(320px, 45vw, 520px);
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .mexico-map-stage .mexico-map-svg,
@@ -599,8 +600,8 @@ h2 {
 .bars-stage {
   display: block;
   max-height: none;
-  overflow: hidden;
-  overflow-x: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
   padding: .35rem;
 }
 
@@ -1153,10 +1154,11 @@ h2 {
 @media (min-width: 1025px) {
   .mexico-map-stage .bars-stage {
     padding: .25rem;
+    overflow: visible;
   }
 
   .mexico-map-stage .vbars-scroll {
-    overflow: hidden;
+    overflow: visible;
     height: 100%;
   }
 
@@ -1166,7 +1168,7 @@ h2 {
     grid-template-columns: repeat(var(--bar-count, 1), minmax(0, 1fr));
     gap: .06rem;
     align-items: end;
-    padding: 1.2rem .06rem .08rem;
+    padding: 2.35rem .06rem .08rem;
   }
 
   .mexico-map-stage .vbar-col {
@@ -1196,6 +1198,7 @@ h2 {
     background: transparent;
     align-items: end;
     overflow: visible;
+    position: relative;
   }
 
   .mexico-map-stage .vbar-fill {
@@ -1206,17 +1209,23 @@ h2 {
     position: relative;
   }
 
-  .mexico-map-stage .vbar-fill[data-extremal]::after {
-    content: attr(data-value);
+  .mexico-map-stage .vbar-extremal-value {
     position: absolute;
     left: 50%;
-    bottom: calc(100% + 4px);
+    bottom: calc(var(--bar-pct, 0%) + 4px);
     transform: translateX(-50%);
-    font-size: .74rem;
-    font-weight: 700;
+    font-size: .68rem;
+    font-weight: 600;
     color: #1f2340;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
     white-space: nowrap;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .mexico-map-stage .vbar-extremal-value.is-max {
+    bottom: calc(var(--bar-pct, 0%) - 2px);
+    transform: translateX(-50%) translateY(-100%);
   }
 
   .mexico-map-stage .vbar-label {
@@ -1254,7 +1263,7 @@ h2 {
 }
 
 .dashboard .section .line-chart-wrap .chart-svg text {
-  font-size: 11px !important;
+  font-size: 13px !important;
 }
 
 /* Optimización de densidad visual para laptop estándar (1366x768 aprox.). */
@@ -1307,19 +1316,19 @@ h2 {
   }
 
   .dashboard .section .stem-hbars-svg text {
-    font-size: .84rem !important;
+    font-size: 1.42rem !important;
   }
 
   .dashboard .section .stem-hbars-svg .stem-hbar-label {
-    font-size: .84rem !important;
+    font-size: 1.42rem !important;
   }
 
   .dashboard .section .stem-hbars-svg .stem-hbar-value {
-    font-size: .84rem !important;
+    font-size: 1.42rem !important;
   }
 
   .dashboard .section .stem-hbars-legend {
-    font-size: .84rem;
+    font-size: .94rem;
   }
 
   .section-body.map-ranking-body {
@@ -1681,6 +1690,7 @@ h2 {
 
 .stem-map-stage {
   height: clamp(320px, 45vw, 520px);
+  overflow: visible;
 }
 
 .stem-map-heading {
@@ -1711,20 +1721,20 @@ h2 {
 }
 
 .dashboard .section .stem-hbars-svg text {
-  font-size: .94rem !important;
+  font-size: 1.59rem !important;
 }
 
 .dashboard .section .stem-hbars-svg .stem-hbar-label {
-  font-size: .94rem !important;
+  font-size: 1.59rem !important;
 }
 
 .dashboard .section .stem-hbars-svg .stem-hbar-value {
-  font-size: .94rem !important;
+  font-size: 1.59rem !important;
 }
 
 .dashboard .section .stem-hbars-legend {
-  justify-content: center;
-  font-size: .94rem;
+  justify-content: flex-end;
+  font-size: 1.12rem;
   margin-bottom: .2rem;
 }
 

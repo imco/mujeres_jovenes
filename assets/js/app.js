@@ -1465,7 +1465,8 @@ function syncIndicatorSideHeightToMap(mapWrap, indicatorSide) {
 // Este bloque controla también el hint de scroll en móvil.
 function renderBarsStage(container, items, selectedKey, onSelect) {
   const max = Math.max(...items.map((i) => i.value), 1);
-  const minVal = Math.min(...items.map((i) => i.value));
+  const firstKey = items[0]?.key || '';
+  const lastKey = items[items.length - 1]?.key || '';
   container.className = 'bars-stage';
   container.innerHTML = `
     <p class="bars-scroll-hint" aria-hidden="true">Desliza para ver el gráfico completo →</p>
@@ -1476,7 +1477,11 @@ function renderBarsStage(container, items, selectedKey, onSelect) {
           const active = item.key === selectedKey ? 'active' : '';
           const label = String(item.label || '').trim();
           const displayValue = typeof item.displayValue === 'string' ? item.displayValue : item.value.toFixed(1);
-          const extremal = item.value === minVal || item.value === max ? ' data-extremal="1"' : '';
+          const isMax = item.key === firstKey;
+          const isMin = item.key === lastKey;
+          const isExtremal = isMin || isMax;
+          const extremal = isExtremal ? ' data-extremal="1"' : '';
+          const extremalClass = isMax ? ' is-max' : (isMin ? ' is-min' : '');
           const unitText = item.unitSymbol || (item.unit ? ` ${item.unit}` : '');
           return `<button
             type="button"
@@ -1486,7 +1491,10 @@ function renderBarsStage(container, items, selectedKey, onSelect) {
             data-value-text="${escapeHtml(`${displayValue}${unitText}`)}"
           >
             <span class="vbar-label">${escapeHtml(label)}</span>
-            <span class="vbar-track"><span class="vbar-fill"${extremal} data-value="${escapeHtml(`${displayValue}${item.unitSymbol}`)}" style="--bar-pct:${pct}%;"></span></span>
+            <span class="vbar-track">
+              ${isExtremal ? `<span class="vbar-extremal-value${extremalClass}" style="--bar-pct:${pct}%;">${escapeHtml(`${displayValue}${item.unitSymbol}`)}</span>` : ''}
+              <span class="vbar-fill"${extremal} data-value="${escapeHtml(`${displayValue}${item.unitSymbol}`)}" style="--bar-pct:${pct}%;"></span>
+            </span>
             <strong class="vbar-value">${displayValue}${escapeHtml(item.unitSymbol)}</strong>
           </button>`;
         }).join('')}
@@ -1841,13 +1849,13 @@ function renderLineChart(data, options = {}) {
     const value = min + ((max - min) / 4) * i;
     const yPos = y(value);
     return `<line x1="${margin.left}" y1="${yPos}" x2="${width - margin.right}" y2="${yPos}" stroke="${palette.grid}" />
-      <text x="10" y="${yPos + 4}" font-size="11" fill="#7b809a">${value.toFixed(0)}${data.unit || ''}</text>`;
+      <text x="10" y="${yPos + 4}" font-size="13" fill="#7b809a">${value.toFixed(0)}${data.unit || ''}</text>`;
   }).join('');
 
   const skipStep = isNarrow ? Math.ceil(labels.length / 5) : Math.ceil(labels.length / 10);
   const xTicks = labels.map((label, i) => {
     if (i % skipStep !== 0 && i !== labels.length - 1) return '';
-    return `<text x="${x(i)}" y="${height - 10}" font-size="11" fill="#7b809a" text-anchor="middle">${label}</text>`;
+    return `<text x="${x(i)}" y="${height - 10}" font-size="13" fill="#7b809a" text-anchor="middle">${label}</text>`;
   }).join('');
 
   const lines = series.map((line) => {
@@ -2736,7 +2744,7 @@ function renderStemMercadoLaboral(data) {
   }).join('');
 
   const groupW = innerW / cats.length;
-  const barW = Math.min(26, Math.floor((groupW / series.length) * 0.68));
+  const barW = Math.min(52, Math.floor((groupW / series.length) * 0.88));
   const barGroupTotalW = series.length * barW + (series.length - 1) * 4;
 
   const bars = cats.flatMap((cat, ci) => {

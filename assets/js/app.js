@@ -176,7 +176,7 @@ const MAP_COLOR_STOPS = ['#e5e4fe', '#7f79fb'];
 const CDMX_COMMON_NOTE = 'Nota: No se presentan estimaciones para algunas alcaldías debido a que los resultados no son estadísticamente significativos (margen de error superior a 7% con un nivel de confianza de 80%).';
 
 // Fuentes de geometría para mapas (mundo, México y CDMX).
-const WORLD_GEOJSON_URL = 'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson';
+const WORLD_GEOJSON_URL = 'data/world.geojson';
 const MEXICO_GEOJSON_URL = 'https://raw.githubusercontent.com/angelnmara/geojson/master/mexicoHigh.json';
 const CDMX_GEOJSON_LOCAL = 'data/cdmx-alcaldia/cdmx_alcaldias_real.geojson';
 const CDMX_GEOJSON_URL = 'https://raw.githubusercontent.com/angelnmara/geojson/master/mexicoCityHigh.json';

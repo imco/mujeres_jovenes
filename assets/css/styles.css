@@ -587,8 +587,7 @@ h2 {
   background: #f9f7ff;
   padding: .35rem;
   height: clamp(320px, 45vw, 520px);
-  overflow-x: clip;
-  overflow-y: visible;
+  overflow: clip;
 }
 
 .mexico-map-stage .mexico-map-svg,

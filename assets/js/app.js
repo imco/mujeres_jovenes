@@ -8,8 +8,8 @@ const TABS = [
     label: 'Resultados nacionales',
     title: 'Datos nacionales',
     downloadLabel: 'Descarga datos',
-    downloadHref: 'https://imco.org.mx/monitor/wp-content/uploads/2026/02/Monitor_pestana_resultados_nacionales-8.xlsx',
-    downloadFilename: 'Monitor_pestana_resultados_nacionales.xlsx',
+    downloadHref: 'data/dashboard-nacional/Datos_monitor_nacionales.xlsx',
+    downloadFilename: 'Datos_monitor_nacionales.xlsx',
     sections: [
       {
         key: 'participacion-global',

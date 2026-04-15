@@ -37,7 +37,7 @@
       "categorias": ["2003", "2006", "2009", "2012", "2015", "2018", "2022"],
       "series": [
         {
-          "nombre": "Comprensión Lectora",
+          "nombre": "Comprensión lectora",
           "color": "#A3A5A8",
           "datos": [400, 410, 425, 424, 423, 420, 415]
         },
@@ -62,15 +62,15 @@
       "nota": "Ordenado de mayor a menor participación femenina",
       "categorias": [
         "Educación",
-        "Ciencias De La Salud",
-        "Ciencias Sociales Y Derecho",
-        "Artes Y Humanidades",
-        "Administración Y Negocios",
+        "Ciencias de la salud",
+        "Ciencias sociales y derecho",
+        "Artes y humanidades",
+        "Administración y negocios",
         "Servicios",
-        "Ciencias Naturales, Matemáticas Y Estadística",
-        "Agronomía Y Veterinaria",
-        "Ingeniería, Manufactura Y Construcción",
-        "Tecnologías De La Información"
+        "Ciencias naturales, matemáticas y estadística",
+        "Agronomía y veterinaria",
+        "Ingeniería, manufactura y construcción",
+        "Tecnologías de la información"
       ],
       "series": [
         {

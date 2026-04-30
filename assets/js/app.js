@@ -142,7 +142,7 @@ const TABS = [
       {
         key: 'stem-map-profesionistas',
         type: 'stem-map',
-        title: 'Coahuila y Querétaro lideran a nivel nacional, 18% de sus mujeres profesionistas se dedican a áreas STEM',
+        title: 'Coahuila y Querétaro lideran a nivel nacional. 18% de las mujeres profesionistas trabajan en STEM',
         subtitle: 'Proporción de profesionistas STEM respecto al total de profesionistas por estado',
         file: 'data/stem/monitor_stem.json',
         graphId: 'mapa_profesionistas_stem',

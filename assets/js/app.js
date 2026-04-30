@@ -109,7 +109,7 @@ const TABS = [
       {
         key: 'stem-pisa-historico',
         type: 'line',
-        title: 'México registra una tendencia a la baja en matemáticas, comprensión lectora y ciencias',
+        title: 'México registra una tendencia a la baja en el desempeño en matemáticas, comprensión lectora y ciencias',
         subtitle: 'Histórico de puntajes obtenidos por México entre 2003 y 2022',
         file: 'data/stem/monitor_stem.json',
         width: 'half',
@@ -118,7 +118,7 @@ const TABS = [
       {
         key: 'stem-nivel-matematicas',
         type: 'stem-nivel-matematicas',
-        title: 'Una de cada mil jóvenes logra aplicar razonamiento matemático a problemas complejos',
+        title: 'Una de cada mil jóvenes aplica razonamiento matemático a problemas complejos',
         subtitle: 'Nivel de desempeño en matemáticas por sexo',
         file: 'data/stem/monitor_stem.json',
         width: 'half'
@@ -142,7 +142,7 @@ const TABS = [
       {
         key: 'stem-map-profesionistas',
         type: 'stem-map',
-        title: 'Coahuila y Querétaro lideran a nivel nacional, 18% de sus profesionistas se dedican a áreas STEM',
+        title: 'Coahuila y Querétaro lideran a nivel nacional, 18% de sus mujeres profesionistas se dedican a áreas STEM',
         subtitle: 'Proporción de profesionistas STEM respecto al total de profesionistas por estado',
         file: 'data/stem/monitor_stem.json',
         graphId: 'mapa_profesionistas_stem',
@@ -151,7 +151,7 @@ const TABS = [
       {
         key: 'stem-mercado-laboral',
         type: 'stem-mercado-laboral',
-        title: 'Mujeres egresadas de carreras STEM acceden a mejores beneficios laborales, con ingresos promedio\nde 16 mil 993 pesos mensuales',
+        title: 'Mujeres egresadas de carreras STEM acceden a mejores beneficios laborales.',
         subtitle: 'Indicadores del mercado laboral para mujeres por área de estudios',
         file: 'data/stem/monitor_stem.json'
       }

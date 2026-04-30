@@ -8,7 +8,7 @@
       "id": "nivel_matematicas",
       "titulo": "Nivel de desempeño en matemáticas por sexo",
       "tipo": "barra_horizontal_agrupada",
-      "fuente": "Fuente: Elaborado por el IMCO con datos de PISA 2022.",
+      "fuente": "Fuente: Elaborado con datos de PISA 2022 de la OCDE.",
       "unidad": "proporción",
       "categorias": [
         "No dominan operaciones matemáticas básicas\n(Nivel I y II)",
@@ -32,7 +32,7 @@
       "id": "historico_pisa",
       "titulo": "Histórico de puntajes obtenidos por México entre 2003 y 2022",
       "tipo": "linea_multiple",
-      "fuente": "Fuente: Elaborado por el IMCO con datos de PISA.",
+      "fuente": "Fuente: Elaborado con datos de PISA de la OCDE.",
       "unidad": "puntaje",
       "categorias": ["2003", "2006", "2009", "2012", "2015", "2018", "2022"],
       "series": [
@@ -57,7 +57,7 @@
       "id": "matricula_por_area",
       "titulo": "Distribución de matrícula de hombres y mujeres por área de estudio",
       "tipo": "barra_apilada_horizontal_100",
-      "fuente": "Fuente: Elaborado por el IMCO con datos de los anuarios estadísticos de la ANUIES para el ciclo escolar 2024-2025.",
+      "fuente": "Fuente: Elaborado con datos de los anuarios estadísticos de la ANUIES para el ciclo escolar 2024-2025.",
       "unidad": "proporción",
       "nota": "Ordenado de mayor a menor participación femenina",
       "categorias": [
@@ -89,7 +89,7 @@
       "id": "mapa_matricula_stem",
       "titulo": "Proporción de mujeres que estudian una carrera STEM respecto al total de alumnas",
       "tipo": "mapa_choropleth_mexico",
-      "fuente": "Fuente: Elaborado por el IMCO con datos de los anuarios estadísticos de la ANUIES para el ciclo escolar 2024-2025.",
+      "fuente": "Fuente: Elaborado con datos de los anuarios estadísticos de la ANUIES para el ciclo escolar 2024-2025.",
       "unidad": "proporción",
       "nota_destacada": "San Luis Potosí es la entidad donde más mujeres estudiantes eligen una carrera STEM",
       "datos": [
@@ -131,7 +131,7 @@
       "id": "mapa_profesionistas_stem",
       "titulo": "Proporción de profesionistas STEM respecto al total de profesionistas por estado",
       "tipo": "mapa_choropleth_mexico",
-      "fuente": "Fuente: Elaborado por el IMCO con datos de la ENOE al 3T de 2025 del INEGI.",
+      "fuente": "Fuente: Elaborado con datos de la ENOE al 3T de 2025 del INEGI.",
       "unidad": "proporción",
       "nota_destacada": "Coahuila y Querétaro lideran a nivel nacional, 18% de sus profesionistas se dedican a áreas STEM",
       "datos": [
@@ -173,7 +173,7 @@
       "id": "mercado_laboral_stem",
       "titulo": "Indicadores del mercado laboral para mujeres por área de estudios",
       "tipo": "barra_agrupada",
-      "fuente": "Fuente: Elaborado por el IMCO con datos de la ENOE al 3T de 2025 del INEGI.",
+      "fuente": "Fuente: Elaborado con datos de la ENOE al 3T de 2025 del INEGI.",
       "unidad": "proporción",
       "nota": "Mujeres egresadas de carreras STEM acceden a mejores beneficios laborales, con ingresos promedio de 16 mil 993 pesos mensuales",
       "ingreso_promedio_stem": 16993,

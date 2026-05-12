@@ -19,6 +19,14 @@
   box-sizing: border-box;
 }
 
+/* Impide scroll horizontal en el documento (los charts internos siguen siendo scroll). */
+html {
+  overflow-x: clip; /* modern: no crea scroll container */
+}
+body {
+  overflow-x: hidden; /* fallback iOS Safari < 16 */
+}
+
 body {
   margin: 0;
   font-family: 'Space Grotesk', sans-serif;
@@ -45,6 +53,7 @@ body {
   margin: .75rem auto;
   display: grid;
   gap: 1rem;
+  min-width: 0;
 }
 
 /* Tarjeta base reutilizable. */
@@ -53,6 +62,8 @@ body {
   border: 1px solid var(--line);
   border-radius: 16px;
   box-shadow: var(--shadow);
+  min-width: 0;
+  overflow: hidden;
 }
 
 /* Header superior y cabecera de vista activa. */
@@ -78,6 +89,7 @@ body {
 
 .view-header > div {
   margin: 0 auto;
+  min-width: 0;
 }
 
 .view-header #view-pill {
@@ -129,6 +141,8 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  min-width: 0;
+  max-width: 100%;
 }
 
 /* Botones de pestaña (desktop + móvil con scroll). */
@@ -173,13 +187,21 @@ h2 {
 .pill-download-wrap {
   display: inline-flex;
   align-items: center;
-  gap: .45rem;
+  gap: .7rem;
   flex-wrap: wrap;
+  justify-content: flex-end;
   padding: 0;
   border: 0;
   background: transparent;
   text-transform: none;
   letter-spacing: 0;
+}
+
+.view-brand-logo {
+  display: block;
+  height: 34px;
+  width: auto;
+  object-fit: contain;
 }
 
 .pill-download-btn {
@@ -322,11 +344,13 @@ h2 {
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(12, minmax(0, 1fr));
+  min-width: 0;
 }
 
 .section {
   grid-column: span 12;
   padding: 1rem;
+  min-width: 0;
 }
 
 /* Limita la altura total de secciones con mapas para evitar recortes en iframes. */
@@ -347,6 +371,7 @@ h2 {
 
 .section-head {
   margin-bottom: .85rem;
+  min-width: 0;
 }
 
 .section-title {
@@ -366,6 +391,7 @@ h2 {
   border-radius: 14px;
   padding: 0.75rem;
   background: linear-gradient(180deg, #fff, #fcfbff);
+  min-width: 0;
 }
 
 .chart-wrap:hover,
@@ -562,7 +588,7 @@ h2 {
   background: #f9f7ff;
   padding: .35rem;
   height: clamp(320px, 45vw, 520px);
-  overflow: hidden;
+  overflow: clip;
 }
 
 .mexico-map-stage .mexico-map-svg,
@@ -574,17 +600,24 @@ h2 {
 .bars-stage {
   display: block;
   max-height: none;
-  overflow: hidden;
-  overflow-x: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
   padding: .35rem;
 }
 
 /* Hint móvil para indicar desplazamiento horizontal en barras. */
-.bars-scroll-hint {
+.bars-scroll-hint,
+.stem-scroll-hint {
   display: none;
-  margin: 0 0 .35rem;
+  margin: .38rem 0 0;
   color: #7b809a;
   font-size: .72rem;
+  text-align: right;
+}
+
+/* Marco para el fade de scroll: en desktop es transparente; en móvil activa el ::after. */
+.stem-scroll-frame {
+  position: relative;
 }
 
 .vbars-scroll {
@@ -1121,10 +1154,11 @@ h2 {
 @media (min-width: 1025px) {
   .mexico-map-stage .bars-stage {
     padding: .25rem;
+    overflow: visible;
   }
 
   .mexico-map-stage .vbars-scroll {
-    overflow: hidden;
+    overflow: visible;
     height: 100%;
   }
 
@@ -1134,7 +1168,7 @@ h2 {
     grid-template-columns: repeat(var(--bar-count, 1), minmax(0, 1fr));
     gap: .06rem;
     align-items: end;
-    padding: 1.2rem .06rem .08rem;
+    padding: 2.35rem .06rem .08rem;
   }
 
   .mexico-map-stage .vbar-col {
@@ -1164,6 +1198,7 @@ h2 {
     background: transparent;
     align-items: end;
     overflow: visible;
+    position: relative;
   }
 
   .mexico-map-stage .vbar-fill {
@@ -1174,17 +1209,23 @@ h2 {
     position: relative;
   }
 
-  .mexico-map-stage .vbar-fill[data-extremal]::after {
-    content: attr(data-value);
+  .mexico-map-stage .vbar-extremal-value {
     position: absolute;
     left: 50%;
-    bottom: calc(100% + 4px);
+    bottom: calc(var(--bar-pct, 0%) + 4px);
     transform: translateX(-50%);
-    font-size: .74rem;
-    font-weight: 700;
+    font-size: .68rem;
+    font-weight: 600;
     color: #1f2340;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
     white-space: nowrap;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .mexico-map-stage .vbar-extremal-value.is-max {
+    bottom: calc(var(--bar-pct, 0%) - 2px);
+    transform: translateX(-50%) translateY(-100%);
   }
 
   .mexico-map-stage .vbar-label {
@@ -1222,7 +1263,7 @@ h2 {
 }
 
 .dashboard .section .line-chart-wrap .chart-svg text {
-  font-size: 11px !important;
+  font-size: 13px !important;
 }
 
 /* Optimización de densidad visual para laptop estándar (1366x768 aprox.). */
@@ -1272,6 +1313,22 @@ h2 {
   .chart-legend {
     font-size: .94rem;
     margin-bottom: .35rem;
+  }
+
+  .dashboard .section .stem-hbars-svg text {
+    font-size: 1.42rem !important;
+  }
+
+  .dashboard .section .stem-hbars-svg .stem-hbar-label {
+    font-size: 1.42rem !important;
+  }
+
+  .dashboard .section .stem-hbars-svg .stem-hbar-value {
+    font-size: 1.42rem !important;
+  }
+
+  .dashboard .section .stem-hbars-legend {
+    font-size: .94rem;
   }
 
   .section-body.map-ranking-body {
@@ -1327,13 +1384,40 @@ h2 {
   .section.half {
     grid-column: span 12;
   }
+
+  .line-chart-wrap,
+  .care-stacked-wrap,
+  .stem-bar-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .line-chart-wrap .chart-svg {
+    width: auto;
+    min-width: 760px;
+    max-width: none;
+  }
+
+  .care-stacked-wrap .chart-svg {
+    width: auto;
+    min-width: 920px;
+    max-width: none;
+  }
+
+  .stem-bar-scroll .chart-svg {
+    width: auto;
+    min-width: 920px;
+    max-width: none;
+  }
 }
 
 /* Móvil: ajustes de navegación, charts y layout. */
 @media (max-width: 760px) {
   .app-shell {
     width: calc(100vw - .8rem);
-    margin: .4rem auto 1rem;
+    margin: .4rem auto 2.5rem;
+    gap: .7rem;
   }
 
   h1 {
@@ -1362,6 +1446,7 @@ h2 {
   .view-header {
     flex-wrap: wrap;
     padding-right: .9rem;
+    overflow: hidden;
   }
 
   .view-header #view-pill {
@@ -1369,7 +1454,21 @@ h2 {
     top: auto;
     right: auto;
     transform: none;
-    margin-left: auto;
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: .5rem;
+  }
+
+  .view-header > div {
+    width: 100%;
+  }
+
+  .view-header h2,
+  .view-header #view-subtitle {
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 
   .tab-nav {
@@ -1382,7 +1481,11 @@ h2 {
   .tab-btn {
     flex: 0 0 auto;
     font-size: .84rem;
-    padding: .52rem .8rem;
+    padding: .52rem .9rem;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    touch-action: manipulation;
   }
 
   .tab-scroll-hint {
@@ -1397,11 +1500,18 @@ h2 {
     font-size: .72rem;
     padding: .48rem .74rem;
     gap: .38rem;
+    max-width: 100%;
   }
 
   .pill-cite-btn {
     font-size: .7rem;
     padding: .48rem .7rem;
+    max-width: 100%;
+  }
+
+  .view-brand-logo {
+    height: 28px;
+    max-width: min(138px, 42vw);
   }
 
   .pill-cite-tooltip {
@@ -1415,15 +1525,17 @@ h2 {
   }
 
   .line-chart-wrap {
+    max-width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
   }
 
   .line-chart-wrap .chart-svg {
-    min-width: 640px;
-    width: 640px;
+    width: auto;
+    min-width: 680px;
     max-width: none;
+    height: auto;
   }
 
   .line-chart-wrap + .chart-legend {
@@ -1458,11 +1570,17 @@ h2 {
   }
 
   .care-stacked-wrap {
+    max-width: 100%;
     overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
   }
 
   .care-stacked-wrap .chart-svg {
-    min-width: 820px;
+    width: auto;
+    min-width: 920px;
+    max-width: none;
+    height: auto;
   }
 
   .care-top-legend {
@@ -1504,8 +1622,9 @@ h2 {
     overflow-wrap: break-word;
   }
 
-  .bars-scroll-hint {
-    display: block;
+  .bars-scroll-hint,
+  .stem-scroll-hint {
+    display: none;
   }
 
   .indicator-side {
@@ -1514,5 +1633,216 @@ h2 {
 
   .mexico-map-stage {
     height: clamp(280px, 72vw, 440px);
+  }
+
+  /* Tipografía compacta en móvil */
+  .topbar-title {
+    font-size: 1.18rem;
+    line-height: 1.3;
+  }
+
+  .eyebrow {
+    font-size: .7rem;
+    letter-spacing: .03em;
+  }
+
+  .section-head {
+    margin-bottom: .55rem;
+  }
+
+  .chart-legend {
+    font-size: .84rem;
+    gap: .55rem;
+    margin-bottom: .3rem;
+  }
+
+  .chart-source {
+    font-size: .72rem;
+    margin-top: .45rem;
+  }
+
+  /* Permite scroll horizontal del gráfico y vertical de la página */
+  .line-chart-wrap,
+  .care-stacked-wrap {
+    touch-action: pan-x pan-y;
+  }
+}
+
+/* ── STEM Section ───────────────────────────────────────────────────────────── */
+
+/* Dos mapas choropleth side by side */
+.stem-maps-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.stem-map-panel {
+  display: flex;
+  flex-direction: column;
+  gap: .55rem;
+}
+
+.stem-map-toolbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.stem-map-stage {
+  height: clamp(320px, 45vw, 520px);
+}
+
+.stem-map-heading {
+  margin: 0;
+  font-size: .92rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
+  min-height: 2.6rem;
+}
+
+.stem-map-svg-wrap {
+  flex: 1;
+  min-height: 0;
+}
+
+.stem-map-stage .chart-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 10px;
+}
+
+/* Barras SVG STEM: overflow para labels largos */
+.stem-hbars-svg,
+.stem-stacked-svg {
+  overflow: visible;
+}
+
+.dashboard .section .stem-hbars-svg text {
+  font-size: 1.59rem !important;
+}
+
+.dashboard .section .stem-hbars-svg .stem-hbar-label {
+  font-size: 1.59rem !important;
+}
+
+.dashboard .section .stem-hbars-svg .stem-hbar-value {
+  font-size: 1.59rem !important;
+}
+
+.dashboard .section .stem-hbars-legend {
+  justify-content: flex-end;
+  font-size: 1.12rem;
+  margin-bottom: .2rem;
+}
+
+.section.stem-top-pair .stem-hbars-wrap {
+  padding: .4rem .5rem .45rem;
+}
+
+.section.stem-top-pair .stem-hbars-wrap .chart-svg {
+  width: 100%;
+}
+
+.dashboard .section .stem-stacked-svg .stem-stacked-label {
+  font-size: 11px !important;
+}
+
+.dashboard .section .stem-stacked-svg .stem-stacked-value {
+  font-size: 12px !important;
+}
+
+.dashboard .section .stem-stacked-svg .stem-stacked-badge {
+  font-size: 10px !important;
+}
+
+.stem-map-stage .vbar-fill {
+  background: linear-gradient(180deg, #6f4fe8 0%, #c9bdfd 100%);
+}
+
+.dashboard .section .stem-market-wrap .chart-legend {
+  font-size: 1rem;
+}
+
+.dashboard .section .stem-market-svg text {
+  font-size: 10px !important;
+}
+
+@media (min-width: 1025px) {
+  .section.stem-top-pair {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .section.stem-top-pair .section-head {
+    min-height: 5.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .section.stem-top-pair .section-title {
+    line-height: 1.22;
+  }
+
+  .section.stem-top-pair .section-subtitle {
+    min-height: 1.6rem;
+  }
+
+  .section.stem-top-pair .section-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .section.stem-top-pair .chart-wrap {
+    flex: 1;
+    min-height: 27rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .section.stem-top-pair .chart-svg {
+    flex: 1;
+  }
+}
+
+/* Scroll horizontal en móvil para SVGs de barras horizontales STEM */
+@media (max-width: 760px) {
+  .stem-maps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stem-map-heading {
+    min-height: auto;
+  }
+
+  .section.half {
+    grid-column: span 12;
+  }
+
+  /* Gráficas STEM de barras: scroll horizontal para preservar legibilidad */
+  .stem-bar-scroll {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .stem-bar-scroll .chart-svg {
+    width: auto;
+    min-width: 920px;
+    max-width: none;
+    height: auto;
+  }
+
+  .stem-map-stage {
+    height: clamp(260px, 78vw, 380px);
+  }
+
+  .view-toggle {
+    width: 100%;
+    justify-content: flex-end;
   }
 }

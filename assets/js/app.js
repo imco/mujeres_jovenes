@@ -8,8 +8,8 @@ const TABS = [
     label: 'Resultados nacionales',
     title: 'Datos nacionales',
     downloadLabel: 'Descarga datos',
-    downloadHref: 'https://imco.org.mx/monitor/wp-content/uploads/2026/02/Monitor_pestana_resultados_nacionales-8.xlsx',
-    downloadFilename: 'Monitor_pestana_resultados_nacionales.xlsx',
+    downloadHref: 'data/dashboard-nacional/Datos_monitor_nacionales.xlsx',
+    downloadFilename: 'Datos_monitor_nacionales.xlsx',
     sections: [
       {
         key: 'participacion-global',
@@ -93,6 +93,69 @@ const TABS = [
         layout: 'indicator-map'
       }
     ]
+  },
+  {
+    id: 'stem',
+    label: 'Resultados STEM',
+    title: 'Mujeres en STEM',
+    subtitle: 'Ciencia, Tecnología, Ingeniería y Matemáticas',
+    pill: 'STEM+',
+    downloadLabel: 'Descarga datos',
+    downloadHref: 'data/stem/Datos_monitor_stem.xlsx',
+    downloadFilename: 'Datos_monitor_stem.xlsx',
+    brandLogoSrc: '/logos/stem-plus-white-horizontal.png',
+    brandLogoAlt: 'Movimiento STEM+',
+    sections: [
+      {
+        key: 'stem-pisa-historico',
+        type: 'line',
+        title: 'México registra una tendencia a la baja en el desempeño en matemáticas, comprensión lectora y ciencias',
+        subtitle: 'Histórico de puntajes obtenidos por México entre 2003 y 2022',
+        file: 'data/stem/monitor_stem.json',
+        width: 'half',
+        chartHeightScale: 1.2
+      },
+      {
+        key: 'stem-nivel-matematicas',
+        type: 'stem-nivel-matematicas',
+        title: 'Una de cada mil jóvenes aplica razonamiento matemático a problemas complejos',
+        subtitle: 'Nivel de desempeño en matemáticas por sexo',
+        file: 'data/stem/monitor_stem.json',
+        width: 'half'
+      },
+      {
+        key: 'stem-matricula-area',
+        type: 'stem-matricula-area',
+        title: 'En México de cada tres estudiantes en carreras STEM una es mujer',
+        subtitle: 'Distribución de matrícula de hombres y mujeres por área de estudio',
+        file: 'data/stem/monitor_stem.json'
+      },
+      {
+        key: 'stem-map-matricula',
+        type: 'stem-map',
+        title: 'San Luis Potosí es la entidad donde más mujeres estudiantes eligen una carrera STEM',
+        subtitle: 'Proporción de mujeres que estudian una carrera STEM respecto al total de alumnas',
+        file: 'data/stem/monitor_stem.json',
+        graphId: 'mapa_matricula_stem',
+        width: 'half'
+      },
+      {
+        key: 'stem-map-profesionistas',
+        type: 'stem-map',
+        title: 'Coahuila y Querétaro lideran a nivel nacional. 18% de las mujeres profesionistas trabajan en STEM',
+        subtitle: 'Proporción de profesionistas STEM respecto al total de profesionistas por estado',
+        file: 'data/stem/monitor_stem.json',
+        graphId: 'mapa_profesionistas_stem',
+        width: 'half'
+      },
+      {
+        key: 'stem-mercado-laboral',
+        type: 'stem-mercado-laboral',
+        title: 'Mujeres egresadas de carreras STEM acceden a mejores beneficios laborales.',
+        subtitle: 'Indicadores del mercado laboral para mujeres por área de estudios',
+        file: 'data/stem/monitor_stem.json'
+      }
+    ]
   }
 ];
 
@@ -113,7 +176,7 @@ const MAP_COLOR_STOPS = ['#e5e4fe', '#7f79fb'];
 const CDMX_COMMON_NOTE = 'Nota: No se presentan estimaciones para algunas alcaldías debido a que los resultados no son estadísticamente significativos (margen de error superior a 7% con un nivel de confianza de 80%).';
 
 // Fuentes de geometría para mapas (mundo, México y CDMX).
-const WORLD_GEOJSON_URL = 'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson';
+const WORLD_GEOJSON_URL = 'data/world.geojson';
 const MEXICO_GEOJSON_URL = 'https://raw.githubusercontent.com/angelnmara/geojson/master/mexicoHigh.json';
 const CDMX_GEOJSON_LOCAL = 'data/cdmx-alcaldia/cdmx_alcaldias_real.geojson';
 const CDMX_GEOJSON_URL = 'https://raw.githubusercontent.com/angelnmara/geojson/master/mexicoCityHigh.json';
@@ -365,7 +428,8 @@ async function loadTab(tabId) {
   if (!tab) return;
 
   viewTitle.textContent = tab.title;
-  viewSubtitle.textContent = tab.subtitle;
+  viewSubtitle.textContent = tab.subtitle || '';
+  viewSubtitle.hidden = !tab.subtitle;
   renderViewPill(tab);
 
   dashboard.innerHTML = '<article class="section card">Cargando secciones...</article>';
@@ -399,8 +463,12 @@ function renderViewPill(tab) {
   }
 
   const citationText = buildMonitorWebsiteCitation();
+  const brandLogoMarkup = tab.brandLogoSrc
+    ? `<img class="view-brand-logo" src="${escapeHtml(encodeURI(tab.brandLogoSrc))}" alt="${escapeHtml(tab.brandLogoAlt || '')}">`
+    : '';
   viewPill.className = 'pill pill-download-wrap';
   viewPill.innerHTML = `
+    ${brandLogoMarkup}
     <a
       class="pill-download-btn"
       href="${escapeHtml(tab.downloadHref)}"
@@ -530,6 +598,7 @@ async function copyTextToClipboard(text) {
 // Para añadir un nuevo tipo de gráfico, agrega un nuevo bloque aquí.
 async function renderSection(section, data) {
   const node = sectionTemplate.content.firstElementChild.cloneNode(true);
+  node.dataset.sectionKey = section.key;
   node.querySelector('.section-title').textContent = section.title;
   node.querySelector('.section-subtitle').textContent = section.subtitle;
 
@@ -545,6 +614,9 @@ async function renderSection(section, data) {
   }
   if (section.width === 'half') {
     node.classList.add('half');
+  }
+  if (section.key === 'stem-pisa-historico' || section.key === 'stem-nivel-matematicas') {
+    node.classList.add('stem-top-pair');
   }
 
   if (section.type === 'world-map-ranking') {
@@ -605,6 +677,26 @@ async function renderSection(section, data) {
   if (section.type === 'horizontal-bars') {
     body.innerHTML = renderHorizontalBars(data);
     attachBarChartTooltip(body, '.horizontal-bar-fill');
+  }
+
+  if (section.type === 'stem-nivel-matematicas') {
+    body.innerHTML = renderStemNivelMatematicas(data);
+    attachBarChartTooltip(body, '.stem-hbar-fill');
+  }
+
+  if (section.type === 'stem-matricula-area') {
+    body.innerHTML = renderStemMatriculaArea(data);
+    attachBarChartTooltip(body, '.stem-stacked-fill');
+  }
+
+  if (section.type === 'stem-map') {
+    body.innerHTML = renderStemMapShell();
+    await attachStemMap(body, data, section.graphId);
+  }
+
+  if (section.type === 'stem-mercado-laboral') {
+    body.innerHTML = renderStemMercadoLaboral(data);
+    attachBarChartTooltip(body, '.stem-gbar-fill');
   }
 
   return node;
@@ -1373,7 +1465,8 @@ function syncIndicatorSideHeightToMap(mapWrap, indicatorSide) {
 // Este bloque controla también el hint de scroll en móvil.
 function renderBarsStage(container, items, selectedKey, onSelect) {
   const max = Math.max(...items.map((i) => i.value), 1);
-  const minVal = Math.min(...items.map((i) => i.value));
+  const firstKey = items[0]?.key || '';
+  const lastKey = items[items.length - 1]?.key || '';
   container.className = 'bars-stage';
   container.innerHTML = `
     <p class="bars-scroll-hint" aria-hidden="true">Desliza para ver el gráfico completo →</p>
@@ -1384,7 +1477,11 @@ function renderBarsStage(container, items, selectedKey, onSelect) {
           const active = item.key === selectedKey ? 'active' : '';
           const label = String(item.label || '').trim();
           const displayValue = typeof item.displayValue === 'string' ? item.displayValue : item.value.toFixed(1);
-          const extremal = item.value === minVal || item.value === max ? ' data-extremal="1"' : '';
+          const isMax = item.key === firstKey;
+          const isMin = item.key === lastKey;
+          const isExtremal = isMin || isMax;
+          const extremal = isExtremal ? ' data-extremal="1"' : '';
+          const extremalClass = isMax ? ' is-max' : (isMin ? ' is-min' : '');
           const unitText = item.unitSymbol || (item.unit ? ` ${item.unit}` : '');
           return `<button
             type="button"
@@ -1394,7 +1491,10 @@ function renderBarsStage(container, items, selectedKey, onSelect) {
             data-value-text="${escapeHtml(`${displayValue}${unitText}`)}"
           >
             <span class="vbar-label">${escapeHtml(label)}</span>
-            <span class="vbar-track"><span class="vbar-fill"${extremal} data-value="${escapeHtml(`${displayValue}${item.unitSymbol}`)}" style="--bar-pct:${pct}%;"></span></span>
+            <span class="vbar-track">
+              ${isExtremal ? `<span class="vbar-extremal-value${extremalClass}" style="--bar-pct:${pct}%;">${escapeHtml(`${displayValue}${item.unitSymbol}`)}</span>` : ''}
+              <span class="vbar-fill"${extremal} data-value="${escapeHtml(`${displayValue}${item.unitSymbol}`)}" style="--bar-pct:${pct}%;"></span>
+            </span>
             <strong class="vbar-value">${displayValue}${escapeHtml(item.unitSymbol)}</strong>
           </button>`;
         }).join('')}
@@ -1728,7 +1828,7 @@ function renderLineChart(data, options = {}) {
   const isNarrow = window.innerWidth <= 760;
   const labels = data.labels;
   const series = data.series;
-  const values = series.flatMap((s) => s.values);
+  const values = series.flatMap((s) => s.values).filter((v) => v !== null && Number.isFinite(Number(v)));
   const min = data.min ?? Math.min(...values);
   const max = data.max ?? Math.max(...values);
   const unit = data.unit || '';
@@ -1749,18 +1849,23 @@ function renderLineChart(data, options = {}) {
     const value = min + ((max - min) / 4) * i;
     const yPos = y(value);
     return `<line x1="${margin.left}" y1="${yPos}" x2="${width - margin.right}" y2="${yPos}" stroke="${palette.grid}" />
-      <text x="10" y="${yPos + 4}" font-size="11" fill="#7b809a">${value.toFixed(0)}${data.unit || ''}</text>`;
+      <text x="10" y="${yPos + 4}" font-size="13" fill="#7b809a">${value.toFixed(0)}${data.unit || ''}</text>`;
   }).join('');
 
   const skipStep = isNarrow ? Math.ceil(labels.length / 5) : Math.ceil(labels.length / 10);
   const xTicks = labels.map((label, i) => {
     if (i % skipStep !== 0 && i !== labels.length - 1) return '';
-    return `<text x="${x(i)}" y="${height - 10}" font-size="11" fill="#7b809a" text-anchor="middle">${label}</text>`;
+    return `<text x="${x(i)}" y="${height - 10}" font-size="13" fill="#7b809a" text-anchor="middle">${label}</text>`;
   }).join('');
 
   const lines = series.map((line) => {
-    const path = line.values.map((value, i) => `${i === 0 ? 'M' : 'L'}${x(i)},${y(value)}`).join(' ');
-    const points = line.values.map((value, i) => `
+    const path = line.values.reduce((acc, value, i) => {
+      if (value === null || !Number.isFinite(Number(value))) return acc;
+      return `${acc}${acc === '' ? 'M' : ' L'}${x(i)},${y(value)}`;
+    }, '');
+    const points = line.values.map((value, i) => {
+      if (value === null || !Number.isFinite(Number(value))) return '';
+      return `
       <circle cx="${x(i)}" cy="${y(value)}" r="4.2" fill="${line.color}" class="line-point" />
       <circle
         cx="${x(i)}"
@@ -1770,12 +1875,13 @@ function renderLineChart(data, options = {}) {
         class="line-hit"
         data-label="${escapeHtml(labels[i])}"
         data-series="${escapeHtml(line.name)}"
-        data-value="${value.toFixed(2)}"
+        data-value="${Number(value).toFixed(2)}"
         data-unit="${escapeHtml(unit)}"
         data-color="${line.color}"
         data-cx="${x(i)}"
       />
-    `).join('');
+    `;
+    }).join('');
     return `
       <path d="${path}" fill="none" stroke="${line.color}" stroke-width="3" stroke-linecap="round"/>
       ${points}
@@ -2204,6 +2310,24 @@ function normalizeSectionData(section, data) {
     };
   }
 
+  if (section.key === 'stem-pisa-historico') {
+    const grafica = data?.graficas?.find((g) => g.id === 'historico_pisa');
+    if (!grafica) return data;
+    const allVals = grafica.series.flatMap((s) => s.datos.filter((v) => v !== null && Number.isFinite(v)));
+    return {
+      unit: '',
+      min: Math.floor(Math.min(...allVals) / 10) * 10 - 10,
+      max: Math.ceil(Math.max(...allVals) / 10) * 10 + 10,
+      labels: grafica.categorias,
+      source: grafica.fuente || '',
+      series: grafica.series.map((s) => ({
+        name: s.nombre,
+        color: s.color,
+        values: s.datos.map((v) => (v === null || !Number.isFinite(v)) ? null : Number(v))
+      }))
+    };
+  }
+
   return data;
 }
 
@@ -2239,4 +2363,449 @@ function mountFlourishEmbedScript() {
   script.async = true;
   script.dataset.flourishEmbedScript = 'true';
   document.body.appendChild(script);
+}
+
+// ── STEM renderers ────────────────────────────────────────────────────────────
+
+// Áreas STEM (normalizadas) para resaltarlas en el gráfico de matrícula.
+const STEM_AREAS = new Set([
+  'ciencias naturales matematicas y estadistica',
+  'ingenieria manufactura y construccion',
+  'tecnologias de la informacion'
+]);
+
+function wrapStemLabelLines(label, maxCharsPerLine = 26) {
+  return String(label || '')
+    .split('\n')
+    .flatMap((segment) => {
+      const words = segment.trim().split(/\s+/).filter(Boolean);
+      if (!words.length) return [''];
+
+      const lines = [];
+      let currentLine = '';
+
+      words.forEach((word) => {
+        const nextLine = currentLine ? `${currentLine} ${word}` : word;
+        if (nextLine.length <= maxCharsPerLine) {
+          currentLine = nextLine;
+          return;
+        }
+        if (currentLine) lines.push(currentLine);
+        currentLine = word;
+      });
+
+      if (currentLine) lines.push(currentLine);
+      return lines;
+    });
+}
+
+// Barras horizontales agrupadas: nivel de desempeño en matemáticas por sexo.
+function renderStemNivelMatematicas(data) {
+  const grafica = data?.graficas?.find((g) => g.id === 'nivel_matematicas');
+  if (!grafica) return '<div class="chart-wrap">Sin datos disponibles.</div>';
+
+  const cats = [...grafica.categorias].reverse();
+  const series = grafica.series
+    .map((serie) => ({
+      ...serie,
+      datos: [...serie.datos].reverse()
+    }))
+    .sort((a, b) => {
+      if (a.nombre === 'Mujeres') return -1;
+      if (b.nombre === 'Mujeres') return 1;
+      return 0;
+    });
+  const source = grafica.fuente || '';
+
+  const W = 1180;
+  const barH = 46;
+  const innerGap = 14;
+  const catGap = 40;
+  const axisX = 360;
+  const labelCenterX = 170;
+  const rightPad = 44;
+  const barAreaW = W - axisX - rightPad;
+  const padTop = 12;
+
+  const groupH = series.length * barH + (series.length - 1) * innerGap;
+  const lineHeight = 20;
+  const wrappedCats = cats.map((cat) => wrapStemLabelLines(cat));
+  const rowHeights = wrappedCats.map((lines) => Math.max(groupH, lines.length * lineHeight));
+  const totalRowsHeight = rowHeights.reduce((sum, rowHeight) => sum + rowHeight, 0);
+  const H = padTop + totalRowsHeight + catGap * Math.max(cats.length - 1, 0) + padTop + 10;
+
+  let cursorY = padTop;
+  const svgContent = cats.flatMap((cat, ci) => {
+    const lines = wrappedCats[ci];
+    const rowContentH = rowHeights[ci];
+    const yTop = cursorY + (rowContentH - groupH) / 2;
+    const centerY = cursorY + rowContentH / 2;
+
+    const labelLines = lines.map((line, lineIndex) => {
+      const ty = centerY + (lineIndex - (lines.length - 1) / 2) * lineHeight;
+      return `<text x="${labelCenterX}" y="${ty}" text-anchor="middle" dominant-baseline="middle" class="stem-hbar-label" fill="#555">${escapeHtml(line)}</text>`;
+    });
+
+    const barEls = series.map((s, si) => {
+      const v = s.datos[ci];
+      const bw = Math.round(v * barAreaW);
+      const yB = yTop + si * (barH + innerGap);
+      const pct = (v * 100).toFixed(1);
+      return [
+        `<rect x="${axisX}" y="${yB}" width="${bw}" height="${barH}" rx="0" fill="${s.color}"
+          class="stem-hbar-fill"
+          data-label="${escapeHtml(cat.replace(/\n/g, ' '))}"
+          data-series="${escapeHtml(s.nombre)}"
+          data-value="${(v * 100).toFixed(2)}"
+          data-color="${s.color}"
+          data-unit="%"/>`,
+        `<text x="${axisX + bw + 10}" y="${yB + barH / 2}" dominant-baseline="middle" class="stem-hbar-value" fill="#444" font-weight="600">${pct}%</text>`
+      ].join('');
+    });
+
+    cursorY += rowContentH + catGap;
+
+    return [...labelLines, ...barEls];
+  });
+
+  const legend = series.map((s) =>
+    `<span><span class="legend-dot" style="background:${s.color}"></span>${escapeHtml(s.nombre)}</span>`
+  ).join('');
+
+  return `
+    <p class="stem-scroll-hint" aria-hidden="true">Desliza para ver el gráfico completo →</p>
+    <div class="stem-scroll-frame">
+      <div class="chart-wrap stem-bar-scroll stem-hbars-wrap">
+        <div class="chart-legend stem-hbars-legend">${legend}</div>
+        <svg viewBox="0 0 ${W} ${H}" class="chart-svg stem-hbars-svg" role="img" aria-label="Nivel de desempeño en matemáticas por sexo">
+          <line x1="${axisX}" y1="${padTop - 4}" x2="${axisX}" y2="${H - padTop + 2}" stroke="#d9d9e6" stroke-width="1.5"/>
+          ${svgContent.join('')}
+        </svg>
+      </div>
+    </div>
+    ${source ? `<p class="chart-source">${formatSourceWithNoteBreak(source)}</p>` : ''}
+  `;
+}
+
+// Barras horizontales 100% apiladas: distribución de matrícula por área.
+function renderStemMatriculaArea(data) {
+  const grafica = data?.graficas?.find((g) => g.id === 'matricula_por_area');
+  if (!grafica) return '<div class="chart-wrap">Sin datos disponibles.</div>';
+
+  const cats = [...grafica.categorias].reverse();
+  const series = grafica.series.map((serie) => ({
+    ...serie,
+    datos: [...serie.datos].reverse()
+  }));
+  const source = grafica.fuente || '';
+
+  const W = 1040;
+  const barH = 22;
+  const catGap = 8;
+  const labelW = 320;
+  const stemW = 44;
+  const rightPad = 12;
+  const barAreaW = W - labelW - stemW - rightPad;
+  const padTop = 12;
+
+  const rowH = barH + catGap;
+  const H = padTop + cats.length * rowH - catGap + padTop;
+
+  const rows = cats.map((cat, ci) => {
+    const yBar = padTop + ci * rowH;
+    const isStem = STEM_AREAS.has(normalizeCountry(cat));
+
+    // Widths acumulativos para evitar gaps por redondeo
+    let xOff = labelW;
+    const segments = series.map((s, si) => {
+      const v = s.datos[ci];
+      const isLast = si === series.length - 1;
+      const bw = isLast
+        ? (labelW + barAreaW) - xOff
+        : Math.round(v * barAreaW);
+      const pct = (v * 100).toFixed(0);
+      const el = [
+        `<rect x="${xOff}" y="${yBar}" width="${bw}" height="${barH}" fill="${s.color}"
+          class="stem-stacked-fill"
+          data-label="${escapeHtml(cat)}"
+          data-series="${escapeHtml(s.nombre)}"
+          data-value="${(v * 100).toFixed(1)}"
+          data-color="${s.color}"
+          data-unit="%"/>`,
+        bw > 28
+          ? `<text x="${xOff + bw / 2}" y="${yBar + barH / 2}" dominant-baseline="middle" text-anchor="middle" class="stem-stacked-value" fill="white" font-weight="600" pointer-events="none">${pct}%</text>`
+          : ''
+      ].join('');
+      xOff += bw;
+      return el;
+    });
+
+    const catLabel = `<text x="${labelW - 10}" y="${yBar + barH / 2}" dominant-baseline="middle" text-anchor="end" class="stem-stacked-label" fill="${isStem ? '#6f4fe8' : '#1f2340'}" font-weight="${isStem ? '600' : '400'}">${escapeHtml(cat)}</text>`;
+    const stemBadge = isStem
+      ? `<text x="${labelW + barAreaW + 6}" y="${yBar + barH / 2}" dominant-baseline="middle" class="stem-stacked-badge" fill="#6f4fe8" font-weight="700">STEM</text>`
+      : '';
+
+    return [catLabel, ...segments, stemBadge].join('');
+  });
+
+  const legend = series.map((s) =>
+    `<span><span class="legend-dot" style="background:${s.color}"></span>${escapeHtml(s.nombre)}</span>`
+  ).join('');
+
+  return `
+    <p class="stem-scroll-hint" aria-hidden="true">Desliza para ver el gráfico completo →</p>
+    <div class="stem-scroll-frame">
+      <div class="chart-wrap stem-bar-scroll">
+        <div class="chart-legend">${legend}</div>
+        <svg viewBox="0 0 ${W} ${H}" class="chart-svg stem-stacked-svg" role="img" aria-label="Distribución de matrícula por área de estudio">
+          ${rows.join('')}
+        </svg>
+      </div>
+    </div>
+    ${source ? `<p class="chart-source">${formatSourceWithNoteBreak(source)}</p>` : ''}
+  `;
+}
+
+// Cascarón HTML para un mapa choropleth STEM.
+function renderStemMapShell() {
+  return `
+    <div class="stem-map-panel">
+      <div class="stem-map-toolbar">
+        <div class="view-toggle" role="group" aria-label="Tipo de visualización">
+          <button type="button" class="view-btn active" data-view="map">Mapa</button>
+          <button type="button" class="view-btn" data-view="bars">Barras</button>
+        </div>
+      </div>
+      <div class="stem-map-stage mexico-map-stage">
+        <svg class="chart-svg stem-choropleth" role="img"></svg>
+        <div class="bars-stage" hidden></div>
+      </div>
+      <div class="map-gradient"><span></span><div></div><span></span></div>
+      <p class="chart-source stem-map-source" hidden></p>
+    </div>
+  `;
+}
+
+// Renderiza un mapa choropleth STEM.
+async function attachStemMap(container, data, graphId) {
+  const grafica = data?.graficas?.find((g) => g.id === graphId);
+  const panel = container.querySelector('.stem-map-panel');
+  if (!panel || !grafica) return;
+
+  const sourceEl = panel.querySelector('.stem-map-source');
+  const svg = panel.querySelector('.stem-choropleth');
+  const barsStage = panel.querySelector('.bars-stage');
+  const gradLabels = panel.querySelectorAll('.map-gradient span');
+  const viewButtons = Array.from(panel.querySelectorAll('.view-btn'));
+  if (!svg || !barsStage) return;
+
+  if (sourceEl && grafica.fuente) {
+    sourceEl.innerHTML = formatSourceWithNoteBreak(grafica.fuente);
+    sourceEl.hidden = false;
+  }
+
+  let geojson;
+  try {
+    geojson = await fetchJSON(MEXICO_GEOJSON_URL);
+  } catch {
+    container.innerHTML = '<div class="chart-wrap">No fue posible cargar el mapa de México.</div>';
+    return;
+  }
+
+  const features = extractMexicoFeatures(geojson);
+  if (!features.length) return;
+
+  const W = 540;
+  const H = 360;
+  const featureCollection = {
+    type: 'FeatureCollection',
+    features
+  };
+  const projection = geoMercator().fitExtent([[28, 24], [W - 28, H - 34]], featureCollection);
+  projection.scale(projection.scale() * 0.93);
+  let pathFn = geoPath(projection);
+  const [[minX, minY], [maxX, maxY]] = pathFn.bounds(featureCollection);
+  const boundsCenterX = (minX + maxX) / 2;
+  const boundsCenterY = (minY + maxY) / 2;
+  const [tx, ty] = projection.translate();
+  projection.translate([tx + (W / 2 - boundsCenterX), ty + (H / 2 - boundsCenterY) - 6]);
+  pathFn = geoPath(projection);
+  const tooltip = getSharedChartTooltip();
+  const records = Array.isArray(grafica.datos) ? grafica.datos : [];
+  const byEntity = new Map(records.map((d) => [normalizeStateName(d.entidad), d.proporcion]));
+  const vals = records.map((d) => d.proporcion);
+  const minV = Math.min(...vals);
+  const maxV = Math.max(...vals);
+  const sortedItems = records
+    .map((d) => ({
+      key: normalizeStateName(d.entidad),
+      label: formatStateDisplayName(d.entidad),
+      value: Number(d.proporcion),
+      displayValue: (Number(d.proporcion) * 100).toFixed(1),
+      unitSymbol: '%'
+    }))
+    .sort((a, b) => b.value - a.value);
+  let selectedKey = sortedItems[0]?.key || '';
+  let selectedView = 'map';
+
+  if (gradLabels.length >= 2) {
+    gradLabels[0].textContent = `${(minV * 100).toFixed(0)}%`;
+    gradLabels[1].textContent = `${(maxV * 100).toFixed(0)}%`;
+  }
+
+  const renderCurrentView = () => {
+    const mapVisible = selectedView === 'map';
+    setIndicatorStageView(svg, barsStage, mapVisible);
+
+    if (mapVisible) {
+      const paths = features.map((feature) => {
+        const name = getFeatureName(feature);
+        const key = normalizeStateName(name);
+        const value = byEntity.get(key);
+        const fill = Number.isFinite(value) ? colorFromValue(value, minV, maxV) : '#eceaf5';
+        const d = pathFn(feature);
+        if (!d) return '';
+        const displayName = formatStateDisplayName(name);
+        const pct = Number.isFinite(value) ? `${(value * 100).toFixed(1)}%` : 'Sin dato';
+        const activeClass = key === selectedKey ? ' selected-state' : '';
+        return `<path d="${d}" fill="${fill}" stroke="#ffffff" stroke-width="0.8"
+          class="stem-map-path${activeClass}"
+          data-state-key="${escapeHtml(key)}"
+          data-label="${escapeHtml(displayName)}"
+          data-value="${escapeHtml(pct)}"
+        />`;
+      }).join('');
+
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      svg.setAttribute('aria-label', grafica.titulo || 'Mapa STEM');
+      svg.innerHTML = `<rect x="0" y="0" width="${W}" height="${H}" fill="#f8f7fe" rx="12"/>${paths}`;
+
+      svg.querySelectorAll('.stem-map-path').forEach((path) => {
+        path.addEventListener('mousemove', (e) => {
+          tooltip.innerHTML = `
+            <div class="chart-tooltip-title">${escapeHtml(path.dataset.label || '')}</div>
+            <div class="chart-tooltip-row">
+              <span class="chart-tooltip-dot" style="background:#6f4fe8"></span>
+              <span>${escapeHtml(path.dataset.value || 'Sin dato')}</span>
+            </div>
+          `;
+          tooltip.hidden = false;
+          positionSharedTooltip(tooltip, e.clientX, e.clientY);
+        });
+        path.addEventListener('click', () => {
+          selectedKey = path.dataset.stateKey || selectedKey;
+          renderCurrentView();
+        });
+        path.addEventListener('mouseleave', () => { tooltip.hidden = true; });
+      });
+    } else {
+      renderBarsStage(barsStage, sortedItems, selectedKey, (nextKey) => {
+        selectedKey = nextKey;
+        renderCurrentView();
+      });
+      svg.innerHTML = '';
+    }
+  };
+
+  viewButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      selectedView = btn.dataset.view === 'bars' ? 'bars' : 'map';
+      viewButtons.forEach((b) => b.classList.toggle('active', b === btn));
+      renderCurrentView();
+    });
+  });
+
+  renderCurrentView();
+}
+
+// Barras verticales agrupadas: indicadores del mercado laboral STEM.
+function renderStemMercadoLaboral(data) {
+  const grafica = data?.graficas?.find((g) => g.id === 'mercado_laboral_stem');
+  if (!grafica) return '<div class="chart-wrap">Sin datos disponibles.</div>';
+
+  const cats = grafica.categorias;
+  const series = grafica.series;
+  const source = grafica.fuente || '';
+
+  const W = 920;
+  const H = 310;
+  const margin = { top: 22, right: 20, bottom: 58, left: 52 };
+  const innerW = W - margin.left - margin.right;
+  const innerH = H - margin.top - margin.bottom;
+
+  const maxVal = Math.max(...series.flatMap((s) => s.datos));
+  const yScale = (v) => margin.top + innerH - (v / (maxVal * 1.15)) * innerH;
+  const yTicks = [0, 0.25, 0.5, 0.75, 1.0].filter((t) => t <= maxVal * 1.12);
+
+  const grid = yTicks.map((v) => {
+    const yPos = yScale(v);
+    return `<line x1="${margin.left}" y1="${yPos}" x2="${W - margin.right}" y2="${yPos}" stroke="#ece9f8"/>
+      <text x="${margin.left - 6}" y="${yPos}" text-anchor="end" dominant-baseline="middle" font-size="10" fill="#7b809a">${(v * 100).toFixed(0)}%</text>`;
+  }).join('');
+
+  const groupW = innerW / cats.length;
+  const barW = Math.min(52, Math.floor((groupW / series.length) * 0.88));
+  const barGroupTotalW = series.length * barW + (series.length - 1) * 4;
+
+  const bars = cats.flatMap((cat, ci) => {
+    const groupCx = margin.left + ci * groupW + groupW / 2;
+    const startX = groupCx - barGroupTotalW / 2;
+
+    const catBars = series.map((s, si) => {
+      const v = s.datos[ci];
+      const xB = startX + si * (barW + 4);
+      const yB = yScale(v);
+      const bh = margin.top + innerH - yB;
+      const pct = (v * 100).toFixed(0);
+      return [
+        `<rect x="${xB}" y="${yB}" width="${barW}" height="${bh}" rx="4" fill="${s.color}"
+          class="stem-gbar-fill"
+          data-label="${escapeHtml(cat)}"
+          data-series="${escapeHtml(s.nombre)}"
+          data-value="${(v * 100).toFixed(1)}"
+          data-color="${s.color}"
+          data-unit="%"/>`,
+        `<text x="${xB + barW / 2}" y="${yB - 4}" text-anchor="middle" font-size="10" fill="${s.color}" font-weight="600">${pct}%</text>`
+      ].join('');
+    });
+
+    // Split long labels onto two lines
+    const labelParts = cat.length > 16
+      ? (() => {
+          const mid = Math.floor(cat.length / 2);
+          let l = mid, r = mid;
+          while (l > 0 && cat[l] !== ' ') l--;
+          while (r < cat.length && cat[r] !== ' ') r++;
+          const split = (mid - l <= r - mid) ? l : r;
+          return split > 0 && split < cat.length
+            ? [cat.slice(0, split).trim(), cat.slice(split).trim()]
+            : [cat];
+        })()
+      : [cat];
+    const labelY = H - margin.bottom + 14;
+    const catLabel = labelParts.length === 2
+      ? `<text x="${groupCx}" text-anchor="middle" font-size="10" fill="#1f2340">
+          <tspan x="${groupCx}" y="${labelY}">${escapeHtml(labelParts[0])}</tspan>
+          <tspan x="${groupCx}" dy="12">${escapeHtml(labelParts[1])}</tspan>
+         </text>`
+      : `<text x="${groupCx}" y="${labelY}" text-anchor="middle" font-size="10" fill="#1f2340">${escapeHtml(cat)}</text>`;
+    return [...catBars, catLabel];
+  });
+
+  const legend = series.map((s) =>
+    `<span><span class="legend-dot" style="background:${s.color}"></span>${escapeHtml(s.nombre)}</span>`
+  ).join('');
+
+  return `
+    <p class="stem-scroll-hint" aria-hidden="true">Desliza para ver el gráfico completo →</p>
+    <div class="stem-scroll-frame">
+      <div class="chart-wrap stem-market-wrap stem-bar-scroll">
+        <div class="chart-legend">${legend}</div>
+        <svg viewBox="0 0 ${W} ${H}" class="chart-svg stem-market-svg" overflow="visible" role="img" aria-label="Indicadores del mercado laboral para mujeres STEM">
+          ${grid}${bars.join('')}
+        </svg>
+      </div>
+    </div>
+    ${source ? `<p class="chart-source">${formatSourceWithNoteBreak(source)}</p>` : ''}
+  `;
 }

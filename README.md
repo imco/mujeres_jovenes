@@ -23,10 +23,11 @@ El sitio consume datos JSON y renderiza mapas y gráficas interactivas.
 │   └── js/app.js             # Lógica completa del dashboard
 ├── public/
 │   └── data/
-│       ├── dashboard-nacional/   # JSON para pestaña nacional
+│       ├── dashboard-nacional/   # JSON y Excel para pestaña nacional
 │       ├── estadisticas-entidad/ # JSON para pestaña entidad
 │       ├── cdmx-alcaldia/        # JSON y GeoJSON para CDMX
-│       └── stem/                 # JSON y Excel para pestaña STEM
+│       ├── stem/                 # JSON y Excel para pestaña STEM
+│       └── world.geojson         # GeoJSON del mapa mundial (servido local)
 ├── logos/
 │   └── stem-plus-white-horizontal.png  # Logo de Movimiento STEM+
 ├── index.html                # Shell principal
@@ -114,6 +115,7 @@ Puntos clave:
 - `ALCALDIA_ALIASES`
 
 GeoJSON usados:
+- Mundo: `public/data/world.geojson` (local)
 - Entidad: URL remota (`MEXICO_GEOJSON_URL`)
 - CDMX: `public/data/cdmx-alcaldia/cdmx_alcaldias_real.geojson` (local)
 
@@ -131,6 +133,8 @@ En `assets/css/styles.css`:
 - `.vbars-scroll`, `.vbars-plot`, `.bars-scroll-hint`
 - `.stem-bar-scroll`, `.stem-scroll-hint` (barras STEM con scroll horizontal)
 - `.stem-maps-grid` (mapas STEM: desktop 2 columnas, móvil 1 columna)
+
+Los contenedores con scroll horizontal (`.line-chart-wrap`, `.care-stacked-wrap`) usan `touch-action: pan-x pan-y` para permitir tanto el scroll horizontal del gráfico como el vertical de la página en dispositivos táctiles.
 
 ## 8) Agregar o modificar la pestaña STEM
 
@@ -177,9 +181,18 @@ Las fuentes de datos de todas las gráficas (incluidas las STEM) deben usar `for
 
 ## Ejecutar local
 
+Requiere **Node ≥ 18**. Si el sistema tiene una versión anterior, usar nvm:
+
 ```bash
+nvm use 18
 npm install
 npm run dev
+```
+
+Sin nvm, ejecutar Vite directamente con el binario correcto:
+
+```bash
+~/.nvm/versions/node/v18.20.8/bin/node node_modules/vite/bin/vite.js
 ```
 
 ## Build producción

@@ -53,7 +53,6 @@ wp_add_inline_style('monitor-mujeres-jovenes-template', "
     width: 100%;
     min-height: 760px;
     height: calc(100vh - 140px);
-    max-height: 1800px;
     border: 0;
     background: #fff;
   }
@@ -62,7 +61,6 @@ wp_add_inline_style('monitor-mujeres-jovenes-template', "
     .primary_monitor_mj .mj_embed_iframe {
       min-height: 680px;
       height: calc(100vh - 120px);
-      max-height: 1600px;
     }
   }
 
@@ -70,7 +68,6 @@ wp_add_inline_style('monitor-mujeres-jovenes-template', "
     .primary_monitor_mj .mj_embed_iframe {
       min-height: 620px;
       height: calc(100vh - 100px);
-      max-height: 1500px;
     }
   }
 ");
@@ -109,7 +106,7 @@ wp_add_inline_script('monitor-mj-template-js', "
   (function () {
     var iframe = document.getElementById('mj_dashboard_iframe');
     if (!iframe) return;
-    var useAutoHeightFromChild = false;
+    var useAutoHeightFromChild = true;
 
     function clamp(value, min, max) {
       return Math.max(min, Math.min(max, value));

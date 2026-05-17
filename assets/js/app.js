@@ -493,6 +493,7 @@ function renderViewPill(tab) {
         <p class="pill-cite-help">Te sugerimos citarnos de la siguiente manera:</p>
         <p class="pill-cite-text" data-role="cite-text">${escapeHtml(citationText)}</p>
         <div class="pill-cite-actions">
+          <span class="pill-cite-feedback" data-role="cite-copied-feedback" hidden></span>
           <button type="button" class="pill-cite-copy-btn" data-action="copy-cite-text">Copiar cita</button>
         </div>
       </div>
@@ -526,7 +527,19 @@ function setupViewPillActions() {
       const shouldOpen = tooltip.hidden;
       tooltip.hidden = !shouldOpen;
       toggleBtn.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
-      if (shouldOpen) track('citation_open');
+
+      if (shouldOpen) {
+        track('citation_open');
+        const textNode = tooltip.querySelector('[data-role="cite-text"]');
+        const feedbackEl = tooltip.querySelector('[data-role="cite-copied-feedback"]');
+        if (textNode instanceof HTMLElement && feedbackEl instanceof HTMLElement) {
+          const copied = await copyTextToClipboard(textNode.textContent || '');
+          track('citation_copy', { success: copied });
+          feedbackEl.textContent = copied ? '¡Cita copiada al portapapeles!' : 'No se pudo copiar automáticamente';
+          feedbackEl.classList.toggle('pill-cite-feedback--error', !copied);
+          feedbackEl.hidden = false;
+        }
+      }
       return;
     }
 
@@ -539,7 +552,7 @@ function setupViewPillActions() {
       const copied = await copyTextToClipboard(textNode.textContent || '');
       track('citation_copy', { success: copied });
       const originalLabel = copyBtn.textContent || 'Copiar cita';
-      copyBtn.textContent = copied ? 'Cita copiada' : 'No se pudo copiar';
+      copyBtn.textContent = copied ? '¡Copiada!' : 'No se pudo copiar';
       window.setTimeout(() => {
         copyBtn.textContent = originalLabel;
       }, 1400);

@@ -328,6 +328,17 @@ h2 {
   cursor: pointer;
 }
 
+.pill-cite-feedback {
+  font-size: .7rem;
+  font-weight: 700;
+  color: #1a7a4a;
+  flex: 1;
+}
+
+.pill-cite-feedback--error {
+  color: #b91c1c;
+}
+
 .pill-download-icon {
   width: 1.2rem;
   height: 1.2rem;

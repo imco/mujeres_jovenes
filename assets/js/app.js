@@ -365,13 +365,12 @@ function setupEmbedAutoResize() {
 
   const notify = () => {
     const root = document.querySelector('.app-shell');
-    const doc = document.documentElement;
-    const body = document.body;
-    const contentHeight = Math.max(
-      root?.scrollHeight || 0,
-      body?.scrollHeight || 0,
-      doc?.scrollHeight || 0
-    );
+    if (!root) return;
+    const rect = root.getBoundingClientRect();
+    const style = getComputedStyle(root);
+    const contentHeight = rect.height
+      + parseFloat(style.marginTop)
+      + parseFloat(style.marginBottom);
     window.parent.postMessage({
       type: 'mj:resize',
       height: Math.ceil(contentHeight + 16)

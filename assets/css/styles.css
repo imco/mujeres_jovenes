@@ -27,6 +27,16 @@ body {
   overflow-x: hidden; /* fallback iOS Safari < 16 */
 }
 
+/* Dentro de iframe (clase añadida por JS): oculta la barra de scroll del documento
+   sin bloquear el layout. La altura la gestiona el padre vía postMessage. */
+html.in-iframe {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+html.in-iframe::-webkit-scrollbar {
+  display: none;
+}
+
 body {
   margin: 0;
   font-family: 'Space Grotesk', sans-serif;

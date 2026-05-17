@@ -363,6 +363,12 @@ function init() {
 function setupEmbedAutoResize() {
   if (window.parent === window) return;
 
+  // Dentro de un iframe, el scroll del documento lo controla el padre vía postMessage.
+  // Esto elimina la barra de scroll interna del iframe sin afectar los scrolls internos
+  // de los componentes (ranking, barras, etc.) que tienen sus propias reglas de overflow.
+  document.documentElement.style.overflow = 'hidden';
+  document.body.style.overflow = 'hidden';
+
   const notify = () => {
     const root = document.querySelector('.app-shell');
     if (!root) return;

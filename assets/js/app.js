@@ -597,10 +597,12 @@ async function copyTextToClipboard(text) {
   textarea.value = text;
   textarea.setAttribute('readonly', '');
   textarea.style.position = 'fixed';
+  textarea.style.top = '0';
+  textarea.style.left = '0';
   textarea.style.opacity = '0';
   textarea.style.pointerEvents = 'none';
   document.body.appendChild(textarea);
-  textarea.focus();
+  textarea.focus({ preventScroll: true });
   textarea.select();
   const copied = document.execCommand('copy');
   document.body.removeChild(textarea);

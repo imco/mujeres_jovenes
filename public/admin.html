@@ -181,6 +181,17 @@
 <script>
   const logEl = document.getElementById('log');
 
+  const SECTION_NAMES = {
+    participacion_global: 'Participación Global',
+    tpe_historica:        'TPE Histórica',
+    brecha_salarial:      'Brecha Salarial',
+    informalidad:         'Informalidad',
+    valor_cuidados:       'Valor Cuidados',
+    entidad_enriched:     'Resultados por Entidad',
+    cdmx_indicadores:     'CDMX Alcaldías',
+    stem:                 'STEM',
+  };
+
   function pwd() { return document.getElementById('pwd').value.trim(); }
 
   function logLine(text, type = '') {
@@ -192,6 +203,16 @@
     logEl.scrollTop = logEl.scrollHeight;
   }
 
+  function logSynced(s) {
+    const name = SECTION_NAMES[s.id] ?? s.id;
+    logLine(`✓ ${name}: ${s.rows} filas`, 'ok');
+    if (s.sheets) {
+      for (const [sheet, rows] of Object.entries(s.sheets)) {
+        logLine(`    • ${sheet}: ${rows} filas`, 'ok');
+      }
+    }
+  }
+
   async function callSync(body) {
     const res = await fetch('/api/sync', {
       method: 'POST',
@@ -201,9 +222,8 @@
     return { res, json: await res.json() };
   }
 
-  // Botones por pestaña (ignorar clicks en enlaces de descarga)
+  // Botones por pestaña
   document.querySelector('.tab-grid').addEventListener('click', async (e) => {
-    if (e.target.closest('.dl-btn')) return;
     const btn = e.target.closest('.tab-btn');
     if (!btn) return;
     if (!pwd()) { logLine('⚠ Ingresa la contraseña primero.', 'err'); return; }
@@ -214,7 +234,7 @@
     btn.classList.add('loading');
     btn.classList.remove('ok', 'err');
     btn.querySelector('.tab-hint').textContent = 'sincronizando…';
-    logLine(`→ ${label}…`, 'dim');
+    logLine(`\n→ Sincronizando ${label}…`, 'dim');
 
     const { res, json } = await callSync({ tab });
 
@@ -222,14 +242,13 @@
 
     if (!res.ok || json.errors?.length) {
       btn.classList.add('err');
-      const hint = json.errors?.map(e => e.id).join(', ') ?? 'error';
-      btn.querySelector('.tab-hint').textContent = '✗ ' + hint;
-      for (const e of json.errors ?? []) logLine(`✗ ${e.id}: ${e.error}`, 'err');
+      btn.querySelector('.tab-hint').textContent = '✗ error';
+      for (const e of json.errors ?? []) logLine(`✗ ${SECTION_NAMES[e.id] ?? e.id}: ${e.error}`, 'err');
     } else {
       btn.classList.add('ok');
       const total = json.synced?.reduce((s, x) => s + (x.rows ?? 0), 0) ?? 0;
-      btn.querySelector('.tab-hint').textContent = `✓ ${total} registros`;
-      for (const s of json.synced ?? []) logLine(`✓ ${s.id}: ${s.rows} registros`, 'ok');
+      btn.querySelector('.tab-hint').textContent = `✓ ${total} filas`;
+      for (const s of json.synced ?? []) logSynced(s);
     }
   });
 
@@ -243,7 +262,6 @@
     logEl.textContent = '';
     logEl.classList.add('visible');
 
-    // Resetear estado de todos los botones de pestaña
     document.querySelectorAll('.tab-btn').forEach(b => {
       b.classList.remove('ok', 'err');
       const hints = { nacionales: '5 secciones', entidades: '1 sección', cdmx: '1 sección', stem: '6 secciones' };
@@ -253,8 +271,8 @@
     logLine('Iniciando sincronización completa…', 'dim');
     const { res, json } = await callSync({});
 
-    for (const s of json.synced ?? []) logLine(`✓ ${s.id}: ${s.rows} registros`, 'ok');
-    for (const e of json.errors ?? []) logLine(`✗ ${e.id}: ${e.error}`, 'err');
+    for (const s of json.synced ?? []) logSynced(s);
+    for (const e of json.errors ?? []) logLine(`✗ ${SECTION_NAMES[e.id] ?? e.id}: ${e.error}`, 'err');
 
     const ok  = json.synced?.length ?? 0;
     const err = json.errors?.length ?? 0;

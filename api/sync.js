@@ -223,9 +223,16 @@ async function syncMultiSheet(cfg) {
     { access: 'public', addRandomSuffix: false, contentType: 'application/json' }
   );
 
-  const totalRows = pisa.length + nivelMat.length + matriculaArea.length +
-    mapaMat.length + mapaProf.length + mercado.length;
-  return { url, rows: totalRows };
+  const sheets = {
+    'PISA Histórico':      pisa.length,
+    'Nivel Matemáticas':   nivelMat.length,
+    'Matrícula por Área':  matriculaArea.length,
+    'Mapa Matrícula':      mapaMat.length,
+    'Mapa Profesionistas': mapaProf.length,
+    'Mercado Laboral':     mercado.length,
+  };
+  const totalRows = Object.values(sheets).reduce((s, n) => s + n, 0);
+  return { url, rows: totalRows, sheets };
 }
 
 // ── Reconstruye monitor_stem.json desde las 6 hojas de Sheets ────────────────

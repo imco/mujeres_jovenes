@@ -16,6 +16,8 @@ const STATIC_FALLBACKS = {
   valor_cuidados:        '/data/dashboard-nacional/valor_economico_cuidados_fuente.json',
   entidad_enriched:      '/data/estadisticas-entidad/variables_monitor_entidad_enriched.json',
   cdmx_indicadores:      '/data/cdmx-alcaldia/monitor_cdmx_indicadores.json',
+  tpe_historica:         '/data/dashboard-nacional/participacion-mexico-historica.json',
+  stem:                  '/data/stem/monitor_stem.json',
 };
 
 export default async function handler(req, res) {

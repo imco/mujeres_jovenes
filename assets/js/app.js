@@ -24,7 +24,7 @@ const TABS = [
         type: 'line',
         title: 'La participación de las mujeres en el mercado laboral ha cambiado poco en los últimos 20 años',
         subtitle: 'Evolución nacional de la tasa de participación económica por sexo',
-        file: 'data/dashboard-nacional/participacion-mexico-historica.json',
+        file: '/api/data?s=tpe_historica',
         source: 'Fuente: Elaborado por el IMCO con datos del tercer trimestre de la Encuesta Nacional de Ocupación y Empleo (ENOE) del INEGI de 2005 a 2025.',
         chartHeightScale: .8
       },
@@ -111,7 +111,7 @@ const TABS = [
         type: 'line',
         title: 'México registra una tendencia a la baja en el desempeño en matemáticas, comprensión lectora y ciencias',
         subtitle: 'Histórico de puntajes obtenidos por México entre 2003 y 2022',
-        file: 'data/stem/monitor_stem.json',
+        file: '/api/data?s=stem',
         width: 'half',
         chartHeightScale: 1.2
       },
@@ -120,7 +120,7 @@ const TABS = [
         type: 'stem-nivel-matematicas',
         title: 'Una de cada mil jóvenes aplica razonamiento matemático a problemas complejos',
         subtitle: 'Nivel de desempeño en matemáticas por sexo',
-        file: 'data/stem/monitor_stem.json',
+        file: '/api/data?s=stem',
         width: 'half'
       },
       {
@@ -135,7 +135,7 @@ const TABS = [
         type: 'stem-map',
         title: 'San Luis Potosí es la entidad donde más mujeres estudiantes eligen una carrera STEM',
         subtitle: 'Proporción de mujeres que estudian una carrera STEM respecto al total de alumnas',
-        file: 'data/stem/monitor_stem.json',
+        file: '/api/data?s=stem',
         graphId: 'mapa_matricula_stem',
         width: 'half'
       },
@@ -144,7 +144,7 @@ const TABS = [
         type: 'stem-map',
         title: 'Coahuila y Querétaro lideran a nivel nacional. 18% de las mujeres profesionistas trabajan en STEM',
         subtitle: 'Proporción de profesionistas STEM respecto al total de profesionistas por estado',
-        file: 'data/stem/monitor_stem.json',
+        file: '/api/data?s=stem',
         graphId: 'mapa_profesionistas_stem',
         width: 'half'
       },

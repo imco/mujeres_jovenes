@@ -49,7 +49,7 @@
   },
   {
     "pais": "Burkina Faso",
-    "tpe": 41.0
+    "tpe": 41
   },
   {
     "pais": "Bangladés",
@@ -61,7 +61,7 @@
   },
   {
     "pais": "Baréin",
-    "tpe": 43.0
+    "tpe": 43
   },
   {
     "pais": "Bahamas",
@@ -85,7 +85,7 @@
   },
   {
     "pais": "Brasil",
-    "tpe": 53.0
+    "tpe": 53
   },
   {
     "pais": "Barbados",
@@ -109,15 +109,15 @@
   },
   {
     "pais": "Canadá",
-    "tpe": 61.0
+    "tpe": 61
   },
   {
     "pais": "Suiza",
-    "tpe": 62.0
+    "tpe": 62
   },
   {
     "pais": "Chile",
-    "tpe": 52.0
+    "tpe": 52
   },
   {
     "pais": "República Popular China",
@@ -185,7 +185,7 @@
   },
   {
     "pais": "Argelia",
-    "tpe": 14.0
+    "tpe": 14
   },
   {
     "pais": "Ecuador",
@@ -233,7 +233,7 @@
   },
   {
     "pais": "Georgia",
-    "tpe": 55.0
+    "tpe": 55
   },
   {
     "pais": "Ghana",
@@ -273,7 +273,7 @@
   },
   {
     "pais": "Hong Kong",
-    "tpe": 52.0
+    "tpe": 52
   },
   {
     "pais": "Honduras",
@@ -281,11 +281,11 @@
   },
   {
     "pais": "Croacia",
-    "tpe": 47.0
+    "tpe": 47
   },
   {
     "pais": "Haití",
-    "tpe": 60.0
+    "tpe": 60
   },
   {
     "pais": "Hungría",
@@ -317,7 +317,7 @@
   },
   {
     "pais": "Israel",
-    "tpe": 62.0
+    "tpe": 62
   },
   {
     "pais": "Italia",
@@ -329,7 +329,7 @@
   },
   {
     "pais": "Jordania",
-    "tpe": 14.0
+    "tpe": 14
   },
   {
     "pais": "Japón",
@@ -337,7 +337,7 @@
   },
   {
     "pais": "Kazajistán",
-    "tpe": 66.0
+    "tpe": 66
   },
   {
     "pais": "Kenia",
@@ -345,15 +345,15 @@
   },
   {
     "pais": "Kirguistán",
-    "tpe": 53.0
+    "tpe": 53
   },
   {
     "pais": "Camboya",
-    "tpe": 74.0
+    "tpe": 74
   },
   {
     "pais": "Corea del Sur",
-    "tpe": 56.0
+    "tpe": 56
   },
   {
     "pais": "Kuwait",
@@ -409,7 +409,7 @@
   },
   {
     "pais": "Maldivas",
-    "tpe": 41.0
+    "tpe": 41
   },
   {
     "pais": "México",
@@ -421,7 +421,7 @@
   },
   {
     "pais": "Mali",
-    "tpe": 58.0
+    "tpe": 58
   },
   {
     "pais": "Malta",
@@ -429,7 +429,7 @@
   },
   {
     "pais": "Birmania",
-    "tpe": 41.0
+    "tpe": 41
   },
   {
     "pais": "Montenegro",
@@ -641,7 +641,7 @@
   },
   {
     "pais": "Timor Oriental",
-    "tpe": 61.0
+    "tpe": 61
   },
   {
     "pais": "Tonga",
@@ -709,7 +709,7 @@
   },
   {
     "pais": "Sudáfrica",
-    "tpe": 53.0
+    "tpe": 53
   },
   {
     "pais": "Zambia",

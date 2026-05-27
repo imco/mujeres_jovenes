@@ -2,7 +2,7 @@
   "sources": [
     {
       "id": "participacion-global",
-      "enabled": false,
+      "enabled": true,
       "description": "Participación económica de mujeres por país",
       "source": {
         "sheetUrl": "https://docs.google.com/spreadsheets/d/18I_XYerve-1L6NVIRNiHkvbw6EudJ1DpB-5gBUOY4n0/edit?gid=0#gid=0",
@@ -16,7 +16,7 @@
     },
     {
       "id": "tpe-historica-linea",
-      "enabled": false,
+      "enabled": true,
       "description": "Serie histórica TPE México (líneas y puntos)",
       "source": {
         "localJsonPath": "scripts/sources/TPE.json"
@@ -31,7 +31,7 @@
     },
     {
       "id": "brecha-salarial-hoja1",
-      "enabled": false,
+      "enabled": true,
       "description": "Serie histórica de brecha salarial",
       "source": {
         "sheetUrl": "https://docs.google.com/spreadsheets/d/18I_XYerve-1L6NVIRNiHkvbw6EudJ1DpB-5gBUOY4n0/edit?gid=253482696#gid=253482696",
@@ -47,7 +47,7 @@
     },
     {
       "id": "informalidad-hoja1",
-      "enabled": false,
+      "enabled": true,
       "description": "Serie trimestral informalidad por sexo",
       "source": {
         "sheetUrl": "https://docs.google.com/spreadsheets/d/18I_XYerve-1L6NVIRNiHkvbw6EudJ1DpB-5gBUOY4n0/edit?gid=761524869#gid=761524869",
@@ -63,7 +63,7 @@
     },
     {
       "id": "valor-cuidados-hoja1",
-      "enabled": false,
+      "enabled": true,
       "description": "Evolución del trabajo no remunerado en PIB por sexo",
       "source": {
         "sheetUrl": "https://docs.google.com/spreadsheets/d/18I_XYerve-1L6NVIRNiHkvbw6EudJ1DpB-5gBUOY4n0/edit?gid=1495501902#gid=1495501902",
@@ -79,7 +79,7 @@
     },
     {
       "id": "entidad-enriched",
-      "enabled": false,
+      "enabled": true,
       "description": "Datos por entidad con metadata enriquecida",
       "source": {
         "sheetUrl": "https://docs.google.com/spreadsheets/d/18I_XYerve-1L6NVIRNiHkvbw6EudJ1DpB-5gBUOY4n0/edit?gid=1208416458#gid=1208416458",
@@ -95,7 +95,7 @@
     },
     {
       "id": "cdmx-indicadores",
-      "enabled": false,
+      "enabled": true,
       "description": "Indicadores por alcaldía (CDMX)",
       "source": {
         "sheetUrl": "https://docs.google.com/spreadsheets/d/18I_XYerve-1L6NVIRNiHkvbw6EudJ1DpB-5gBUOY4n0/edit?gid=207678363#gid=207678363",

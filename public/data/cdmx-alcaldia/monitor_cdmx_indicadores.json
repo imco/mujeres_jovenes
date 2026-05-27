@@ -85,7 +85,7 @@
     {
       "Entidad": "Azcapotzalco",
       "Variable": "Duración de la jornada laboral",
-      "Valor": 36.0,
+      "Valor": 36,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a actividades remuneradas.",
       "Unidad": "Porcentaje",
       "Fuente": "Encuesta Nacional de Ocupación y Empleo (ENOE), INEGI (promedio de los cuatro trimestres, 2024)"
@@ -157,7 +157,7 @@
     {
       "Entidad": "Coyoacán",
       "Variable": "Mujeres con discapacidad",
-      "Valor": 2.0,
+      "Valor": 2,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con discapacidad respecto al total de la población de mujeres.",
       "Unidad": "Porcentaje",
       "Fuente": "Censo de Población y Vivienda (2020)"
@@ -493,7 +493,7 @@
     {
       "Entidad": "Gustavo A. Madero",
       "Variable": "Brecha de ingresos",
-      "Valor": -5.0,
+      "Valor": -5,
       "Que_mide": "Valor absoluto de la diferencia de ingresos mensuales promedio de hombres y mujeres entre 15 y 29 años dividida entre los ingresos mensuales promedio de los hombres.",
       "Unidad": "Porcentaje",
       "Fuente": "Censo de Población y Vivienda (2020)"
@@ -541,7 +541,7 @@
     {
       "Entidad": "Iztacalco",
       "Variable": "Población de mujeres jóvenes",
-      "Valor": 22.0,
+      "Valor": 22,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años respecto al total de la población de mujeres.",
       "Unidad": "Porcentaje",
       "Fuente": "Censo de Población y Vivienda (2020)"
@@ -781,7 +781,7 @@
     {
       "Entidad": "Iztapalapa",
       "Variable": "Brecha de ingresos",
-      "Valor": 10.0,
+      "Valor": 10,
       "Que_mide": "Valor absoluto de la diferencia de ingresos mensuales promedio de hombres y mujeres entre 15 y 29 años dividida entre los ingresos mensuales promedio de los hombres.",
       "Unidad": "Porcentaje",
       "Fuente": "Censo de Población y Vivienda (2020)"
@@ -901,7 +901,7 @@
     {
       "Entidad": "La Magdalena Contreras",
       "Variable": "Duración de la jornada laboral",
-      "Valor": 40.0,
+      "Valor": 40,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a actividades remuneradas.",
       "Unidad": "Porcentaje",
       "Fuente": "Encuesta Nacional de Ocupación y Empleo (ENOE), INEGI (promedio de los cuatro trimestres, 2024)"
@@ -917,7 +917,7 @@
     {
       "Entidad": "La Magdalena Contreras",
       "Variable": "Informalidad",
-      "Valor": 53.0,
+      "Valor": 53,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años ocupadas en trabajos dentro del sector informal respecto a la PEA en ese rango de edad.",
       "Unidad": "Porcentaje",
       "Fuente": "Encuesta Nacional de Ocupación y Empleo (ENOE), INEGI (promedio de los cuatro trimestres, 2024)"
@@ -1013,7 +1013,7 @@
     {
       "Entidad": "Milpa Alta",
       "Variable": "Feminicidios",
-      "Valor": 5.0,
+      "Valor": 5,
       "Que_mide": "Mujeres víctimas de feminicidios por cada 100 mil mujeres.",
       "Unidad": "Porcentaje",
       "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo (2024)"
@@ -1037,7 +1037,7 @@
     {
       "Entidad": "Milpa Alta",
       "Variable": "Horas promedio destinadas a los cuidados",
-      "Valor": 29.0,
+      "Valor": 29,
       "Que_mide": "Horas promedio a la semana que dedican las mujeres entre 15 y 29 años a actividades de cuidado.",
       "Unidad": "Porcentaje",
       "Fuente": "Encuesta Nacional de Ingreso y Gastos de los Hogares (ENIGH), INEGI (2024)"
@@ -1149,7 +1149,7 @@
     {
       "Entidad": "Álvaro Obregón",
       "Variable": "Acceso a servicios de salud",
-      "Valor": 27.0,
+      "Valor": 27,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años sin acceso a servicios médicos o de salud pública y/o privada respecto a la población en ese rango de edad.",
       "Unidad": "Porcentaje",
       "Fuente": "Censo de Población y Vivienda (2020)"
@@ -1237,7 +1237,7 @@
     {
       "Entidad": "Tláhuac",
       "Variable": "Porcentaje de mujeres con hijos",
-      "Valor": 32.0,
+      "Valor": 32,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con hijos respecto a la población en ese rango de edad.",
       "Unidad": "Porcentaje",
       "Fuente": "Censo de Población y Vivienda (2020)"
@@ -1269,7 +1269,7 @@
     {
       "Entidad": "Tláhuac",
       "Variable": "Mujeres fuera del sistema educativo y del mercado de trabajo",
-      "Valor": 14.0,
+      "Valor": 14,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años que no estudian ni tienen un empleo respecto a la población en ese rango de edad.",
       "Unidad": "Porcentaje",
       "Fuente": "Encuesta Nacional de Ocupación y Empleo (ENOE), INEGI (promedio de los cuatro trimestres, 2024)"
@@ -1285,7 +1285,7 @@
     {
       "Entidad": "Tláhuac",
       "Variable": "Feminicidios",
-      "Valor": 2.0,
+      "Valor": 2,
       "Que_mide": "Mujeres víctimas de feminicidios por cada 100 mil mujeres.",
       "Unidad": "Porcentaje",
       "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo (2024)"
@@ -1373,7 +1373,7 @@
     {
       "Entidad": "Tlalpan",
       "Variable": "Mujeres jóvenes que hablan una lengua indígena",
-      "Valor": 12.0,
+      "Valor": 12,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que hablan lengua indígena y/o se autoadscriben como afrodescendientes, respecto al total de mujeres en ese grupo de edad.",
       "Unidad": "Porcentaje",
       "Fuente": "Censo de Población y Vivienda (2020)"
@@ -1405,7 +1405,7 @@
     {
       "Entidad": "Tlalpan",
       "Variable": "Acceso a servicios de salud",
-      "Valor": 30.0,
+      "Valor": 30,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años sin acceso a servicios médicos o de salud pública y/o privada respecto a la población en ese rango de edad.",
       "Unidad": "Porcentaje",
       "Fuente": "Censo de Población y Vivienda (2020)"
@@ -1453,7 +1453,7 @@
     {
       "Entidad": "Tlalpan",
       "Variable": "Tasa de participación económica de las mujeres",
-      "Valor": 45.0,
+      "Valor": 45,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que tienen un empleo o que buscan uno respecto a la población total en ese rango de edad.",
       "Unidad": "Porcentaje",
       "Fuente": "Encuesta Nacional de Ocupación y Empleo (ENOE), INEGI (promedio de los cuatro trimestres, 2024)"
@@ -1637,7 +1637,7 @@
     {
       "Entidad": "Xochimilco",
       "Variable": "Informalidad",
-      "Valor": 71.0,
+      "Valor": 71,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años ocupadas en trabajos dentro del sector informal respecto a la PEA en ese rango de edad.",
       "Unidad": "Porcentaje",
       "Fuente": "Encuesta Nacional de Ocupación y Empleo (ENOE), INEGI (promedio de los cuatro trimestres, 2024)"
@@ -1701,7 +1701,7 @@
     {
       "Entidad": "Benito Juárez",
       "Variable": "Mujeres con discapacidad",
-      "Valor": 3.0,
+      "Valor": 3,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con discapacidad respecto al total de la población de mujeres.",
       "Unidad": "Porcentaje",
       "Fuente": "Censo de Población y Vivienda (2020)"
@@ -1749,7 +1749,7 @@
     {
       "Entidad": "Benito Juárez",
       "Variable": "Tasa de participación económica de las mujeres",
-      "Valor": 52.0,
+      "Valor": 52,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que tienen un empleo o que buscan uno respecto a la población total en ese rango de edad.",
       "Unidad": "Porcentaje",
       "Fuente": "Encuesta Nacional de Ocupación y Empleo (ENOE), INEGI (promedio de los cuatro trimestres, 2024)"
@@ -1773,7 +1773,7 @@
     {
       "Entidad": "Benito Juárez",
       "Variable": "Informalidad",
-      "Valor": 34.0,
+      "Valor": 34,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años ocupadas en trabajos dentro del sector informal respecto a la PEA en ese rango de edad.",
       "Unidad": "Porcentaje",
       "Fuente": "Encuesta Nacional de Ocupación y Empleo (ENOE), INEGI (promedio de los cuatro trimestres, 2024)"
@@ -1797,7 +1797,7 @@
     {
       "Entidad": "Benito Juárez",
       "Variable": "Emprendedoras",
-      "Valor": 5.0,
+      "Valor": 5,
       "Que_mide": "Porcentaje de emprendedoras entre 15 años y 29 años respecto a la PEA en ese rango de edad.",
       "Unidad": "Porcentaje",
       "Fuente": "Encuesta Nacional de Ocupación y Empleo (ENOE), INEGI (promedio de los cuatro trimestres, 2024)"
@@ -1813,7 +1813,7 @@
     {
       "Entidad": "Cuauhtémoc",
       "Variable": "Porcentaje de mujeres con hijos",
-      "Valor": 20.0,
+      "Valor": 20,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con hijos respecto a la población en ese rango de edad.",
       "Unidad": "Porcentaje",
       "Fuente": "Censo de Población y Vivienda (2020)"
@@ -1829,7 +1829,7 @@
     {
       "Entidad": "Cuauhtémoc",
       "Variable": "Mujeres con discapacidad",
-      "Valor": 3.0,
+      "Valor": 3,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con discapacidad respecto al total de la población de mujeres.",
       "Unidad": "Porcentaje",
       "Fuente": "Censo de Población y Vivienda (2020)"
@@ -1837,7 +1837,7 @@
     {
       "Entidad": "Cuauhtémoc",
       "Variable": "Rezago educativo",
-      "Valor": 10.0,
+      "Valor": 10,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años con rezago educativo respecto a la población en ese rango de edad.",
       "Unidad": "Porcentaje",
       "Fuente": "Censo de Población y Vivienda (2020)"
@@ -1877,7 +1877,7 @@
     {
       "Entidad": "Cuauhtémoc",
       "Variable": "Tasa de participación económica de las mujeres",
-      "Valor": 54.0,
+      "Valor": 54,
       "Que_mide": "Porcentaje de mujeres entre 15 a 29 años que tienen un empleo o que buscan uno respecto a la población total en ese rango de edad.",
       "Unidad": "Porcentaje",
       "Fuente": "Encuesta Nacional de Ocupación y Empleo (ENOE), INEGI (promedio de los cuatro trimestres, 2024)"
@@ -2061,7 +2061,7 @@
     {
       "Entidad": "Venustiano Carranza",
       "Variable": "Población de mujeres jóvenes",
-      "Valor": 21.0,
+      "Valor": 21,
       "Que_mide": "Porcentaje de mujeres entre 15 y 29 años respecto al total de la población de mujeres.",
       "Unidad": "Porcentaje",
       "Fuente": "Censo de Población y Vivienda (2020)"
@@ -2125,7 +2125,7 @@
     {
       "Entidad": "Venustiano Carranza",
       "Variable": "Delitos sexuales",
-      "Valor": 147.0,
+      "Valor": 147,
       "Que_mide": "Carpetas de investigación de delitos de acoso y abuso sexual por cada 100 mil mujeres.",
       "Unidad": "Porcentaje",
       "Fuente": "Observatorio Nacional Ciudadano con datos del Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública y Conapo (2024)"

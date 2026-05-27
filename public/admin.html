@@ -137,10 +137,42 @@
     .log-ok  { color: #86efac; }
     .log-err { color: #fca5a5; }
     .log-dim { color: #6b7280; }
+
+    .imco-logo {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: 1.5rem;
+    }
+    .imco-logo-badge {
+      background: #1f2340;
+      color: #fff;
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      padding: .25rem .55rem;
+      border-radius: 5px;
+    }
+    .imco-logo-text {
+      font-size: .75rem;
+      color: #9ca3af;
+      font-weight: 500;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: .72rem;
+      color: #9ca3af;
+    }
   </style>
 </head>
 <body>
 <div class="card">
+  <div class="imco-logo">
+    <span class="imco-logo-badge">IMCO</span>
+    <span class="imco-logo-text">Instituto Mexicano para la Competitividad</span>
+  </div>
   <h1>Actualización de datos</h1>
   <p class="subtitle">Monitor Mujeres Jóvenes — sincroniza Google Sheets → dashboard</p>
 
@@ -177,6 +209,8 @@
 
   <pre id="log"></pre>
 </div>
+
+<footer>Desarrollado por Joel Bravo · IMCO 2025</footer>
 
 <script>
   const logEl = document.getElementById('log');

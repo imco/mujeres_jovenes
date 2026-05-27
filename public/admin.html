@@ -149,39 +149,29 @@
 
   <p class="tabs-label">Actualizar por pestaña</p>
   <div class="tab-grid">
-    <div>
-      <button class="tab-btn" data-tab="nacionales">
-        <span class="tab-icon">🇲🇽</span>
-        <span class="tab-name">Resultados nacionales</span>
-        <span class="tab-hint">5 secciones</span>
-      </button>
-      <a class="dl-btn" href="/api/download?tab=nacionales" download>⬇ Descargar plantilla .xlsx</a>
-    </div>
-    <div>
-      <button class="tab-btn" data-tab="entidades">
-        <span class="tab-icon">🗺️</span>
-        <span class="tab-name">Resultados por entidad</span>
-        <span class="tab-hint">1 sección</span>
-      </button>
-      <a class="dl-btn" href="/api/download?tab=entidades" download>⬇ Descargar plantilla .xlsx</a>
-    </div>
-    <div>
-      <button class="tab-btn" data-tab="cdmx">
-        <span class="tab-icon">🏙️</span>
-        <span class="tab-name">Resultados CDMX</span>
-        <span class="tab-hint">1 sección</span>
-      </button>
-      <a class="dl-btn" href="/api/download?tab=cdmx" download>⬇ Descargar plantilla .xlsx</a>
-    </div>
-    <div>
-      <button class="tab-btn" data-tab="stem">
-        <span class="tab-icon">🔬</span>
-        <span class="tab-name">Resultados STEM</span>
-        <span class="tab-hint">6 secciones</span>
-      </button>
-      <a class="dl-btn" href="/api/download?tab=stem" download>⬇ Descargar plantilla .xlsx</a>
-    </div>
+    <button class="tab-btn" data-tab="nacionales">
+      <span class="tab-icon">🇲🇽</span>
+      <span class="tab-name">Resultados nacionales</span>
+      <span class="tab-hint">5 secciones</span>
+    </button>
+    <button class="tab-btn" data-tab="entidades">
+      <span class="tab-icon">🗺️</span>
+      <span class="tab-name">Resultados por entidad</span>
+      <span class="tab-hint">1 sección</span>
+    </button>
+    <button class="tab-btn" data-tab="cdmx">
+      <span class="tab-icon">🏙️</span>
+      <span class="tab-name">Resultados CDMX</span>
+      <span class="tab-hint">1 sección</span>
+    </button>
+    <button class="tab-btn" data-tab="stem">
+      <span class="tab-icon">🔬</span>
+      <span class="tab-name">Resultados STEM</span>
+      <span class="tab-hint">6 secciones</span>
+    </button>
   </div>
+
+  <a class="dl-btn" href="/api/download" download style="margin-bottom:1rem;">⬇ Descargar plantilla .xlsx (todas las pestañas)</a>
 
   <button class="sync-all" id="sync-all">⟳ Sincronizar todas las pestañas</button>
 

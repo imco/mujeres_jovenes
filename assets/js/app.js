@@ -16,7 +16,7 @@ const TABS = [
         type: 'world-map-ranking',
         title: ' La participación económica de las mujeres en México se ubica por debajo del nivel mundial',
         subtitle: 'Tasa de participación económica de las mujeres por país',
-        file: 'data/dashboard-nacional/participacion_economica_mujeres_por_pais.json',
+        file: '/api/data?s=participacion_global',
         layout: 'map-ranking'
       },
       {
@@ -34,7 +34,7 @@ const TABS = [
         title: 'Por cada 100 pesos que gana un hombre, una mujer percibe en promedio 86 pesos',
         subtitle: 'Evolución de la brecha salarial por género en México',
         source: 'Fuente: Elaborado por el IMCO con el promedio de los cuatro trimestres de la Encuesta Nacional de Ocupación y Empleo (ENOE) del INEGI de 2005 a 2025.',
-        file: 'data/dashboard-nacional/evolucion_brecha_salarial_genero_mexico_fuente.json',
+        file: '/api/data?s=brecha_salarial',
         width: 'half',
         chartHeightScale: 1.35
       },
@@ -44,7 +44,7 @@ const TABS = [
         title: 'Actualmente la diferencia entre hombres y mujeres en la informalidad se encuentra en niveles similares a 2005',
         subtitle: 'Porcentaje de trabajadores en la informalidad por sexo',
         source: 'Nota: Se considera la tasa de informalidad con respecto a la población ocupada no agropecuaria (TIL2). Fuente: Elaborado por el IMCO con el dato trimestral de la Encuesta Nacional de Ocupación y Empleo (ENOE) del INEGI de 2005 a 2025.',
-        file: 'data/dashboard-nacional/evolucion_informalidad_laboral_por_sexo_fuente.json',
+        file: '/api/data?s=informalidad',
         width: 'half',
         chartHeightScale: 1.28
       },
@@ -53,7 +53,7 @@ const TABS = [
         type: 'stacked-bars',
         title: ' El trabajo del hogar y de cuidados equivale a 24% de la economía nacional',
         subtitle: 'Trabajo no remunerado de los hogares como porcentaje del PIB (pesos corrientes)',
-        file: 'data/dashboard-nacional/valor_economico_cuidados_fuente.json'
+        file: '/api/data?s=valor_cuidados'
       }
     ]
   },
@@ -70,7 +70,7 @@ const TABS = [
         type: 'mexico-indicator-map',
         title: 'Indicadores por entidad',
         subtitle: 'Selecciona un indicador de la lista desplegable',
-        file: 'data/estadisticas-entidad/variables_monitor_entidad_enriched.json',
+        file: '/api/data?s=entidad_enriched',
         layout: 'indicator-map'
       }
     ]
@@ -89,7 +89,7 @@ const TABS = [
         type: 'cdmx-indicator-map',
         title: 'Indicadores por alcaldía',
         subtitle: 'Selecciona un indicador de la lista desplegable.',
-        file: 'data/cdmx-alcaldia/monitor_cdmx_indicadores.json',
+        file: '/api/data?s=cdmx_indicadores',
         layout: 'indicator-map'
       }
     ]

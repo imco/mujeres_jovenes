@@ -1,5 +1,9 @@
 {
   "buildCommand": "npm run build",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "functions": {
+    "api/sync.js": { "maxDuration": 60 },
+    "api/data.js": { "maxDuration": 15 }
+  }
 }
 

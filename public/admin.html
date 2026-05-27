@@ -24,7 +24,7 @@
       box-shadow: 0 4px 24px rgba(111,79,232,.10);
       padding: 2.5rem 2rem;
       width: 100%;
-      max-width: 560px;
+      max-width: 540px;
     }
 
     h1 { font-size: 1.25rem; font-weight: 700; margin-bottom: .25rem; }
@@ -40,54 +40,61 @@
       font-size: .95rem;
       outline: none;
       transition: border-color .2s;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.75rem;
     }
     input[type="password"]:focus { border-color: #6f4fe8; }
 
-    .section-grid {
+    .tabs-label { font-size: .8rem; font-weight: 600; color: #374151; margin-bottom: .6rem; }
+
+    .tab-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: .6rem;
+      gap: .7rem;
       margin-bottom: 1rem;
     }
 
-    .section-btn {
+    .tab-btn {
       background: #f4f3ff;
       border: 1.5px solid #e0ddf9;
-      border-radius: 8px;
-      padding: .55rem .75rem;
-      font-size: .78rem;
-      font-weight: 600;
+      border-radius: 10px;
+      padding: .85rem 1rem;
+      font-size: .82rem;
+      font-weight: 700;
       color: #4338ca;
       cursor: pointer;
       display: flex;
-      align-items: center;
-      gap: .4rem;
-      transition: background .15s, border-color .15s;
+      flex-direction: column;
+      gap: .3rem;
+      transition: background .15s, border-color .15s, box-shadow .15s;
+      text-align: left;
     }
-    .section-btn:hover { background: #ede9fe; border-color: #6f4fe8; }
-    .section-btn.loading { opacity: .6; pointer-events: none; }
-    .section-btn .dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: #6f4fe8;
-      flex-shrink: 0;
-    }
-    .section-btn.ok .dot  { background: #16a34a; }
-    .section-btn.err .dot { background: #dc2626; }
+    .tab-btn:hover   { background: #ede9fe; border-color: #6f4fe8; box-shadow: 0 2px 8px rgba(111,79,232,.12); }
+    .tab-btn.loading { opacity: .6; pointer-events: none; }
+    .tab-btn.ok      { border-color: #16a34a; background: #f0fdf4; color: #15803d; }
+    .tab-btn.err     { border-color: #dc2626; background: #fef2f2; color: #dc2626; }
+
+    .tab-icon { font-size: 1.3rem; line-height: 1; }
+    .tab-name { font-size: .85rem; font-weight: 700; }
+    .tab-hint { font-size: .7rem; font-weight: 400; color: #6b7280; }
+    .tab-btn.ok  .tab-hint { color: #16a34a; }
+    .tab-btn.err .tab-hint { color: #dc2626; }
 
     .sync-all {
       width: 100%;
-      padding: .75rem;
+      padding: .8rem;
       background: #6f4fe8;
       color: #fff;
       border: none;
       border-radius: 10px;
-      font-size: 1rem;
+      font-size: .95rem;
       font-weight: 700;
       cursor: pointer;
-      margin-top: .5rem;
+      margin-top: .25rem;
       transition: background .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
     }
     .sync-all:hover    { background: #5b3fd6; }
     .sync-all:disabled { background: #a5b4fc; cursor: not-allowed; }
@@ -98,14 +105,15 @@
       color: #a5f3fc;
       border-radius: 10px;
       padding: 1rem 1.1rem;
-      font-size: .78rem;
+      font-size: .76rem;
       font-family: monospace;
-      min-height: 80px;
-      max-height: 300px;
+      min-height: 70px;
+      max-height: 280px;
       overflow-y: auto;
       display: none;
       white-space: pre-wrap;
       word-break: break-all;
+      line-height: 1.6;
     }
     #log.visible { display: block; }
     .log-ok  { color: #86efac; }
@@ -116,103 +124,124 @@
 <body>
 <div class="card">
   <h1>Actualización de datos</h1>
-  <p class="subtitle">Monitor Mujeres Jóvenes — sincroniza Google Sheets → Vercel Blob</p>
+  <p class="subtitle">Monitor Mujeres Jóvenes — sincroniza Google Sheets → dashboard</p>
 
   <label for="pwd">Contraseña de administrador</label>
   <input type="password" id="pwd" placeholder="••••••••" autocomplete="current-password" />
 
-  <label>Secciones individuales</label>
-  <div class="section-grid" id="section-grid">
-    <button class="section-btn" data-id="participacion_global"><span class="dot"></span>Participación global</button>
-    <button class="section-btn" data-id="brecha_salarial"><span class="dot"></span>Brecha salarial</button>
-    <button class="section-btn" data-id="informalidad"><span class="dot"></span>Informalidad ↑ acum.</button>
-    <button class="section-btn" data-id="valor_cuidados"><span class="dot"></span>Valor cuidados</button>
-    <button class="section-btn" data-id="entidad_enriched"><span class="dot"></span>Entidades</button>
-    <button class="section-btn" data-id="cdmx_indicadores"><span class="dot"></span>CDMX alcaldías</button>
+  <p class="tabs-label">Actualizar por pestaña</p>
+  <div class="tab-grid">
+    <button class="tab-btn" data-tab="nacionales">
+      <span class="tab-icon">🇲🇽</span>
+      <span class="tab-name">Resultados nacionales</span>
+      <span class="tab-hint">5 secciones</span>
+    </button>
+    <button class="tab-btn" data-tab="entidades">
+      <span class="tab-icon">🗺️</span>
+      <span class="tab-name">Resultados por entidad</span>
+      <span class="tab-hint">1 sección</span>
+    </button>
+    <button class="tab-btn" data-tab="cdmx">
+      <span class="tab-icon">🏙️</span>
+      <span class="tab-name">Resultados CDMX</span>
+      <span class="tab-hint">1 sección</span>
+    </button>
+    <button class="tab-btn" data-tab="stem">
+      <span class="tab-icon">🔬</span>
+      <span class="tab-name">Resultados STEM</span>
+      <span class="tab-hint">6 secciones</span>
+    </button>
   </div>
 
-  <button class="sync-all" id="sync-all">⟳ Sincronizar todo</button>
+  <button class="sync-all" id="sync-all">⟳ Sincronizar todas las pestañas</button>
 
   <pre id="log"></pre>
 </div>
 
 <script>
-  const log = document.getElementById('log');
+  const logEl = document.getElementById('log');
+
+  function pwd() { return document.getElementById('pwd').value.trim(); }
 
   function logLine(text, type = '') {
-    log.classList.add('visible');
-    const line = document.createElement('span');
-    if (type) line.className = `log-${type}`;
-    line.textContent = text + '\n';
-    log.appendChild(line);
-    log.scrollTop = log.scrollHeight;
+    logEl.classList.add('visible');
+    const span = document.createElement('span');
+    if (type) span.className = `log-${type}`;
+    span.textContent = text + '\n';
+    logEl.appendChild(span);
+    logEl.scrollTop = logEl.scrollHeight;
   }
 
-  async function syncSection(sectionId, label) {
-    const password = document.getElementById('pwd').value.trim();
-    if (!password) { logLine('⚠ Ingresa la contraseña primero.', 'err'); return; }
-
-    logLine(`→ sincronizando ${label}…`, 'dim');
+  async function callSync(body) {
     const res = await fetch('/api/sync', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password, section: sectionId }),
+      body: JSON.stringify({ password: pwd(), ...body }),
     });
-    const json = await res.json();
-
-    if (!res.ok || json.errors?.length) {
-      const msg = json.errors?.[0]?.error ?? json.error ?? 'Error desconocido';
-      logLine(`✗ ${label}: ${msg}`, 'err');
-      return false;
-    }
-    const rows = json.synced?.[0]?.rows ?? '?';
-    logLine(`✓ ${label}: ${rows} registros`, 'ok');
-    return true;
+    return { res, json: await res.json() };
   }
 
-  // Botones de sección individual
-  document.getElementById('section-grid').addEventListener('click', async (e) => {
-    const btn = e.target.closest('.section-btn');
+  // Botones por pestaña
+  document.querySelector('.tab-grid').addEventListener('click', async (e) => {
+    const btn = e.target.closest('.tab-btn');
     if (!btn) return;
-    const id    = btn.dataset.id;
-    const label = btn.querySelector('span + *')?.textContent ?? id;  // fallback
-    // label from text node
-    const btnLabel = btn.textContent.trim();
+    if (!pwd()) { logLine('⚠ Ingresa la contraseña primero.', 'err'); return; }
+
+    const tab   = btn.dataset.tab;
+    const label = btn.querySelector('.tab-name').textContent;
 
     btn.classList.add('loading');
     btn.classList.remove('ok', 'err');
-    const ok = await syncSection(id, btnLabel);
+    btn.querySelector('.tab-hint').textContent = 'sincronizando…';
+    logLine(`→ ${label}…`, 'dim');
+
+    const { res, json } = await callSync({ tab });
+
     btn.classList.remove('loading');
-    btn.classList.add(ok ? 'ok' : 'err');
+
+    if (!res.ok || json.errors?.length) {
+      btn.classList.add('err');
+      const hint = json.errors?.map(e => e.id).join(', ') ?? 'error';
+      btn.querySelector('.tab-hint').textContent = '✗ ' + hint;
+      for (const e of json.errors ?? []) logLine(`✗ ${e.id}: ${e.error}`, 'err');
+    } else {
+      btn.classList.add('ok');
+      const total = json.synced?.reduce((s, x) => s + (x.rows ?? 0), 0) ?? 0;
+      btn.querySelector('.tab-hint').textContent = `✓ ${total} registros`;
+      for (const s of json.synced ?? []) logLine(`✓ ${s.id}: ${s.rows} registros`, 'ok');
+    }
   });
 
   // Sincronizar todo
   document.getElementById('sync-all').addEventListener('click', async () => {
-    const password = document.getElementById('pwd').value.trim();
-    if (!password) { logLine('⚠ Ingresa la contraseña primero.', 'err'); return; }
+    if (!pwd()) { logLine('⚠ Ingresa la contraseña primero.', 'err'); return; }
 
     const btn = document.getElementById('sync-all');
     btn.disabled = true;
     btn.textContent = '⟳ Sincronizando…';
-    log.textContent = '';
-    log.classList.add('visible');
-    logLine('Iniciando sincronización completa…', 'dim');
+    logEl.textContent = '';
+    logEl.classList.add('visible');
 
-    const res = await fetch('/api/sync', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password }),
+    // Resetear estado de todos los botones de pestaña
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.classList.remove('ok', 'err');
+      const hints = { nacionales: '5 secciones', entidades: '1 sección', cdmx: '1 sección', stem: '6 secciones' };
+      b.querySelector('.tab-hint').textContent = hints[b.dataset.tab] ?? '';
     });
-    const json = await res.json();
 
-    for (const s of json.synced ?? [])  logLine(`✓ ${s.id}: ${s.rows} registros`, 'ok');
-    for (const e of json.errors ?? [])  logLine(`✗ ${e.id}: ${e.error}`, 'err');
+    logLine('Iniciando sincronización completa…', 'dim');
+    const { res, json } = await callSync({});
 
-    if (!json.errors?.length) logLine('\nTodo listo. Recarga el dashboard para ver los cambios.', 'ok');
-    else logLine(`\n${json.synced?.length ?? 0} OK, ${json.errors?.length ?? 0} con error.`, 'err');
+    for (const s of json.synced ?? []) logLine(`✓ ${s.id}: ${s.rows} registros`, 'ok');
+    for (const e of json.errors ?? []) logLine(`✗ ${e.id}: ${e.error}`, 'err');
+
+    const ok  = json.synced?.length ?? 0;
+    const err = json.errors?.length ?? 0;
+    if (!err) logLine(`\n✓ Todo listo (${ok} secciones). Recarga el dashboard.`, 'ok');
+    else      logLine(`\n${ok} OK, ${err} con error.`, 'err');
 
     btn.disabled = false;
-    btn.textContent = '⟳ Sincronizar todo';
+    btn.textContent = '⟳ Sincronizar todas las pestañas';
   });
 </script>
 </body>

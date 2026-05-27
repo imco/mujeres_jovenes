@@ -117,14 +117,27 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { password, section } = req.body ?? {};
+  const { password, section, sections, tab } = req.body ?? {};
 
   if (!process.env.ADMIN_PASSWORD || password !== process.env.ADMIN_PASSWORD) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  const targets = section
-    ? SECTIONS.filter((s) => s.id === section)
+  // Grupos de secciones por pestaña del dashboard
+  const TAB_SECTIONS = {
+    nacionales: ['participacion_global', 'tpe_historica', 'brecha_salarial', 'informalidad', 'valor_cuidados'],
+    entidades:  ['entidad_enriched'],
+    cdmx:       ['cdmx_indicadores'],
+    stem:       ['stem'],
+  };
+
+  let ids = null;
+  if (tab)                              ids = TAB_SECTIONS[tab] ?? [];
+  else if (Array.isArray(sections))     ids = sections;
+  else if (typeof section === 'string') ids = [section];
+
+  const targets = ids
+    ? SECTIONS.filter((s) => ids.includes(s.id))
     : SECTIONS;
 
   if (!targets.length) {

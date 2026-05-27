@@ -145,13 +145,14 @@
       margin-bottom: 1.5rem;
     }
     .imco-logo-badge {
-      background: #1f2340;
-      color: #fff;
+      background: #fff;
+      color: #1f2340;
       font-size: .7rem;
       font-weight: 800;
       letter-spacing: .12em;
       padding: .25rem .55rem;
       border-radius: 5px;
+      border: 1.5px solid #1f2340;
     }
     .imco-logo-text {
       font-size: .75rem;
@@ -159,9 +160,11 @@
       font-weight: 500;
     }
 
-    footer {
+    .card-footer {
       text-align: center;
-      margin-top: 2rem;
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid #f3f4f6;
       font-size: .72rem;
       color: #9ca3af;
     }
@@ -208,9 +211,9 @@
   <button class="sync-all" id="sync-all">⟳ Sincronizar todas las pestañas</button>
 
   <pre id="log"></pre>
-</div>
 
-<footer>Desarrollado por Joel Bravo · IMCO 2025</footer>
+  <p class="card-footer">Desarrollado por Joel Bravo · IMCO 2025</p>
+</div>
 
 <script>
   const logEl = document.getElementById('log');

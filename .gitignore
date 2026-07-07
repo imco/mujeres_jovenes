@@ -4,3 +4,9 @@ dist/
 .DS_Store
 *.log
 
+.vercel
+.env*.local
+
+# Credenciales — nunca subir
+scripts/sa-sheets-key.json
+.codex

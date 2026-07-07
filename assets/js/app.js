@@ -62,8 +62,8 @@ const TABS = [
     label: 'Resultados por entidad',
     title: 'Estados #ConLupaDeGénero',
     downloadLabel: 'Descargas las boletas',
-    downloadHref: 'https://imco.org.mx/monitor/wp-content/uploads/2026/02/Boletas_Estados-ConLupaDeGenero-2025.pdf',
-    downloadFilename: 'Boletas_Estados-ConLupaDeGenero-2025.pdf',
+    downloadHref: 'data/estadisticas-entidad/Boletas_Estados-ConLupaDeGenero-2026.pdf',
+    downloadFilename: 'Boletas_Estados-ConLupaDeGenero-2026.pdf',
     sections: [
       {
         key: 'mapa-indicadores-entidad',

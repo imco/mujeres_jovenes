@@ -269,6 +269,10 @@
       btn.classList.add('err');
       btn.querySelector('.tab-hint').textContent = '✗ error';
       for (const e of json.errors ?? []) logLine(`✗ ${SECTION_NAMES[e.id] ?? e.id}: ${e.error}`, 'err');
+      if (!json.errors?.length) {
+        const msg = json.error ?? `Error HTTP ${res.status}`;
+        logLine(`✗ ${label}: ${res.status === 401 ? 'Contraseña incorrecta' : msg}`, 'err');
+      }
     } else {
       btn.classList.add('ok');
       const total = json.synced?.reduce((s, x) => s + (x.rows ?? 0), 0) ?? 0;
@@ -298,6 +302,10 @@
 
     for (const s of json.synced ?? []) logSynced(s);
     for (const e of json.errors ?? []) logLine(`✗ ${SECTION_NAMES[e.id] ?? e.id}: ${e.error}`, 'err');
+    if (!res.ok && !json.errors?.length) {
+      const msg = json.error ?? `Error HTTP ${res.status}`;
+      logLine(`✗ ${res.status === 401 ? 'Contraseña incorrecta' : msg}`, 'err');
+    }
 
     const ok  = json.synced?.length ?? 0;
     const err = json.errors?.length ?? 0;

@@ -982,8 +982,394 @@ h2 {
   background: linear-gradient(90deg, #C7F1EA 0%, #208070 100%);
 }
 
-.mexico-map-wrap.bars-view .map-gradient {
+.mexico-map-wrap.bars-view .map-gradient,
+.mexico-map-wrap.compare-view .map-gradient {
   display: none;
+}
+
+/* ── Vista "Comparar": matriz alcaldías × indicadores ─────────────────────── */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Selector múltiple de indicadores (reemplaza al <select> en modo Comparar). */
+.compare-picker {
+  position: relative;
+  flex: 1 1 260px;
+  min-width: 0;
+  max-width: 460px;
+}
+
+/* Los items de grid traen min-width:auto y se dejan ensanchar por su contenido:
+   sin esto, la matriz empuja la tarjeta más allá del ancho de la pantalla. */
+.mexico-map-toolbar { min-width: 0; }
+.mexico-map-wrap.compare-view,
+.mexico-map-wrap.compare-view .mexico-map-stage { min-width: 0; }
+
+.compare-picker-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  list-style: none;
+  cursor: pointer;
+  border: 1px solid #ddd8f5;
+  border-radius: 10px;
+  padding: .48rem .6rem;
+  background: #fff;
+  color: #242a45;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
+
+.compare-picker-summary::-webkit-details-marker { display: none; }
+.compare-picker-summary::after {
+  content: '▾';
+  color: var(--primary);
+  font-size: .8rem;
+}
+.compare-picker[open] .compare-picker-summary { border-color: var(--primary); }
+
+.compare-picker-count {
+  margin-left: auto;
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--primary-soft);
+  border-radius: 999px;
+  padding: .12rem .5rem;
+}
+
+.compare-picker-panel {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + .3rem);
+  left: 0;
+  right: 0;
+  max-height: 300px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #ddd8f5;
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(31, 35, 64, .14);
+  padding: .35rem;
+}
+
+.compare-option {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .4rem .5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: .84rem;
+  line-height: 1.3;
+}
+.compare-option:hover { background: #f6f4ff; }
+.compare-option.disabled { opacity: .45; cursor: not-allowed; }
+.compare-option input { accent-color: var(--primary); flex: none; }
+.compare-option-name { flex: 1; }
+
+.compare-badge {
+  flex: none;
+  font-size: .66rem;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: .08rem .38rem;
+  white-space: nowrap;
+}
+.compare-badge.partial { background: #fff1e8; color: #b4491f; }
+.compare-badge.neutral { background: #eeecf8; color: #5d5a80; }
+
+/* Stage de la matriz. */
+.compare-stage {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+  padding: .1rem;
+}
+
+.compare-scroll {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow: auto;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid var(--line);
+}
+
+.compare-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  font-size: .8rem;
+}
+
+.compare-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: #f7f6fd;
+  border-bottom: 1px solid var(--line);
+  padding: 0;
+  vertical-align: bottom;
+}
+
+.compare-corner,
+.compare-rowhead {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: #f7f6fd;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text);
+  padding: .45rem .6rem;
+  border-right: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+.compare-table thead .compare-corner {
+  z-index: 4;
+  font-size: .78rem;
+  color: var(--muted);
+}
+
+.compare-sort {
+  display: flex;
+  flex-direction: column;
+  gap: .15rem;
+  width: 100%;
+  min-width: 118px;
+  max-width: 172px;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  padding: .5rem .55rem;
+}
+.compare-sort:hover { background: #efeaff; }
+
+.compare-th-name {
+  font-weight: 700;
+  font-size: .76rem;
+  line-height: 1.25;
+  white-space: normal;
+}
+
+.compare-th-meta {
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+  font-size: .68rem;
+  font-weight: 400;
+  color: var(--muted);
+}
+.compare-th-arrow { color: var(--primary); font-size: .6rem; }
+.compare-table thead th.sorted { background: #efeaff; }
+
+.compare-th-badges:empty { display: none; }
+.compare-th-badges { display: flex; gap: .22rem; flex-wrap: wrap; }
+
+.compare-cell {
+  padding: .45rem .55rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: #1f2340;
+  border-bottom: 1px solid #f1eff9;
+  white-space: nowrap;
+}
+
+/* El "sin dato" se marca con trama, no con un gris que se leería como valor bajo. */
+.compare-cell.nd {
+  color: #9a9ab4;
+  font-size: .74rem;
+  background-image: repeating-linear-gradient(
+    45deg, #f6f5fa, #f6f5fa 4px, #eceaf3 4px, #eceaf3 8px
+  );
+}
+
+.compare-table tbody tr { cursor: pointer; }
+.compare-table tbody tr:hover .compare-cell { filter: brightness(.965); }
+.compare-table tbody tr:hover .compare-rowhead { background: #efeaff; }
+.compare-table tbody tr.selected .compare-rowhead {
+  background: var(--primary);
+  color: #fff;
+}
+.compare-table tbody tr.selected .compare-cell {
+  box-shadow: inset 0 -2px 0 var(--primary);
+}
+
+.compare-hint {
+  flex: none;
+  font-size: .7rem;
+  color: var(--muted);
+  text-align: right;
+  padding-right: .2rem;
+}
+
+.compare-hint-mobile { display: none; }
+
+.compare-empty {
+  padding: 2rem 1rem;
+  text-align: center;
+  color: var(--muted);
+  font-size: .88rem;
+}
+
+.compare-legend-nd {
+  background-image: repeating-linear-gradient(
+    45deg, #f6f5fa, #f6f5fa 3px, #eceaf3 3px, #eceaf3 6px
+  );
+}
+/* `display: grid` en .indicator-side-top pisa el display:none del atributo
+   hidden; en Comparar el ranking de un solo indicador no aplica. */
+.indicator-side-top[hidden],
+.indicator-side-subtitle[hidden] {
+  display: none !important;
+}
+
+/* ── Panel derecho en modo Comparar ──────────────────────────────────────── */
+
+/* Varios de estos elementos traen display propio, que gana al display:none del
+   atributo hidden; hay que forzarlo. */
+.compare-aside[hidden],
+.indicator-what-box[hidden] {
+  display: none !important;
+}
+
+.compare-aside {
+  display: grid;
+  gap: .6rem;
+}
+
+.compare-howto {
+  background: #f7f6fd;
+  border: 1px solid #e6e2f7;
+  border-radius: 12px;
+  padding: .8rem .85rem;
+}
+
+.compare-howto h5 {
+  margin: 0 0 .45rem;
+  font-size: .72rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.compare-howto p {
+  margin: 0 0 .5rem;
+  font-size: .8rem;
+  line-height: 1.45;
+  color: #3d4260;
+}
+.compare-howto p:last-child { margin-bottom: 0; }
+.compare-howto-actions { color: #5a6080; }
+
+.compare-howto-keys {
+  list-style: none;
+  margin: 0 0 .6rem;
+  padding: 0;
+  display: grid;
+  gap: .3rem;
+}
+
+.compare-howto-keys li {
+  display: grid;
+  grid-template-columns: 14px 1fr;
+  align-items: start;
+  gap: .45rem;
+  font-size: .78rem;
+  line-height: 1.35;
+  color: #3d4260;
+}
+
+.compare-howto-keys i {
+  width: 14px;
+  height: 14px;
+  margin-top: .12rem;
+  border-radius: 4px;
+  border: 1px solid #dbd6f4;
+  display: block;
+}
+
+/* Descripciones de los indicadores seleccionados: plegadas por defecto porque
+   con 6 columnas desplazan el perfil de alcaldía fuera de la pantalla. */
+.compare-what {
+  border: 1px solid #e6e2f7;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.compare-what > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  cursor: pointer;
+  list-style: none;
+  padding: .6rem .8rem;
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.compare-what > summary::-webkit-details-marker { display: none; }
+.compare-what > summary::after {
+  content: '▾';
+  color: var(--primary);
+  font-size: .75rem;
+  margin-left: auto;
+}
+.compare-what[open] > summary::after { content: '▴'; }
+
+.compare-what-count {
+  font-size: .7rem;
+  font-weight: 700;
+  color: var(--primary);
+  background: var(--primary-soft);
+  border-radius: 999px;
+  padding: .08rem .45rem;
+}
+
+.compare-what-list {
+  padding: 0 .8rem .7rem;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.compare-desc-item {
+  margin: 0 0 .55rem;
+  font-size: .79rem;
+  line-height: 1.45;
+  color: #3d4260;
+}
+.compare-desc-item:last-child { margin-bottom: 0; }
+
+@media (max-width: 760px) {
+  .compare-picker { flex-basis: 100%; max-width: none; }
+  .view-toggle { margin-left: 0; }
+  .compare-sort { min-width: 96px; }
+  .compare-table { font-size: .74rem; }
+  .compare-hint { text-align: left; }
+  .compare-hint-mobile { display: inline; }
+  .mexico-map-wrap.compare-view .mexico-map-stage { height: clamp(380px, 58vh, 520px); }
 }
 
 .map-source,

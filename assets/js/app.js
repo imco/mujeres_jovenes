@@ -88,7 +88,7 @@ const TABS = [
         key: 'mapa-indicadores-cdmx',
         type: 'cdmx-indicator-map',
         title: 'Indicadores por alcaldía',
-        subtitle: 'Selecciona un indicador de la lista desplegable.',
+        subtitle: 'Selecciona un indicador, o compara varios a la vez.',
         file: '/api/data?s=cdmx_indicadores',
         layout: 'indicator-map'
       }
@@ -336,6 +336,34 @@ const NO_PERCENT_SYMBOL_VARIABLES = new Set([
   'horas promedio destinadas a las tareas del hogar',
   'horas promedio destinadas a los cuidados'
 ]);
+
+// Indicadores descriptivos: describen el contexto demográfico de la alcaldía,
+// no su desempeño. No tienen dirección "mejor/peor", así que no se rankean ni
+// se colorean como logro en la vista Comparar.
+const NEUTRAL_DIRECTION_VARIABLES = new Set([
+  'poblacion de mujeres jovenes',
+  'porcentaje de mujeres con hijos',
+  'mujeres jovenes que hablan una lengua indigena',
+  'mujeres con discapacidad'
+]);
+
+// ── Vista "Comparar" (multi-indicador) de la pestaña CDMX ────────────────────
+const COMPARE_MAX_INDICATORS = 6;
+const COMPARE_DEFAULT_INDICATORS = [
+  'Tasa de participación económica de las mujeres',
+  'Informalidad',
+  'Mujeres jóvenes con trabajo precario'
+];
+// Escala divergente por percentil: mejor (verde) — medio (blanco) — peor (naranja).
+// Los tintes son claros a propósito: el valor va siempre en texto oscuro, así que
+// el color nunca compite con la legibilidad de la cifra.
+const COMPARE_COLOR_BEST = '#9fd7cd';
+const COMPARE_COLOR_MID = '#ffffff';
+const COMPARE_COLOR_WORST = '#ffc0a8';
+// Indicadores sin dirección: rampa neutra monocroma, sin lectura de logro.
+const COMPARE_COLOR_NEUTRAL_LOW = '#f7f6fc';
+const COMPARE_COLOR_NEUTRAL_HIGH = '#cfcbe8';
+
 const MONITOR_SITE_URL = 'https://imco.org.mx/monitor/mujeres-en-la-economia/';
 const MONITOR_SITE_TITLE = 'Monitor Mujeres en la Economía';
 
@@ -652,7 +680,7 @@ async function renderSection(section, data) {
 
   if (section.type === 'cdmx-indicator-map') {
     node.classList.add('section-map', 'section-map-indicator');
-    body.innerHTML = renderMexicoIndicatorMapShell();
+    body.innerHTML = renderMexicoIndicatorMapShell({ compare: true });
     await attachCdmxIndicatorMap(body, data);
   }
 
@@ -925,22 +953,64 @@ function renderMapFallback(items, min, max) {
 }
 
 // Cascarón compartido para pestañas "Entidad" y "CDMX por Alcaldía".
-function renderMexicoIndicatorMapShell() {
+// `compare: true` habilita la tercera vista (matriz multi-indicador). Solo la
+// usa CDMX; la pestaña Entidad monta el mismo shell sin ella.
+function renderMexicoIndicatorMapShell({ compare = false } = {}) {
+  const compareBtn = compare
+    ? '<button type="button" class="view-btn" data-view="compare">Comparar</button>'
+    : '';
+  const comparePicker = compare
+    ? `<details class="compare-picker" hidden>
+          <summary class="compare-picker-summary">
+            <span>Indicadores</span>
+            <span class="compare-picker-count"></span>
+          </summary>
+          <div class="compare-picker-panel" role="group" aria-label="Selección de indicadores"></div>
+        </details>`
+    : '';
+  const compareStage = compare ? '<div class="compare-stage" hidden></div>' : '';
+  // Explicación de la vista: vive en la columna derecha, donde el lector ya está
+  // buscando el contexto de lo que ve. Las descripciones de los indicadores van
+  // plegadas porque con 6 seleccionados desplazan todo lo demás fuera de pantalla.
+  const compareAside = compare
+    ? `<div class="compare-aside" hidden>
+          <div class="compare-howto">
+            <h5>Cómo leer esta vista</h5>
+            <p>Cada <strong>fila</strong> es una alcaldía y cada <strong>columna</strong> un indicador.</p>
+            <ul class="compare-howto-keys">
+              <li><i style="background:${COMPARE_COLOR_BEST}"></i>Mejor posición</li>
+              <li><i style="background:${COMPARE_COLOR_WORST}"></i>Peor posición</li>
+              <li><i style="background:${COMPARE_COLOR_NEUTRAL_HIGH}"></i>Indicador descriptivo: no tiene lectura de mejor ni peor</li>
+              <li><i class="compare-legend-nd"></i>Sin dato. Al ordenar, esas alcaldías van al final</li>
+            </ul>
+            <p>El color compara cada indicador <strong>contra sí mismo</strong> —la posición que ocupa la alcaldía entre todas las que tienen dato—, nunca entre columnas: un porcentaje, unas horas por semana y una tasa por 100 mil no son equivalentes.</p>
+            <p class="compare-howto-actions">Clic en un <strong>encabezado</strong> para ordenar por ese indicador. Clic en una <strong>fila</strong> para ver el perfil completo de la alcaldía, abajo.</p>
+          </div>
+          <details class="compare-what">
+            <summary><span>¿Qué miden estos indicadores?</span><span class="compare-what-count"></span></summary>
+            <div class="compare-what-list"></div>
+          </details>
+        </div>`
+    : '';
   return `
     <div class="mexico-map-layout">
       <div class="chart-wrap mexico-map-wrap">
         <div class="mexico-map-toolbar">
-          <label for="indicator-select">Indicador</label>
+          <label class="indicator-select-label" for="indicator-select">Indicador</label>
           <select id="indicator-select" class="indicator-select"></select>
+          ${comparePicker}
           <div class="view-toggle" role="group" aria-label="Tipo de visualización">
             <button type="button" class="view-btn active" data-view="map">Mapa</button>
             <button type="button" class="view-btn" data-view="bars">Barras</button>
+            ${compareBtn}
           </div>
         </div>
         <div class="mexico-map-stage">
           <svg class="chart-svg mexico-map-svg" role="img" aria-label="Mapa de México por entidad"></svg>
           <div class="bars-stage" hidden></div>
+          ${compareStage}
         </div>
+
         <div class="map-gradient">
           <span>Mín</span>
           <div></div>
@@ -950,6 +1020,7 @@ function renderMexicoIndicatorMapShell() {
       </div>
       <aside class="indicator-side">
         <h4 class="indicator-side-title"></h4>
+        ${compareAside}
         <div class="indicator-what-box">
           <h5>¿Qué mide?</h5>
           <p class="indicator-side-desc"></p>
@@ -1220,6 +1291,15 @@ async function attachCdmxIndicatorMap(container, payload) {
   const sideTopTitle = container.querySelector('.indicator-side-subtitle');
   const entityProfileName = container.querySelector('.entity-profile-name');
   const entityProfileList = container.querySelector('.entity-profile-list');
+  const selectLabel = container.querySelector('.indicator-select-label');
+  const comparePicker = container.querySelector('.compare-picker');
+  const comparePickerPanel = container.querySelector('.compare-picker-panel');
+  const comparePickerCount = container.querySelector('.compare-picker-count');
+  const compareStage = container.querySelector('.compare-stage');
+  const indicatorWhatBox = container.querySelector('.indicator-what-box');
+  const compareAside = container.querySelector('.compare-aside');
+  const compareWhatList = container.querySelector('.compare-what-list');
+  const compareWhatCount = container.querySelector('.compare-what-count');
   if (!rows.length || !select || !svg || !barsStage || !mapWrap || !indicatorSide || !sideTitle || !sideDesc || !sideMeta || !sideTop || !indicatorSource || !sideTopTitle || !entityProfileName || !entityProfileList) {
     container.innerHTML = '<div class="chart-wrap">No hay datos disponibles para el mapa de alcaldías.</div>';
     return;
@@ -1261,6 +1341,53 @@ async function attachCdmxIndicatorMap(container, payload) {
   let selectedKey = '';
   let selectedView = 'map';
 
+  // Universo de alcaldías: se toma de todas las filas, no del indicador activo,
+  // para que la matriz muestre siempre las 16 y el dato faltante se vea como tal.
+  const allEntities = Array.from(
+    new Map(rows.map((r) => [normalizeAlcaldiaName(r.Entidad), r.Entidad])).entries()
+  ).sort((a, b) => a[1].localeCompare(b[1], 'es'));
+  const entityCount = allEntities.length;
+
+  // Metadatos por indicador, calculados una sola vez.
+  const metaByVariable = new Map(variables.map((variable) => {
+    const subset = rows.filter((r) => r.Variable === variable);
+    const unit = subset.find((r) => String(r.Unidad || '').trim())?.Unidad || 'Valor';
+    return [variable, {
+      variable,
+      subset,
+      sortedValues: subset.map((r) => Number(r.Valor)).sort((a, b) => a - b),
+      byEntity: new Map(subset.map((r) => [normalizeAlcaldiaName(r.Entidad), Number(r.Valor)])),
+      coverage: subset.length,
+      direction: getVariableDirection(variable),
+      unit,
+      symbol: resolveUnitSymbol(variable, unit),
+      description: subset.find((r) => String(r.Que_mide || '').trim())?.Que_mide || 'Sin descripción.',
+      source: subset.find((r) => String(r.Fuente || '').trim())?.Fuente || ''
+    }];
+  }));
+
+  // Estado de la vista Comparar.
+  let selectedIndicators = COMPARE_DEFAULT_INDICATORS.filter((v) => metaByVariable.has(v));
+  if (!selectedIndicators.length) selectedIndicators = variables.slice(0, 3);
+  let compareSort = { variable: selectedIndicators[0] || null, dir: 'desc' };
+
+  // Perfil completo de la alcaldía seleccionada. Lo comparten las tres vistas:
+  // el clic en un estado del mapa, en una barra o en una fila de la matriz lo
+  // actualiza igual.
+  const renderEntityProfile = (fallbackName) => {
+    const selectedRows = rows
+      .filter((r) => normalizeAlcaldiaName(r.Entidad) === selectedKey)
+      .slice()
+      .sort((a, b) => a.Variable.localeCompare(b.Variable, 'es'));
+    entityProfileName.textContent = selectedRows[0]?.Entidad || fallbackName || 'Alcaldía';
+    entityProfileList.innerHTML = selectedRows
+      .map((r) => {
+        const u = resolveUnitSymbol(r.Variable, r.Unidad);
+        return `<li><span class="entity-indicator-name">${escapeHtml(r.Variable)}</span><strong class="entity-indicator-value">${Number(r.Valor).toFixed(1)}${escapeHtml(u)}</strong></li>`;
+      })
+      .join('');
+  };
+
   const renderIndicator = (variable) => {
     const normalizedVariable = normalizeCountry(variable);
     const isSexualOffenses = normalizedVariable.includes('delitos sexuales');
@@ -1288,6 +1415,11 @@ async function attachCdmxIndicatorMap(container, payload) {
       mapGradientLabels[1].textContent = `${formatIndicatorValue(max)}${unitSymbol}`;
     }
     const higherIsBetter = isHigherValueBetter(variable);
+    // Los indicadores descriptivos no admiten lectura de logro: se ordenan igual,
+    // pero el encabezado no afirma que estar arriba sea "mejor".
+    sideTopTitle.textContent = getVariableDirection(variable) === 'neutral'
+      ? 'Alcaldías con el valor más alto'
+      : 'Alcaldías con mejor desempeño';
     const sortedItems = subset.slice().sort((a, b) => higherIsBetter ? b.Valor - a.Valor : a.Valor - b.Valor);
 
     if (!selectedKey || !byEntity.has(selectedKey)) {
@@ -1295,7 +1427,7 @@ async function attachCdmxIndicatorMap(container, payload) {
     }
 
     const mapVisible = selectedView === 'map';
-    setIndicatorStageView(svg, barsStage, mapVisible);
+    setIndicatorStageView(svg, barsStage, selectedView, compareStage);
 
     if (mapVisible) {
       const paths = features.map((feature) => {
@@ -1357,24 +1489,7 @@ async function attachCdmxIndicatorMap(container, payload) {
       })
       .join('');
 
-    const selectedRows = rows
-      .filter((r) => normalizeAlcaldiaName(r.Entidad) === selectedKey)
-      .slice()
-      .sort((a, b) => a.Variable.localeCompare(b.Variable, 'es'));
-    const selectedName = selectedRows[0]?.Entidad || sortedItems[0]?.Entidad || 'Alcaldía';
-    entityProfileName.textContent = selectedName;
-    entityProfileList.innerHTML = selectedRows
-      .map((r) => {
-        const rowVariable = normalizeCountry(r.Variable);
-        const hideRowPercentSymbol = shouldHidePercentSymbol(r.Variable);
-        const uRaw = (r.Unidad || '');
-        const uNormalized = uRaw.toLowerCase();
-        const u = rowVariable.includes('delitos sexuales') || hideRowPercentSymbol
-          ? ''
-          : (uNormalized.includes('porcent') || uNormalized.includes('tasa')) ? '%' : '';
-        return `<li><span class="entity-indicator-name">${r.Variable}</span><strong class="entity-indicator-value">${formatIndicatorValue(Number(r.Valor))}${escapeHtml(u)}</strong></li>`;
-      })
-      .join('');
+    renderEntityProfile(sortedItems[0]?.Entidad);
 
     sideTop.querySelectorAll('li[data-state-key]').forEach((row) => {
       row.addEventListener('click', () => {
@@ -1411,19 +1526,221 @@ async function attachCdmxIndicatorMap(container, payload) {
     }
   };
 
+  // ── Panel lateral de la vista Comparar ───────────────────────────────────
+  const renderCompareSide = () => {
+    const metas = selectedIndicators.map((v) => metaByVariable.get(v)).filter(Boolean);
+    sideTitle.textContent = metas.length === 1
+      ? metas[0].variable
+      : `${metas.length} indicadores comparados`;
+    if (compareWhatList) {
+      compareWhatList.innerHTML = metas.length
+        ? metas.map((m) => `<p class="compare-desc-item"><strong>${escapeHtml(m.variable)}.</strong> ${escapeHtml(m.description)}</p>`).join('')
+        : '<p class="compare-desc-item">Selecciona indicadores para comparar.</p>';
+    }
+    if (compareWhatCount) compareWhatCount.textContent = metas.length ? String(metas.length) : '';
+
+    const partial = metas.filter((m) => m.coverage < entityCount);
+    sideMeta.textContent = partial.length
+      ? `Cobertura incompleta en ${partial.length} de ${metas.length} indicadores: ${partial.map((m) => `${m.variable} (${m.coverage}/${entityCount})`).join(', ')}.`
+      : `Cobertura completa: ${entityCount} alcaldías en los ${metas.length} indicadores.`;
+
+    const sources = Array.from(new Set(metas.map((m) => m.source).filter(Boolean)));
+    const sourceText = sources.length ? `Fuente: ${sources.join(' | ')}` : '';
+    indicatorSource.innerHTML = formatSourceWithNoteBreak(
+      sourceText ? `${CDMX_COMMON_NOTE} ${sourceText}` : CDMX_COMMON_NOTE
+    );
+    indicatorSource.hidden = false;
+
+    if (!selectedKey && allEntities.length) selectedKey = allEntities[0][0];
+    renderEntityProfile(allEntities[0]?.[1]);
+  };
+
+  // ── Matriz alcaldías × indicadores ───────────────────────────────────────
+  // El color de cada celda sale del percentil del valor DENTRO de su columna, no
+  // del valor absoluto: es la única forma honesta de poner lado a lado columnas
+  // en porcentaje, en horas y en tasas por 100 mil.
+  const renderCompare = () => {
+    setIndicatorStageView(svg, barsStage, 'compare', compareStage);
+    svg.innerHTML = '';
+    barsStage.innerHTML = '';
+
+    if (!selectedIndicators.length) {
+      compareStage.innerHTML = '<p class="compare-empty">Selecciona al menos un indicador para comparar.</p>';
+      renderCompareSide();
+      return;
+    }
+
+    const metas = selectedIndicators.map((v) => metaByVariable.get(v)).filter(Boolean);
+    const sortMeta = compareSort.variable ? metaByVariable.get(compareSort.variable) : null;
+
+    // Las alcaldías sin dato en la columna de orden van siempre al final, para no
+    // mezclarlas con valores reales bajos.
+    const ordered = allEntities.slice().sort(([keyA, nameA], [keyB, nameB]) => {
+      if (!sortMeta) return nameA.localeCompare(nameB, 'es');
+      const a = sortMeta.byEntity.get(keyA);
+      const b = sortMeta.byEntity.get(keyB);
+      const aOk = Number.isFinite(a);
+      const bOk = Number.isFinite(b);
+      if (!aOk && !bOk) return nameA.localeCompare(nameB, 'es');
+      if (!aOk) return 1;
+      if (!bOk) return -1;
+      return compareSort.dir === 'asc' ? a - b : b - a;
+    });
+
+    const thead = metas.map((m) => {
+      const isSorted = compareSort.variable === m.variable;
+      const arrow = isSorted ? (compareSort.dir === 'asc' ? '▲' : '▼') : '';
+      const badges = [
+        m.direction === 'neutral'
+          ? '<span class="compare-badge neutral" title="Indicador descriptivo: no tiene lectura de mejor o peor">descriptivo</span>'
+          : '',
+        m.coverage < entityCount
+          ? `<span class="compare-badge partial" title="Solo hay dato para ${m.coverage} de ${entityCount} alcaldías">${m.coverage}/${entityCount}</span>`
+          : ''
+      ].join('');
+      return `<th scope="col" class="${isSorted ? 'sorted' : ''}">
+        <button type="button" class="compare-sort" data-sort-var="${escapeHtml(m.variable)}"
+                title="${escapeHtml(m.description)}"
+                aria-label="Ordenar por ${escapeHtml(m.variable)}">
+          <span class="compare-th-name">${escapeHtml(m.variable)}</span>
+          <span class="compare-th-meta">${escapeHtml(m.unit)}<span class="compare-th-arrow">${arrow}</span></span>
+          <span class="compare-th-badges">${badges}</span>
+        </button>
+      </th>`;
+    }).join('');
+
+    const tbody = ordered.map(([key, name]) => {
+      const cells = metas.map((m) => {
+        const value = m.byEntity.get(key);
+        if (!Number.isFinite(value)) {
+          return '<td class="compare-cell nd" title="Sin dato disponible para esta alcaldía"><span>s/d</span></td>';
+        }
+        const pct = percentileRank(value, m.sortedValues);
+        const tip = `${name} — ${m.variable}: ${value.toFixed(1)}${m.symbol} · percentil ${Math.round(pct * 100)} entre las ${m.coverage} alcaldías con dato`;
+        return `<td class="compare-cell" style="background:${compareCellColor(pct, m.direction)}" title="${escapeHtml(tip)}"><span>${value.toFixed(1)}${escapeHtml(m.symbol)}</span></td>`;
+      }).join('');
+      return `<tr data-state-key="${escapeHtml(key)}" class="${key === selectedKey ? 'selected' : ''}"><th scope="row" class="compare-rowhead">${escapeHtml(name)}</th>${cells}</tr>`;
+    }).join('');
+
+    compareStage.innerHTML = `
+      <div class="compare-scroll">
+        <table class="compare-table">
+          <caption class="sr-only">Comparación de ${metas.length} indicadores en ${entityCount} alcaldías de la Ciudad de México</caption>
+          <thead><tr><th scope="col" class="compare-corner">Alcaldía</th>${thead}</tr></thead>
+          <tbody>${tbody}</tbody>
+        </table>
+      </div>
+      <p class="compare-hint" aria-hidden="true"><span class="compare-hint-mobile">Desliza la tabla para ver todos los indicadores · </span>Clic en un encabezado para ordenar · clic en una fila para ver el perfil completo</p>`;
+
+    compareStage.querySelectorAll('.compare-sort').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const variable = btn.dataset.sortVar;
+        if (compareSort.variable === variable) {
+          compareSort.dir = compareSort.dir === 'asc' ? 'desc' : 'asc';
+        } else {
+          compareSort = { variable, dir: 'desc' };
+        }
+        track('compare_sort', { variable, direction: compareSort.dir, section: 'cdmx' });
+        renderCompare();
+      });
+    });
+
+    compareStage.querySelectorAll('tr[data-state-key]').forEach((row) => {
+      row.addEventListener('click', () => {
+        selectedKey = row.dataset.stateKey || selectedKey;
+        track('entity_select', { entity: row.querySelector('.compare-rowhead')?.textContent, section: 'cdmx', view: 'compare' });
+        renderCompare();
+      });
+    });
+
+    renderCompareSide();
+  };
+
+  // ── Selector múltiple de indicadores ─────────────────────────────────────
+  const renderPicker = () => {
+    if (!comparePickerPanel || !comparePickerCount) return;
+    const atLimit = selectedIndicators.length >= COMPARE_MAX_INDICATORS;
+    comparePickerPanel.innerHTML = variables.map((variable) => {
+      const m = metaByVariable.get(variable);
+      const checked = selectedIndicators.includes(variable);
+      const disabled = !checked && atLimit;
+      return `<label class="compare-option${disabled ? ' disabled' : ''}">
+        <input type="checkbox" value="${escapeHtml(variable)}"${checked ? ' checked' : ''}${disabled ? ' disabled' : ''} />
+        <span class="compare-option-name">${escapeHtml(variable)}</span>
+        ${m.coverage < entityCount ? `<span class="compare-badge partial" title="Cobertura parcial">${m.coverage}/${entityCount}</span>` : ''}
+        ${m.direction === 'neutral' ? '<span class="compare-badge neutral">descriptivo</span>' : ''}
+      </label>`;
+    }).join('');
+    comparePickerCount.textContent = `${selectedIndicators.length} de ${COMPARE_MAX_INDICATORS}`;
+  };
+
+  if (comparePickerPanel) {
+    comparePickerPanel.addEventListener('change', (event) => {
+      const input = event.target;
+      if (!input || input.type !== 'checkbox') return;
+      const value = input.value;
+      if (input.checked) {
+        if (!selectedIndicators.includes(value) && selectedIndicators.length < COMPARE_MAX_INDICATORS) {
+          selectedIndicators = [...selectedIndicators, value];
+        }
+      } else {
+        selectedIndicators = selectedIndicators.filter((v) => v !== value);
+      }
+      if (!selectedIndicators.includes(compareSort.variable)) {
+        compareSort = { variable: selectedIndicators[0] || null, dir: 'desc' };
+      }
+      track('compare_indicators', { count: selectedIndicators.length, section: 'cdmx' });
+      renderPicker();
+      renderCompare();
+    });
+
+    document.addEventListener('click', (event) => {
+      if (comparePicker?.open && !comparePicker.contains(event.target)) comparePicker.open = false;
+    });
+  }
+
+  // ── Despachador de vistas ────────────────────────────────────────────────
+  const applyViewMode = () => {
+    const compareMode = selectedView === 'compare';
+    if (selectLabel) selectLabel.hidden = compareMode;
+    select.hidden = compareMode;
+    if (comparePicker) {
+      comparePicker.hidden = !compareMode;
+      if (!compareMode) comparePicker.open = false;
+    }
+    // En Comparar, el "¿Qué mide?" de un solo indicador cede su lugar al bloque
+    // que explica la vista y agrupa las descripciones de los seleccionados.
+    if (indicatorWhatBox) indicatorWhatBox.hidden = compareMode;
+    if (compareAside) compareAside.hidden = !compareMode;
+    // El ranking lateral y el gradiente describen un solo indicador.
+    if (sideTopTitle) sideTopTitle.hidden = compareMode;
+    if (sideTop) sideTop.hidden = compareMode;
+  };
+
+  const render = () => {
+    applyViewMode();
+    if (selectedView === 'compare') {
+      renderPicker();
+      renderCompare();
+    } else {
+      renderIndicator(select.value);
+    }
+  };
+
   viewButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
-      selectedView = btn.dataset.view === 'bars' ? 'bars' : 'map';
+      const view = btn.dataset.view;
+      selectedView = view === 'bars' ? 'bars' : view === 'compare' ? 'compare' : 'map';
       viewButtons.forEach((b) => b.classList.toggle('active', b === btn));
       track('view_toggle', { view_type: selectedView, section: 'cdmx', variable: select.value });
-      renderIndicator(select.value);
+      render();
     });
   });
   select.addEventListener('change', () => {
     track('indicator_select', { variable: select.value, section: 'cdmx' });
     renderIndicator(select.value);
   });
-  renderIndicator(defaultVar);
+  render();
   syncIndicatorSideHeightToMap(mapWrap, indicatorSide);
 }
 
@@ -1545,15 +1862,27 @@ function renderBarsStage(container, items, selectedKey, onSelect) {
 }
 
 // Alterna visualización "Mapa" <-> "Barras", renderizando una sola a la vez.
-function setIndicatorStageView(svg, barsStage, mapVisible) {
+// `view` acepta 'map' | 'bars' | 'compare'. Sigue admitiendo el booleano que
+// usan los mapas de Entidad y STEM (true = mapa).
+function setIndicatorStageView(svg, barsStage, view, compareStage = null) {
+  const resolved = typeof view === 'boolean' ? (view ? 'map' : 'bars') : view;
+  const mapVisible = resolved === 'map';
+  const barsVisible = resolved === 'bars';
+  const compareVisible = resolved === 'compare';
+
   svg.hidden = !mapVisible;
-  barsStage.hidden = mapVisible;
   svg.style.display = mapVisible ? 'block' : 'none';
-  barsStage.style.display = mapVisible ? 'none' : 'grid';
+  barsStage.hidden = !barsVisible;
+  barsStage.style.display = barsVisible ? 'grid' : 'none';
+  if (compareStage) {
+    compareStage.hidden = !compareVisible;
+    compareStage.style.display = compareVisible ? 'flex' : 'none';
+  }
 
   const mapWrap = svg.closest('.mexico-map-wrap');
   if (mapWrap) {
-    mapWrap.classList.toggle('bars-view', !mapVisible);
+    mapWrap.classList.toggle('bars-view', barsVisible);
+    mapWrap.classList.toggle('compare-view', compareVisible);
   }
 }
 
@@ -1712,6 +2041,57 @@ function isHigherValueBetter(variableName) {
 
 function shouldHidePercentSymbol(variableName) {
   return NO_PERCENT_SYMBOL_VARIABLES.has(normalizeCountry(variableName));
+}
+
+// Dirección de lectura de un indicador: si un valor alto es mejor, peor, o si el
+// indicador es puramente descriptivo y no admite juicio.
+function getVariableDirection(variableName) {
+  const normalized = normalizeCountry(variableName);
+  const key = VARIABLE_DIRECTION_ALIASES[normalized] || normalized;
+  if (NEUTRAL_DIRECTION_VARIABLES.has(key)) return 'neutral';
+  return isHigherValueBetter(variableName) ? 'higher-better' : 'lower-better';
+}
+
+// Símbolo de unidad derivado del campo Unidad del dataset.
+// Las excepciones por nombre son un puente mientras el Sheet marque "Porcentaje"
+// en indicadores que son tasas por 100 mil u horas por semana; una vez corregido
+// el origen, este bloque se reduce a la lectura de `unidad`.
+function resolveUnitSymbol(variableName, unidad) {
+  const u = String(unidad || '').toLowerCase();
+  if (u.includes('hora')) return ' h';
+  if (u.includes('100 mil') || u.includes('100mil') || u.includes('cada 100')) return '';
+  if (shouldHidePercentSymbol(variableName)) return '';
+  if (normalizeCountry(variableName).includes('delitos sexuales')) return '';
+  if (u.includes('porcent') || u.includes('tasa')) return '%';
+  return '';
+}
+
+// Percentil (0..1) del valor dentro de su propio indicador.
+// Comparar 16 alcaldías con unidades distintas (%, horas, tasas por 100 mil) solo
+// es honesto sobre una escala de rango: el percentil vuelve comparables columnas
+// que en valor absoluto no lo son. Los empates comparten posición promedio.
+function percentileRank(value, sortedValues) {
+  const n = sortedValues.length;
+  if (n <= 1) return 0.5;
+  let below = 0;
+  let equal = 0;
+  for (const v of sortedValues) {
+    if (v < value) below += 1;
+    else if (v === value) equal += 1;
+  }
+  return (below + (equal - 1) / 2) / (n - 1);
+}
+
+// Color de celda de la matriz: divergente para indicadores con dirección,
+// monocromo para los descriptivos.
+function compareCellColor(percentile, direction) {
+  if (direction === 'neutral') {
+    return mixHex(COMPARE_COLOR_NEUTRAL_LOW, COMPARE_COLOR_NEUTRAL_HIGH, percentile);
+  }
+  const goodness = direction === 'higher-better' ? percentile : 1 - percentile;
+  return goodness >= 0.5
+    ? mixHex(COMPARE_COLOR_MID, COMPARE_COLOR_BEST, (goodness - 0.5) * 2)
+    : mixHex(COMPARE_COLOR_MID, COMPARE_COLOR_WORST, (0.5 - goodness) * 2);
 }
 
 // Construye diccionario inglés->español de países usando Intl.DisplayNames.

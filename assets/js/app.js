@@ -1,4 +1,5 @@
 import { geoMercator, geoNaturalEarth1, geoPath } from 'd3-geo';
+import { renderBrechaStory } from './brecha.js';
 
 // Configuración principal del micrositio.
 // Si necesitas agregar una nueva sección o pestaña, empieza aquí.
@@ -154,6 +155,24 @@ const TABS = [
         title: 'Mujeres egresadas de carreras STEM acceden a mejores beneficios laborales.',
         subtitle: 'Indicadores del mercado laboral para mujeres por área de estudios',
         file: 'data/stem/monitor_stem.json'
+      }
+    ]
+  },
+  {
+    id: 'brecha-salarial',
+    label: 'Brecha salarial',
+    title: 'Brecha salarial',
+    // La descarga responde a la selección del explorador (ver brecha.js).
+    downloadAction: 'dynamic',
+    downloadLabel: 'Descarga datos',
+    // Scrollytelling: dentro del iframe de WordPress esta pestaña necesita scroll
+    // propio, así que pide al padre un alto de viewport en vez del alto del contenido.
+    iframeViewport: true,
+    sections: [
+      {
+        key: 'brecha-salarial',
+        type: 'brecha-story',
+        file: '/api/data?s=monitor_brecha'
       }
     ]
   }
@@ -375,6 +394,8 @@ const viewPill = document.getElementById('view-pill');
 const sectionTemplate = document.getElementById('section-template');
 
 let activeTab = TABS[0].id;
+// Descarga de las pestañas cuyo archivo depende de la selección del usuario.
+let activeDownloadHandler = null;
 
 init();
 
@@ -395,7 +416,20 @@ function setupEmbedAutoResize() {
   // (sin bloquear el layout ni el contenido). La altura la controla el padre vía postMessage.
   document.documentElement.classList.add('in-iframe');
 
+  let viewportModeSent = false;
   const notify = () => {
+    // Pestañas con scrollytelling: el iframe debe medir lo que el viewport del
+    // padre, no lo que el contenido, para tener scroll propio (sticky y el
+    // progreso de scroll no funcionan si quien scrollea es la página de WordPress).
+    if (TABS.find((tab) => tab.id === activeTab)?.iframeViewport) {
+      if (!viewportModeSent) {
+        window.parent.postMessage({ type: 'mj:viewport' }, '*');
+        viewportModeSent = true;
+      }
+      return;
+    }
+    viewportModeSent = false;
+
     const root = document.querySelector('.app-shell');
     if (!root) return;
     const rect = root.getBoundingClientRect();
@@ -458,6 +492,8 @@ async function loadTab(tabId) {
   const tab = TABS.find((item) => item.id === tabId);
   if (!tab) return;
 
+  activeDownloadHandler = null;
+  document.documentElement.classList.toggle('tab-viewport-scroll', Boolean(tab.iframeViewport));
   viewTitle.textContent = tab.title;
   viewSubtitle.textContent = tab.subtitle || '';
   viewSubtitle.hidden = !tab.subtitle;
@@ -486,7 +522,7 @@ async function loadTab(tabId) {
 // - Pestañas normales: texto tipo pill.
 // - CDMX: botón de descarga de boletas.
 function renderViewPill(tab) {
-  const hasDownload = Boolean(tab.downloadHref);
+  const hasDownload = Boolean(tab.downloadHref || tab.downloadAction);
   if (!hasDownload) {
     viewPill.className = 'pill';
     viewPill.textContent = tab.pill || '';
@@ -498,18 +534,25 @@ function renderViewPill(tab) {
     ? `<img class="view-brand-logo" src="${escapeHtml(encodeURI(tab.brandLogoSrc))}" alt="${escapeHtml(tab.brandLogoAlt || '')}">`
     : '';
   viewPill.className = 'pill pill-download-wrap';
-  viewPill.innerHTML = `
-    ${brandLogoMarkup}
-    <a
+  const downloadLabel = escapeHtml(tab.downloadLabel || 'Descarga datos');
+  const downloadMarkup = tab.downloadAction
+    ? `<button type="button" class="pill-download-btn" data-action="dynamic-download" title="${downloadLabel}">
+        <span class="pill-download-icon" aria-hidden="true">⬇</span>
+        <span>${downloadLabel}</span>
+      </button>`
+    : `<a
       class="pill-download-btn"
       href="${escapeHtml(tab.downloadHref)}"
       download="${escapeHtml(tab.downloadFilename || 'boletas_alcaldia.zip')}"
-      title="${escapeHtml(tab.downloadLabel || 'Descarga datos')}"
-      aria-label="${escapeHtml(tab.downloadLabel || 'Descarga datos')}"
+      title="${downloadLabel}"
+      aria-label="${downloadLabel}"
     >
       <span class="pill-download-icon" aria-hidden="true">⬇</span>
-      <span>${escapeHtml(tab.downloadLabel || 'Descarga datos')}</span>
-    </a>
+      <span>${downloadLabel}</span>
+    </a>`;
+  viewPill.innerHTML = `
+    ${brandLogoMarkup}
+    ${downloadMarkup}
     <div class="pill-cite-wrap">
       <button
         type="button"
@@ -530,9 +573,11 @@ function renderViewPill(tab) {
       </div>
     </div>
   `;
-  viewPill.querySelector('.pill-download-btn')?.addEventListener('click', () => {
-    track('file_download', { file_name: tab.downloadFilename || tab.downloadHref, section: tab.label });
-  });
+  if (!tab.downloadAction) {
+    viewPill.querySelector('.pill-download-btn')?.addEventListener('click', () => {
+      track('file_download', { file_name: tab.downloadFilename || tab.downloadHref, section: tab.label });
+    });
+  }
 }
 
 function setupViewPillActions() {
@@ -548,6 +593,17 @@ function setupViewPillActions() {
     const actionNode = event.target instanceof Element ? event.target.closest('[data-action]') : null;
     if (!actionNode) return;
     const action = actionNode.getAttribute('data-action');
+
+    if (action === 'dynamic-download') {
+      if (!activeDownloadHandler) return;
+      actionNode.setAttribute('aria-busy', 'true');
+      try {
+        await activeDownloadHandler();
+      } finally {
+        actionNode.removeAttribute('aria-busy');
+      }
+      return;
+    }
 
     if (action === 'toggle-cite-tooltip') {
       const wrap = actionNode.closest('.pill-cite-wrap');
@@ -643,6 +699,15 @@ async function copyTextToClipboard(text) {
 // Fabrica visual de cada tipo de sección.
 // Para añadir un nuevo tipo de gráfico, agrega un nuevo bloque aquí.
 async function renderSection(section, data) {
+  if (section.type === 'brecha-story') {
+    return renderBrechaStory(data, {
+      escapeHtml,
+      track,
+      citation: buildMonitorWebsiteCitation,
+      setDownloadHandler: (handler) => { activeDownloadHandler = handler; }
+    });
+  }
+
   const node = sectionTemplate.content.firstElementChild.cloneNode(true);
   node.dataset.sectionKey = section.key;
   node.querySelector('.section-title').textContent = section.title;

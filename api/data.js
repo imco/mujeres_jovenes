@@ -18,6 +18,9 @@ const STATIC_FALLBACKS = {
   cdmx_indicadores:      '/data/cdmx-alcaldia/monitor_cdmx_indicadores.json',
   tpe_historica:         '/data/dashboard-nacional/participacion-mexico-historica.json',
   stem:                  '/data/stem/monitor_stem.json',
+  // Generado con `npm run data:brecha` desde scripts/sources/brecha/.
+  // Aún sin sync: la base llega como .xlsx en Drive, no como Sheet nativo.
+  monitor_brecha:        '/data/brecha-salarial/monitor_brecha.json',
 };
 
 export default async function handler(req, res) {

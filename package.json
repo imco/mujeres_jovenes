@@ -11,6 +11,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "data:sync": "~/.nvm/versions/node/v20.20.2/bin/node scripts/sync-data-from-sheets.mjs",
+    "data:brecha": "node scripts/build-brecha.mjs",
     "data:sync:dry": "~/.nvm/versions/node/v20.20.2/bin/node scripts/sync-data-from-sheets.mjs --dry-run"
   },
   "dependencies": {

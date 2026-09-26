@@ -6,7 +6,7 @@ import { renderBrechaStory } from './brecha.js';
 const TABS = [
   {
     id: 'dashboard-nacional',
-    label: 'Resultados nacionales',
+    label: 'Nacional',
     title: 'Datos nacionales',
     downloadLabel: 'Descarga datos',
     downloadHref: 'data/dashboard-nacional/Datos_monitor_nacionales.xlsx',
@@ -36,6 +36,7 @@ const TABS = [
         subtitle: 'Evolución de la brecha salarial por género en México',
         source: 'Fuente: Elaborado por el IMCO con el promedio de los cuatro trimestres de la Encuesta Nacional de Ocupación y Empleo (ENOE) del INEGI de 2005 a 2025.',
         file: '/api/data?s=brecha_salarial',
+        cta: { label: 'Explora la brecha salarial a detalle', tab: 'brecha-salarial' },
         width: 'half',
         chartHeightScale: 1.35
       },
@@ -60,7 +61,7 @@ const TABS = [
   },
   {
     id: 'estadisticas-entidad',
-    label: 'Resultados por entidad',
+    label: 'Estatal',
     title: 'Estados #ConLupaDeGénero',
     downloadLabel: 'Descargas las boletas',
     downloadHref: 'data/estadisticas-entidad/Boletas_Estados-ConLupaDeGenero-2026.pdf',
@@ -78,7 +79,7 @@ const TABS = [
   },
   {
     id: 'cdmx-alcaldia',
-    label: 'Resultados CDMX',
+    label: 'CDMX',
     title: 'Mujeres jóvenes en la CDMX',
     pill: 'Alcaldías CDMX',
     downloadLabel: 'Descargas las boletas',
@@ -97,7 +98,7 @@ const TABS = [
   },
   {
     id: 'stem',
-    label: 'Resultados STEM',
+    label: 'STEM',
     title: 'Mujeres en STEM',
     subtitle: 'Ciencia, Tecnología, Ingeniería y Matemáticas',
     pill: 'STEM+',
@@ -165,14 +166,24 @@ const TABS = [
     // La descarga responde a la selección del explorador (ver brecha.js).
     downloadAction: 'dynamic',
     downloadLabel: 'Descarga datos',
-    // Scrollytelling: dentro del iframe de WordPress esta pestaña necesita scroll
-    // propio, así que pide al padre un alto de viewport en vez del alto del contenido.
-    iframeViewport: true,
     sections: [
       {
         key: 'brecha-salarial',
         type: 'brecha-story',
         file: '/api/data?s=monitor_brecha'
+      }
+    ]
+  },
+  {
+    id: 'investigaciones',
+    label: 'Investigaciones',
+    title: 'Investigaciones',
+    subtitle: 'Conoce nuestras investigaciones más recientes sobre las mujeres en la economía.',
+    sections: [
+      {
+        key: 'investigaciones',
+        type: 'investigaciones',
+        file: 'data/investigaciones/investigaciones.json'
       }
     ]
   }
@@ -407,6 +418,31 @@ function init() {
   loadTab(activeTab);
 }
 
+// Últimas investigaciones del IMCO sobre mujeres (pestaña Investigaciones).
+// Los datos y las imágenes se guardan en el repo (public/data/investigaciones/,
+// public/investigaciones/) para no depender de imco.org.mx al cargar.
+function renderInvestigaciones(items) {
+  const node = document.createElement('section');
+  node.className = 'investigaciones';
+  node.setAttribute('aria-label', 'Investigaciones');
+  node.innerHTML = `<div class="investigaciones-grid">${(Array.isArray(items) ? items : []).map((item) => `
+    <article class="inv-card">
+      <img class="inv-img" src="${escapeHtml(item.imagen)}" alt="" loading="lazy" width="720" height="446">
+      <div class="inv-body">
+        <span class="inv-year">${escapeHtml(item.anio)}</span>
+        <h4 class="inv-title">${escapeHtml(item.titulo)}</h4>
+        <p class="inv-text">${escapeHtml(item.resumen)}</p>
+        <a class="inv-link" href="${escapeHtml(item.url)}" target="_blank" rel="noopener">
+          Ver investigación <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </article>`).join('')}</div>`;
+  node.querySelectorAll('.inv-link').forEach((link) => {
+    link.addEventListener('click', () => track('investigacion_click', { url: link.href }));
+  });
+  return node;
+}
+
 // Si el dashboard está dentro de un iframe, notifica su altura al contenedor padre.
 // Esto evita la doble barra de scroll en integraciones tipo WordPress + iframe.
 function setupEmbedAutoResize() {
@@ -416,20 +452,7 @@ function setupEmbedAutoResize() {
   // (sin bloquear el layout ni el contenido). La altura la controla el padre vía postMessage.
   document.documentElement.classList.add('in-iframe');
 
-  let viewportModeSent = false;
   const notify = () => {
-    // Pestañas con scrollytelling: el iframe debe medir lo que el viewport del
-    // padre, no lo que el contenido, para tener scroll propio (sticky y el
-    // progreso de scroll no funcionan si quien scrollea es la página de WordPress).
-    if (TABS.find((tab) => tab.id === activeTab)?.iframeViewport) {
-      if (!viewportModeSent) {
-        window.parent.postMessage({ type: 'mj:viewport' }, '*');
-        viewportModeSent = true;
-      }
-      return;
-    }
-    viewportModeSent = false;
-
     const root = document.querySelector('.app-shell');
     if (!root) return;
     const rect = root.getBoundingClientRect();
@@ -468,6 +491,15 @@ function setupEmbedAutoResize() {
 }
 
 // Renderiza navegación superior de pestañas.
+function selectTab(tabId) {
+  const tab = TABS.find((item) => item.id === tabId);
+  if (!tab || activeTab === tabId) return;
+  activeTab = tabId;
+  renderTabButtons();
+  loadTab(activeTab);
+  track('tab_view', { tab_id: tab.id, tab_label: tab.label });
+}
+
 function renderTabButtons() {
   tabNav.innerHTML = '';
 
@@ -476,13 +508,7 @@ function renderTabButtons() {
     button.className = `tab-btn${tab.id === activeTab ? ' active' : ''}`;
     button.textContent = tab.label;
     button.type = 'button';
-    button.onclick = () => {
-      if (activeTab === tab.id) return;
-      activeTab = tab.id;
-      renderTabButtons();
-      loadTab(activeTab);
-      track('tab_view', { tab_id: tab.id, tab_label: tab.label });
-    };
+    button.onclick = () => selectTab(tab.id);
     tabNav.appendChild(button);
   });
 }
@@ -493,7 +519,6 @@ async function loadTab(tabId) {
   if (!tab) return;
 
   activeDownloadHandler = null;
-  document.documentElement.classList.toggle('tab-viewport-scroll', Boolean(tab.iframeViewport));
   viewTitle.textContent = tab.title;
   viewSubtitle.textContent = tab.subtitle || '';
   viewSubtitle.hidden = !tab.subtitle;
@@ -526,8 +551,11 @@ function renderViewPill(tab) {
   if (!hasDownload) {
     viewPill.className = 'pill';
     viewPill.textContent = tab.pill || '';
+    // Sin descarga ni texto, la píldora vacía se vería como una mancha blanca.
+    viewPill.hidden = !tab.pill;
     return;
   }
+  viewPill.hidden = false;
 
   const citationText = buildMonitorWebsiteCitation();
   const brandLogoMarkup = tab.brandLogoSrc
@@ -699,12 +727,28 @@ async function copyTextToClipboard(text) {
 // Fabrica visual de cada tipo de sección.
 // Para añadir un nuevo tipo de gráfico, agrega un nuevo bloque aquí.
 async function renderSection(section, data) {
+  if (section.type === 'investigaciones') {
+    return renderInvestigaciones(data);
+  }
+
   if (section.type === 'brecha-story') {
     return renderBrechaStory(data, {
       escapeHtml,
       track,
       citation: buildMonitorWebsiteCitation,
-      setDownloadHandler: (handler) => { activeDownloadHandler = handler; }
+      setDownloadHandler: (handler) => { activeDownloadHandler = handler; },
+      // Piezas del mapa de la pestaña Estatal, reutilizadas por la vista por entidad.
+      fetchJSON,
+      MEXICO_GEOJSON_URL,
+      extractMexicoFeatures,
+      getFeatureName,
+      normalizeStateName,
+      colorFromValue,
+      renderBarsStage,
+      setIndicatorStageView,
+      syncIndicatorSideHeightToMap,
+      getSharedChartTooltip,
+      positionSharedTooltip
     });
   }
 
@@ -808,6 +852,19 @@ async function renderSection(section, data) {
   if (section.type === 'stem-mercado-laboral') {
     body.innerHTML = renderStemMercadoLaboral(data);
     attachBarChartTooltip(body, '.stem-gbar-fill');
+  }
+
+  if (section.cta) {
+    const cta = document.createElement('button');
+    cta.type = 'button';
+    cta.className = 'section-cta';
+    cta.innerHTML = `${escapeHtml(section.cta.label)} <span aria-hidden="true">→</span>`;
+    cta.addEventListener('click', () => {
+      track('cta_click', { from: section.key, to: section.cta.tab });
+      selectTab(section.cta.tab);
+      document.querySelector('.view-header')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    body.appendChild(cta);
   }
 
   return node;

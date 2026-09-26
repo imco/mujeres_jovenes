@@ -107,8 +107,6 @@ wp_add_inline_script('monitor-mj-template-js', "
     var iframe = document.getElementById('mj_dashboard_iframe');
     if (!iframe) return;
     var useAutoHeightFromChild = true;
-    // true mientras el app muestra una pestaña con scroll propio (mj:viewport).
-    var viewportMode = false;
 
     function clamp(value, min, max) {
       return Math.max(min, Math.min(max, value));
@@ -123,32 +121,12 @@ wp_add_inline_script('monitor-mj-template-js', "
       iframe.style.height = clamp(available, min, max) + 'px';
     }
 
-    // Pestañas con scrollytelling: el iframe mide lo que el viewport y el app
-    // scrollea por dentro. Se ancla al alto de la ventana, no a la posición del
-    // iframe, para no quedar más alto que la pantalla si la página ya bajó.
-    function resizeIframeToViewport() {
-      var isMobile = window.innerWidth <= 760;
-      var min = isMobile ? 480 : 560;
-      iframe.style.height = Math.max(min, window.innerHeight - 20) + 'px';
-    }
-
-    function resizeIframe() {
-      if (viewportMode) resizeIframeToViewport();
-      else resizeIframeFallback();
-    }
-
     // Soporte opcional para auto-height si el app embebido decide enviar postMessage.
     window.addEventListener('message', function (event) {
       if (!useAutoHeightFromChild) return;
       if (!event || !event.data || typeof event.data !== 'object') return;
-      if (event.data.type === 'mj:viewport') {
-        viewportMode = true;
-        resizeIframeToViewport();
-        return;
-      }
       if (event.data.type !== 'mj:resize') return;
       if (typeof event.data.height !== 'number') return;
-      viewportMode = false;
 
       var isMobile = window.innerWidth <= 760;
       var min = isMobile ? 620 : 760;
@@ -156,14 +134,14 @@ wp_add_inline_script('monitor-mj-template-js', "
       iframe.style.height = clamp(Math.round(event.data.height), min, max) + 'px';
     });
 
-    window.addEventListener('load', resizeIframe);
+    window.addEventListener('load', resizeIframeFallback);
     window.addEventListener('resize', function () {
       window.clearTimeout(window.__mjResizeTmr);
-      window.__mjResizeTmr = window.setTimeout(resizeIframe, 120);
+      window.__mjResizeTmr = window.setTimeout(resizeIframeFallback, 120);
     });
-    resizeIframe();
-    window.setTimeout(resizeIframe, 500);
-    window.setTimeout(resizeIframe, 1200);
+    resizeIframeFallback();
+    window.setTimeout(resizeIframeFallback, 500);
+    window.setTimeout(resizeIframeFallback, 1200);
   })();
 ");
 get_footer();

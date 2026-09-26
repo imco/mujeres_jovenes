@@ -22,12 +22,12 @@ const OUTPUT = path.join(ROOT, 'public/data/brecha-salarial/monitor_brecha.json'
 // `aliases` cubre las variantes con que cada corte aparece en los nombres de
 // hoja, en la matriz y en la hoja de textos.
 const CORTES = [
-  { id: 'nivel_ingresos', label: 'Nivel de ingresos',       aliases: ['nivel de ingresos'] },
+  { id: 'nivel_ingresos', label: 'Distribución de ingresos', aliases: ['distribución de ingresos', 'nivel de ingresos'] },
   { id: 'ingreso_hora',   label: 'Ingreso por hora',        aliases: ['ingreso por hora'] },
   { id: 'estado',         label: 'Entidad federativa',      aliases: ['estado', 'entidad federativa'] },
   { id: 'jornada',        label: 'Jornada laboral',         aliases: ['duración de la jornada laboral', 'jornada'] },
   { id: 'informalidad',   label: 'Informalidad laboral',    aliases: ['condición de informalidad', 'informalidad'] },
-  { id: 'puesto',         label: 'Nivel de puesto',         aliases: ['nivel de puesto'] },
+  { id: 'puesto',         label: 'Ocupaciones',             aliases: ['ocupaciones', 'nivel de puesto'] },
   { id: 'escolaridad',    label: 'Escolaridad',             aliases: ['escolaridad'] },
   { id: 'edad',           label: 'Edad',                    aliases: ['edad'] },
   { id: 'maternidad',     label: 'Maternidad y paternidad', aliases: ['maternidad y paternidad', 'maternidad'] },
@@ -41,13 +41,13 @@ const DESCRIPCIONES = {
     'empleo-informal': 'sin acceso a seguridad social',
   },
   jornada: {
-    'tiempo-completo': '35 horas o más a la semana',
-    'tiempo-parcial': 'menos de 35 horas a la semana',
+    'tiempo-completo': '30 horas o más a la semana',
+    'tiempo-parcial': 'menos de 30 horas a la semana',
   },
   ingreso_hora: {
     total: 'todas las personas ocupadas',
-    'tiempo-completo': '35 horas o más a la semana',
-    'tiempo-parcial': 'menos de 35 horas a la semana',
+    'tiempo-completo': '30 horas o más a la semana',
+    'tiempo-parcial': 'menos de 30 horas a la semana',
   },
 };
 
@@ -230,18 +230,29 @@ for (const row of matriz.slice(matriz.indexOf(headerRow) + 1)) {
 
 // ── Textos ───────────────────────────────────────────────────────────────────
 const textosRows = XLSX.utils.sheet_to_json(textosWb.Sheets.Textos, { header: 1, blankrows: false, defval: '' });
+const textosHeader = textosRows[1].map((h) => norm(h));
+const col = (pattern) => {
+  const i = textosHeader.findIndex((h) => pattern.test(h));
+  if (i === -1) throw new Error(`Falta la columna ${pattern} en la hoja Textos`);
+  return i;
+};
+const C = {
+  c1: col(/^corte 1/), c2: col(/^corte 2/), medicion: col(/^medici/), titulo: col(/^t[ií]tulo/),
+  subtitulo: col(/^subt[ií]tulo/), cuadro: col(/^cuadro/), nota: col(/^nota/), fuente: col(/^fuente/),
+};
 const textos = {};
-for (const r of textosRows.slice(2)) {
-  if (!String(r[2]).trim()) continue;
-  const c1 = corteIdFrom(r[2]);
-  const c2 = String(r[3]).trim() && String(r[3]).trim() !== '—' ? corteIdFrom(r[3]) : '';
-  const medicion = /mediana/i.test(r[4]) ? 'mediana' : 'media';
+for (const row of textosRows.slice(2)) {
+  const r = Object.fromEntries(Object.entries(C).map(([k, i]) => [k, String(row[i] ?? '').trim()]));
+  if (!r.c1) continue;
+  const c1 = corteIdFrom(r.c1);
+  const c2 = r.c2 && r.c2 !== '—' ? corteIdFrom(r.c2) : '';
+  const medicion = /mediana/i.test(r.medicion) ? 'mediana' : 'media';
   textos[`${c1}|${c2}|${medicion}`] = {
-    titulo: String(r[5]).trim(),
-    subtitulo: String(r[6]).trim(),
-    fuente: String(r[7]).trim(),
-    ...(String(r[8]).trim() ? { cuadro: String(r[8]).trim() } : {}),
-    ...(String(r[9]).trim() ? { nota: String(r[9]).trim() } : {}),
+    titulo: r.titulo,
+    subtitulo: r.subtitulo,
+    fuente: r.fuente,
+    ...(r.cuadro ? { cuadro: r.cuadro } : {}),
+    ...(r.nota ? { nota: r.nota } : {}),
   };
 }
 
@@ -280,8 +291,10 @@ const output = {
     soloMediana: soloMediana.has(id),
     unidad: id === 'ingreso_hora' ? 'hora' : 'mensual',
     // Fila de referencia al inicio de la gráfica: el total nacional, salvo en
-    // ingreso por hora, donde el nacional mensual no es comparable y se usa "Total".
-    referencia: id === 'ingreso_hora' ? 'total' : 'nacional',
+    // ingreso por hora, donde el nacional mensual no es comparable y se usa "Total",
+    // y en jornada, donde el universo son personas con 30 horas o más y "Nacional"
+    // coincide con "Tiempo completo".
+    referencia: id === 'ingreso_hora' ? 'total' : id === 'jornada' ? null : 'nacional',
     combinables: combinables[id] ?? [],
     categorias: categorias[id] ?? [],
   })),

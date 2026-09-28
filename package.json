@@ -8,10 +8,11 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node scripts/build-chat-knowledge.mjs && vite build",
     "preview": "vite preview",
     "data:sync": "~/.nvm/versions/node/v20.20.2/bin/node scripts/sync-data-from-sheets.mjs",
     "data:brecha": "node scripts/build-brecha.mjs",
+    "data:chat": "node scripts/build-chat-knowledge.mjs",
     "data:sync:dry": "~/.nvm/versions/node/v20.20.2/bin/node scripts/sync-data-from-sheets.mjs --dry-run"
   },
   "dependencies": {

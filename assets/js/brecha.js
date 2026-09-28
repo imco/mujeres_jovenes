@@ -469,6 +469,18 @@ export function renderBrechaStory(data, ctx) {
   setupHelp(root, ctx);
 
   ctx.setDownloadHandler(() => downloadSelection(data, state, cortesById, getTexto(), buildGroups, ctx));
+  // Selección desde fuera (asistente de IA). Los identificadores inválidos se
+  // ignoran; syncControls() corrige combinaciones o mediciones no permitidas.
+  ctx.registerController?.({
+    select({ c1, c2 = '', medicion = '' } = {}) {
+      if (!cortesById.has(c1)) return;
+      state.c1 = c1;
+      state.c2 = c2 && cortesById.get(c1).combinables.includes(c2) ? c2 : '';
+      if (medicion === 'media' || medicion === 'mediana') state.medicion = medicion;
+      state.selected = null;
+      render();
+    },
+  });
 
   render();
   return root;

@@ -519,6 +519,8 @@ async function loadTab(tabId) {
   if (!tab) return;
 
   activeDownloadHandler = null;
+  const tooltip = document.getElementById('chart-tooltip');
+  if (tooltip) tooltip.hidden = true;
   viewTitle.textContent = tab.title;
   viewSubtitle.textContent = tab.subtitle || '';
   viewSubtitle.hidden = !tab.subtitle;
@@ -736,19 +738,7 @@ async function renderSection(section, data) {
       escapeHtml,
       track,
       citation: buildMonitorWebsiteCitation,
-      setDownloadHandler: (handler) => { activeDownloadHandler = handler; },
-      // Piezas del mapa de la pestaña Estatal, reutilizadas por la vista por entidad.
-      fetchJSON,
-      MEXICO_GEOJSON_URL,
-      extractMexicoFeatures,
-      getFeatureName,
-      normalizeStateName,
-      colorFromValue,
-      renderBarsStage,
-      setIndicatorStageView,
-      syncIndicatorSideHeightToMap,
-      getSharedChartTooltip,
-      positionSharedTooltip
+      setDownloadHandler: (handler) => { activeDownloadHandler = handler; }
     });
   }
 
@@ -2696,6 +2686,12 @@ function getSharedChartTooltip() {
   tooltip.className = 'chart-tooltip';
   tooltip.hidden = true;
   document.body.appendChild(tooltip);
+  // En pantallas táctiles no hay "mouseleave": el tooltip se quedaba visible,
+  // incluso al cambiar de corte o de pestaña. Un toque nuevo lo oculta (si toca
+  // otro elemento con tooltip, este lo vuelve a mostrar), igual que el scroll.
+  const hide = () => { tooltip.hidden = true; };
+  document.addEventListener('touchstart', hide, { passive: true });
+  window.addEventListener('scroll', hide, { passive: true });
   return tooltip;
 }
 

@@ -41,13 +41,27 @@ const DESCRIPCIONES = {
     'empleo-informal': 'sin acceso a seguridad social',
   },
   jornada: {
-    'tiempo-completo': '30 horas o más a la semana',
-    'tiempo-parcial': 'menos de 30 horas a la semana',
+    'tiempo-completo': '35 horas o más a la semana',
+    'tiempo-parcial': 'menos de 35 horas a la semana',
   },
   ingreso_hora: {
     total: 'todas las personas ocupadas',
-    'tiempo-completo': '30 horas o más a la semana',
-    'tiempo-parcial': 'menos de 30 horas a la semana',
+    'tiempo-completo': '35 horas o más a la semana',
+    'tiempo-parcial': 'menos de 35 horas a la semana',
+  },
+};
+
+// Cortes que no se publican en la pestaña. La brecha por entidad federativa ya
+// está en la pestaña Estatal (Estados #ConLupaDeGénero); el corte se sigue
+// reconociendo al leer los Excel para no romper la matriz ni los textos.
+const EXCLUIDOS = new Set(['estado']);
+
+// Cambios a la base de textos pedidos en la revisión del 28/09/2026. Se aplican
+// después de leer el Excel; al llegar una versión de la base que ya los incluya,
+// esta tabla puede vaciarse.
+const TEXTOS_AJUSTES = {
+  'nivel_ingresos||mediana': {
+    cuadro: 'El percentil 25 agrupa a 25% de las personas con menores ingresos, la mediana marca el punto medio de la distribución y el percentil 75 separa a 25% con mayores ingresos.',
   },
 };
 
@@ -240,6 +254,17 @@ const C = {
   c1: col(/^corte 1/), c2: col(/^corte 2/), medicion: col(/^medici/), titulo: col(/^t[ií]tulo/),
   subtitulo: col(/^subt[ií]tulo/), cuadro: col(/^cuadro/), nota: col(/^nota/), fuente: col(/^fuente/),
 };
+// Nota y fuente de cada corte aislado (tarjetas bajo la gráfica combinada).
+// Columnas opcionales: las versiones anteriores de la base no las traen.
+const optionalCol = (pattern) => textosHeader.findIndex((h) => pattern.test(h));
+const CA = [1, 2].map((n) => ({
+  nota: optionalCol(new RegExp(`^nota\\s*-\\s*corte ${n}`)),
+  fuente: optionalCol(new RegExp(`^fuente\\s*-\\s*corte ${n}`)),
+}));
+const cell = (row, i) => {
+  const v = i >= 0 ? String(row[i] ?? '').trim() : '';
+  return v === '—' || v === '-' ? '' : v;
+};
 const textos = {};
 for (const row of textosRows.slice(2)) {
   const r = Object.fromEntries(Object.entries(C).map(([k, i]) => [k, String(row[i] ?? '').trim()]));
@@ -247,12 +272,14 @@ for (const row of textosRows.slice(2)) {
   const c1 = corteIdFrom(r.c1);
   const c2 = r.c2 && r.c2 !== '—' ? corteIdFrom(r.c2) : '';
   const medicion = /mediana/i.test(r.medicion) ? 'mediana' : 'media';
+  const aislados = CA.map(({ nota, fuente }) => ({ nota: cell(row, nota), fuente: cell(row, fuente) }));
   textos[`${c1}|${c2}|${medicion}`] = {
+    ...(c2 && aislados.some((a) => a.nota || a.fuente) ? { aislados } : {}),
     titulo: r.titulo,
     subtitulo: r.subtitulo,
     fuente: r.fuente,
-    ...(r.cuadro ? { cuadro: r.cuadro } : {}),
-    ...(r.nota ? { nota: r.nota } : {}),
+    ...(r.cuadro && r.cuadro !== '—' ? { cuadro: r.cuadro } : {}),
+    ...(r.nota && r.nota !== '—' ? { nota: r.nota } : {}),
   };
 }
 
@@ -263,7 +290,7 @@ for (const c1 of Object.keys(combinables)) {
     if (!textos[`${c1}||${m}`]) warnings.push(`Falta texto para ${c1} (${m})`);
   }
   for (const c2 of combinables[c1]) {
-    if (!combinados[`${c1}|${c2}`] && !combinados[`${c2}|${c1}`]) {
+    if (c1 !== 'ingreso_hora' && !combinados[`${c1}|${c2}`] && !combinados[`${c2}|${c1}`]) {
       warnings.push(`La matriz permite ${c1} × ${c2} pero no hay hoja de datos`);
     }
     for (const m of ['media', 'mediana']) {
@@ -271,6 +298,27 @@ for (const c1 of Object.keys(combinables)) {
     }
   }
 }
+// Ingreso por hora: la hoja ya viene desglosada por jornada. Sola muestra el
+// total; con "Jornada laboral" como segunda variable, tiempo completo y parcial.
+// Los textos de la base describen el desglose, así que pasan al cruce y la vista
+// sola recibe una versión sin la mención a la jornada.
+combinables.ingreso_hora = ['jornada'];
+for (const m of medicionesDe('ingreso_hora')) {
+  const t = textos[`ingreso_hora||${m}`];
+  if (!t) continue;
+  textos[`ingreso_hora|jornada|${m}`] ??= t;
+  textos[`ingreso_hora||${m}`] = {
+    ...t,
+    titulo: 'Brecha salarial: Ingreso por hora',
+    subtitulo: t.subtitulo.replace(/\s+según duración de la jornada laboral\s*$/i, ''),
+    ...(t.nota ? { nota: t.nota.replace(/\s*Se considera tiempo completo.*$/i, '') } : {}),
+  };
+}
+
+for (const [key, ajuste] of Object.entries(TEXTOS_AJUSTES)) {
+  if (textos[key]) Object.assign(textos[key], ajuste);
+}
+
 const sinUso = Object.keys(combinados).filter((k) => {
   const [a, b] = k.split('|');
   return !combinables[a]?.includes(b) && !combinables[b]?.includes(a);
@@ -278,6 +326,12 @@ const sinUso = Object.keys(combinados).filter((k) => {
 for (const k of sinUso) delete combinados[k];
 
 // ── Salida ───────────────────────────────────────────────────────────────────
+const publicados = CORTES.filter((c) => !EXCLUIDOS.has(c.id));
+for (const id of EXCLUIDOS) delete unicos[id];
+for (const key of Object.keys(textos)) {
+  if (key.split('|').some((id) => EXCLUIDOS.has(id))) delete textos[key];
+}
+
 const output = {
   meta: {
     periodo: '3T2025',
@@ -285,17 +339,17 @@ const output = {
     fuentes: [path.basename(basePath), path.basename(textosPath)],
   },
   nacional,
-  cortes: CORTES.map(({ id, label }) => ({
+  cortes: publicados.map(({ id, label }) => ({
     id,
     label,
     soloMediana: soloMediana.has(id),
     unidad: id === 'ingreso_hora' ? 'hora' : 'mensual',
     // Fila de referencia al inicio de la gráfica: el total nacional, salvo en
     // ingreso por hora, donde el nacional mensual no es comparable y se usa "Total",
-    // y en jornada, donde el universo son personas con 30 horas o más y "Nacional"
+    // y en jornada, donde el universo son personas con 35 horas o más y "Nacional"
     // coincide con "Tiempo completo".
     referencia: id === 'ingreso_hora' ? 'total' : id === 'jornada' ? null : 'nacional',
-    combinables: combinables[id] ?? [],
+    combinables: (combinables[id] ?? []).filter((c) => !EXCLUIDOS.has(c)),
     categorias: categorias[id] ?? [],
   })),
   unicos,

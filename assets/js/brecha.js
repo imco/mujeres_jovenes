@@ -6,20 +6,19 @@
 //
 // Datos: public/data/brecha-salarial/monitor_brecha.json (npm run data:brecha).
 
-import { geoMercator, geoPath } from 'd3-geo';
-
 const MEDICIONES = [
   { id: 'mediana', label: 'Mediana' },
   { id: 'media', label: 'Promedio' },
 ];
 
-// Vista con la que abre el monitor.
-const DEFAULT_STATE = { c1: 'informalidad', c2: '', medicion: 'mediana' };
+// Vista con la que abre el monitor. `medicion` es la preferencia del usuario:
+// las variables que solo tienen mediana la ignoran sin perderla.
+const DEFAULT_STATE = { c1: 'informalidad', c2: '', medicion: 'media' };
 
-const BANNER_TEXT = [
-  'En este monitor analizamos la brecha salarial entre las personas que tienen un empleo en México.',
-  'Selecciona hasta dos variables en los menús desplegables y compara cómo cambian entre distintos grupos.',
-];
+const BANNER_TEXT = 'Este monitor analiza la brecha salarial entre las personas ocupadas en México. Selecciona hasta dos variables para conocer cómo cambia la brecha según las distintas características laborales.';
+
+// Listas con más filas que esto se sombrean en filas alternas para leerlas mejor.
+const ZEBRA_MIN_ROWS = 6;
 
 // Contenido de la burbuja (?) junto al título. Texto de la página 6 del mockup
 // de Canva (Monitor Brecha Salarial_Mockup).
@@ -45,6 +44,11 @@ const moneyFormatters = {
 const formatMoney = (value, unidad = 'mensual') => `$${moneyFormatters[unidad].format(value)}`;
 // Un decimal y signo menos cuando la brecha es negativa (las mujeres ganan más).
 const formatGap = (value) => `${Number(value).toFixed(1)}%`;
+
+// Subtítulo con la medición en negritas: solo "ingreso mediano/promedio", no
+// otras apariciones como "(percentil 25, mediana y percentil 75)".
+const emphasizeMedicion = (text, escapeHtml) =>
+  escapeHtml(text).replace(/\b(ingresos?)\s+(medianos?|promedios?)\b/gi, '$1 <strong>$2</strong>');
 
 // "Brecha salarial: Informalidad laboral" → prefijo + parte resaltada en morado.
 function splitTitle(title) {
@@ -188,13 +192,11 @@ export function renderBrechaStory(data, ctx) {
 
   const cortesById = new Map(data.cortes.map((c) => [c.id, c]));
   // chartType: 'dumbbell' (puntos) o 'bars' (barras agrupadas); se conserva al cambiar de variable.
-  const state = { ...DEFAULT_STATE, selected: null, chartType: 'dumbbell' };
+  // medicion es la que se muestra; medicionPref, la que eligió el usuario.
+  const state = { ...DEFAULT_STATE, medicionPref: DEFAULT_STATE.medicion, selected: null, chartType: 'dumbbell' };
 
   root.innerHTML = `
-    <div class="brecha-banner">
-      <span>${escapeHtml(BANNER_TEXT[0])}</span>
-      <span>${escapeHtml(BANNER_TEXT[1])}</span>
-    </div>
+    <div class="brecha-banner"><span>${escapeHtml(BANNER_TEXT)}</span></div>
     <div class="brecha-controls" role="group" aria-label="Selección de variables">
       <label class="brecha-select">
         <span class="brecha-select-label">Variable 1</span>
@@ -237,7 +239,6 @@ export function renderBrechaStory(data, ctx) {
       </footer>
     </article>
     <section class="brecha-aislados" data-role="aislados" hidden>
-      <h4 class="brecha-aislados-title">Cortes aislados</h4>
       <div class="brecha-aislados-grid" data-role="aislados-grid"></div>
     </section>
   `;
@@ -276,6 +277,21 @@ export function renderBrechaStory(data, ctx) {
           { key: 'p75', label: 'Percentil 75', descripcion: 'mayores ingresos', pair: p.p75 },
         ],
       }];
+    }
+
+    // Ingreso por hora: la hoja ya trae el desglose por jornada. Sola se ve el
+    // total; con "Jornada laboral" como segunda variable, el total como referencia
+    // y después tiempo completo y parcial.
+    if (state.c1 === 'ingreso_hora') {
+      const all = (data.unicos.ingreso_hora || []).map((r) => ({
+        key: r.id,
+        label: r.label,
+        descripcion: c1.categorias.find((c) => c.id === r.id)?.descripcion || '',
+        pair: r.repr ? r[med] : null,
+        reference: r.id === c1.referencia,
+      }));
+      const total = all.filter((r) => r.reference);
+      return [{ group: null, rows: state.c2 === 'jornada' ? [...total, ...all.filter((r) => !r.reference)] : total }];
     }
 
     if (!state.c2) {
@@ -329,13 +345,14 @@ export function renderBrechaStory(data, ctx) {
   // ── Controles ─────────────────────────────────────────────────────────────
   function syncControls() {
     const c1 = cortesById.get(state.c1);
-    if (c1.soloMediana) state.medicion = 'mediana';
+    state.medicion = c1.soloMediana ? 'mediana' : state.medicionPref;
     if (state.c2 && !c1.combinables.includes(state.c2)) state.c2 = '';
 
-    selMedicion.innerHTML = MEDICIONES.map((m) => {
-      const disabled = c1.soloMediana && m.id !== 'mediana';
-      return `<option value="${m.id}"${disabled ? ' disabled' : ''}>${m.label}</option>`;
-    }).join('');
+    // Variables que solo se miden con la mediana: el menú dice "No aplica".
+    selMedicion.disabled = c1.soloMediana;
+    selMedicion.innerHTML = c1.soloMediana
+      ? '<option value="mediana">No aplica</option>'
+      : MEDICIONES.map((m) => `<option value="${m.id}">${m.label}</option>`).join('');
     selMedicion.value = state.medicion;
     selC1.value = state.c1;
 
@@ -359,52 +376,51 @@ export function renderBrechaStory(data, ctx) {
     const [prefix, accent] = splitTitle(texto?.titulo || `Brecha salarial: ${c1.label}`);
 
     const titleHtml = `${escapeHtml(prefix)} <span>${escapeHtml(accent)}</span>`;
+    const subtitleHtml = emphasizeMedicion(texto?.subtitulo || '', escapeHtml);
     // Título y subtítulo se desvanecen al cambiar; con la misma selección no se animan.
     if ($('title').innerHTML !== titleHtml) replayAnimation($('title'), 'anim-swap');
-    if ($('subtitle').textContent !== (texto?.subtitulo || '')) replayAnimation($('subtitle'), 'anim-swap');
+    if ($('subtitle').innerHTML !== subtitleHtml) replayAnimation($('subtitle'), 'anim-swap');
     $('title').innerHTML = titleHtml;
-    $('subtitle').textContent = texto?.subtitulo || '';
+    $('subtitle').innerHTML = subtitleHtml;
     $('nota').textContent = texto?.nota || '';
     $('nota').hidden = !texto?.nota;
     $('fuente').textContent = texto?.fuente || '';
 
-    const isEstado = state.c1 === 'estado' && !state.c2;
+    // La distribución de ingresos tiene su propia gráfica (dumbbell vertical).
+    const isDistribucion = state.c1 === 'nivel_ingresos';
     const toggle = $('chart-toggle');
-    toggle.hidden = isEstado;
+    toggle.hidden = isDistribucion;
     toggle.querySelectorAll('.view-btn').forEach((b) => b.classList.toggle('active', b.dataset.type === state.chartType));
-    $('legend').innerHTML = isEstado
-      ? ''
-      : `<span class="brecha-key brecha-key--m">Mujeres</span>
-         <span class="brecha-key brecha-key--h">Hombres</span>
-         <span class="brecha-key brecha-key--gap"><i>%</i>Brecha</span>`;
+    $('legend').innerHTML = `
+      <span class="brecha-key brecha-key--m">Mujeres</span>
+      <span class="brecha-key brecha-key--h">Hombres</span>
+      <span class="brecha-key brecha-key--gap"><i>%</i>Brecha</span>`;
 
     const chart = $('chart');
     // Posiciones y cifras actuales, para animar la transición hacia la nueva selección.
     const prevChart = snapshotRows(chart);
     const prevAislados = snapshotRows($('aislados-grid'));
-    if (isEstado) {
-      renderEstado(chart, data, state, cortesById, ctx);
-    } else {
-      const groups = buildGroups();
-      const graph = state.chartType === 'bars'
-        ? renderGroupedBars(groups, c1.unidad, state.selected, escapeHtml)
-        : renderDumbbell(groups, c1.unidad, state.selected, escapeHtml);
-      chart.innerHTML = texto?.cuadro
-        ? `<div class="pc-layout"><div class="pc-main">${graph}</div><aside class="pc-box"><p>${escapeHtml(texto.cuadro)}</p></aside></div>`
-        : graph;
-      bindRowSelection(chart);
-      animateRows(chart, prevChart);
-    }
+    const groups = buildGroups();
+    let graph;
+    if (isDistribucion) graph = renderVerticalDumbbell(groups[0]?.rows || [], c1.unidad, state.selected, escapeHtml);
+    else if (state.chartType === 'bars') graph = renderGroupedBars(groups, c1.unidad, state.selected, escapeHtml);
+    else graph = renderDumbbell(groups, c1.unidad, state.selected, escapeHtml);
+    chart.innerHTML = texto?.cuadro
+      ? `<div class="pc-layout"><div class="pc-main">${graph}</div><aside class="pc-box"><p>${escapeHtml(texto.cuadro)}</p></aside></div>`
+      : graph;
+    chart.classList.toggle('is-long', groups.reduce((n, g) => n + g.rows.length, 0) > ZEBRA_MIN_ROWS);
+    bindRowSelection(chart);
+    animateRows(chart, prevChart);
 
     renderAislados();
     animateRows($('aislados-grid'), prevAislados);
   }
 
   function bindRowSelection(chart) {
-    chart.querySelectorAll('.bd-row[data-key], .gb-row[data-key]').forEach((row) => {
+    chart.querySelectorAll('.bd-row[data-key], .gb-row[data-key], .vd-col[data-key]').forEach((row) => {
       const select = () => {
         state.selected = state.selected === row.dataset.key ? null : row.dataset.key;
-        chart.querySelectorAll('.bd-row, .gb-row').forEach((r) => {
+        chart.querySelectorAll('.bd-row, .gb-row, .vd-col').forEach((r) => {
           const on = r.dataset.key === state.selected;
           r.classList.toggle('is-selected', on);
           r.setAttribute('aria-pressed', on ? 'true' : 'false');
@@ -422,9 +438,11 @@ export function renderBrechaStory(data, ctx) {
   }
 
   // Cortes aislados: con dos variables, la brecha de cada una por separado.
+  // El ingreso por hora con jornada no es un cruce real (es un desglose de la
+  // misma hoja), así que no lleva tarjetas.
   function renderAislados() {
     const section = $('aislados');
-    if (!state.c2) {
+    if (!state.c2 || state.c1 === 'ingreso_hora') {
       section.hidden = true;
       $('aislados-grid').innerHTML = '';
       return;
@@ -436,8 +454,21 @@ export function renderBrechaStory(data, ctx) {
       window.setTimeout(() => section.classList.remove('anim-reveal'), 700);
     }
     section.hidden = false;
+    // Subtítulo de la variable sola; nota y fuente propias de este cruce
+    // (columnas "Nota/Fuente - Corte 1/2" de la base) o, si faltan, las de la variable sola.
+    const cruce = getTexto()?.aislados || [];
     $('aislados-grid').innerHTML = [state.c1, state.c2]
-      .map((id) => renderAislado(cortesById.get(id), data.unicos[id] || [], state.medicion, escapeHtml))
+      .map((id, i) => {
+        const solo = data.textos[`${id}||${state.medicion}`] || {};
+        const propio = cruce[i] || {};
+        return renderAislado(
+          cortesById.get(id),
+          data.unicos[id] || [],
+          state.medicion,
+          { subtitulo: solo.subtitulo, nota: propio.nota || solo.nota, fuente: propio.fuente || solo.fuente },
+          escapeHtml
+        );
+      })
       .join('');
   }
 
@@ -450,7 +481,7 @@ export function renderBrechaStory(data, ctx) {
     render();
   });
   selMedicion.addEventListener('change', () => {
-    state.medicion = selMedicion.value;
+    state.medicionPref = selMedicion.value;
     ctx.track('brecha_medicion', { medicion: state.medicion, c1: state.c1, c2: state.c2 });
     render();
   });
@@ -577,181 +608,55 @@ function renderDumbbell(groups, unidad, selectedKey, escapeHtml) {
     </div>`;
 }
 
-// ── Entidad federativa: mapa o barras + lista ordenada ──────────────────────
-let mexicoGeojson = null;
+// ── Distribución de ingresos: dumbbell vertical ─────────────────────────────
+// Una columna por punto de la distribución (P25, mediana, P75). Los dos puntos
+// se unen con una línea vertical, las cifras van a los lados y la brecha en una
+// burbuja por debajo.
+function renderVerticalDumbbell(rows, unidad, selectedKey, escapeHtml) {
+  const values = rows.flatMap((r) => (r.pair ? [r.pair.m, r.pair.h] : []));
+  if (!values.length) return '<p class="brecha-empty">No hay datos disponibles para esta selección.</p>';
+  const scale = niceScale(Math.min(...values), Math.max(...values), 5);
+  const pos = (v) => ((v - scale.lo) / (scale.hi - scale.lo)) * 100;
 
-// Misma estructura visual que la pestaña Estatal (reusa sus clases y helpers):
-// el color y la barra representan la brecha de cada entidad.
-async function renderEstado(chart, data, state, cortesById, ctx) {
-  const { escapeHtml } = ctx;
-  const med = state.medicion;
-  const cats = cortesById.get('estado').categorias;
-  const rows = (data.unicos.estado || [])
-    .filter((r) => r.repr && r[med])
-    .map((r) => ({ key: ctx.normalizeStateName(r.label), label: r.label, pair: r[med] }))
-    .sort((a, b) => b.pair.b - a.pair.b);
-  const byKey = new Map(rows.map((r) => [r.key, r]));
-  const gaps = rows.map((r) => r.pair.b);
-  const min = Math.min(...gaps);
-  const max = Math.max(...gaps);
-  const nac = data.nacional[med];
-  if (!state.estadoView) state.estadoView = 'map';
-  if (!state.estadoKey || !byKey.has(state.estadoKey)) state.estadoKey = rows[0]?.key || '';
+  const ticks = scale.ticks
+    .map((t) => `<span class="vd-tick" style="bottom:${pos(t)}%"><em>${formatMoney(t, unidad)}</em></span>`)
+    .join('');
+  const cols = rows.map((r) => {
+    if (!r.pair) return '<div class="vd-col vd-col--nd"><span class="bd-nd">Sin datos</span></div>';
+    const { m, h, b } = r.pair;
+    const pm = pos(m);
+    const ph = pos(h);
+    const lo = Math.min(pm, ph);
+    const hi = Math.max(pm, ph);
+    const selected = selectedKey === r.key;
+    const aria = `${r.label}: mujeres ${formatMoney(m, unidad)}, hombres ${formatMoney(h, unidad)}, brecha ${formatGap(b)}`;
+    return `
+      <div class="vd-col${selected ? ' is-selected' : ''}" data-key="${escapeHtml(r.key)}" role="button" tabindex="0"
+           aria-pressed="${selected}" aria-label="${escapeHtml(aria)}">
+        <span class="vd-line" style="bottom:${lo}%;height:${hi - lo}%"></span>
+        <span class="vd-dot bd-dot--h" style="bottom:${ph}%"></span>
+        <span class="vd-dot bd-dot--m" style="bottom:${pm}%"></span>
+        <span class="vd-val vd-val--m" style="bottom:${pm}%">${formatMoney(m, unidad)}</span>
+        <span class="vd-val vd-val--h" style="bottom:${ph}%">${formatMoney(h, unidad)}</span>
+        <span class="vd-gap" style="bottom:${lo}%">${formatGap(b)}</span>
+      </div>`;
+  }).join('');
+  const labels = rows.map((r) => `
+    <div class="vd-label">
+      <span class="bd-label-name">${escapeHtml(r.label)}</span>
+      ${r.descripcion ? `<span class="bd-label-desc">${escapeHtml(r.descripcion)}</span>` : ''}
+    </div>`).join('');
 
-  chart.innerHTML = `
-    <div class="mexico-map-layout brecha-estado">
-      <div class="mexico-map-wrap">
-        <div class="mexico-map-toolbar">
-          <p class="brecha-estado-ref">Nacional: <strong>${formatGap(nac.b)}</strong></p>
-          <div class="view-toggle" role="group" aria-label="Tipo de visualización">
-            <button type="button" class="view-btn${state.estadoView === 'map' ? ' active' : ''}" data-view="map">Mapa</button>
-            <button type="button" class="view-btn${state.estadoView === 'bars' ? ' active' : ''}" data-view="bars">Barras</button>
-          </div>
-        </div>
-        <div class="mexico-map-stage">
-          <svg class="chart-svg mexico-map-svg" role="img" aria-label="Mapa de la brecha salarial por entidad federativa"></svg>
-          <div class="bars-stage" hidden></div>
-        </div>
-        <div class="map-gradient">
-          <span>${formatGap(min)}</span>
-          <div></div>
-          <span>${formatGap(max)}</span>
+  return `
+    <div class="vd-chart" style="--vd-cols:${rows.length}">
+      <div class="vd-plot">
+        <div class="vd-area">
+          <div class="vd-grid" aria-hidden="true">${ticks}</div>
+          <div class="vd-cols">${cols}</div>
         </div>
       </div>
-      <aside class="indicator-side">
-        <h5 class="indicator-side-subtitle">Entidades ordenadas por brecha salarial</h5>
-        <ol class="indicator-side-top"></ol>
-        <section class="entity-profile-box">
-          <p class="entity-profile-name"></p>
-          <ul class="entity-profile-list"></ul>
-        </section>
-      </aside>
+      <div class="vd-labels">${labels}</div>
     </div>`;
-
-  const svg = chart.querySelector('.mexico-map-svg');
-  const barsStage = chart.querySelector('.bars-stage');
-  const mapWrap = chart.querySelector('.mexico-map-wrap');
-  const side = chart.querySelector('.indicator-side');
-  const list = chart.querySelector('.indicator-side-top');
-  const profileName = chart.querySelector('.entity-profile-name');
-  const profileList = chart.querySelector('.entity-profile-list');
-  const tooltip = ctx.getSharedChartTooltip();
-
-  let features = [];
-  try {
-    // El geojson se pide una vez por sesión: cambiar de medición no lo recarga.
-    mexicoGeojson ??= ctx.fetchJSON(ctx.MEXICO_GEOJSON_URL);
-    features = ctx.extractMexicoFeatures(await mexicoGeojson);
-  } catch {
-    mexicoGeojson = null;
-    features = [];
-  }
-  // El usuario pudo cambiar de selección mientras cargaba el mapa.
-  if (!chart.contains(svg)) return;
-
-  const W = 980;
-  const H = 600;
-  const path = features.length
-    ? geoPath(geoMercator().fitExtent([[22, 22], [W - 22, H - 22]], { type: 'FeatureCollection', features }))
-    : null;
-
-  const paint = () => {
-    const mapVisible = state.estadoView === 'map' && path;
-    ctx.setIndicatorStageView(svg, barsStage, Boolean(mapVisible));
-
-    if (mapVisible) {
-      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
-      svg.innerHTML = `<rect x="0" y="0" width="${W}" height="${H}" fill="#f8f7fe" rx="14"></rect>${features.map((f) => {
-        const key = ctx.normalizeStateName(ctx.getFeatureName(f));
-        const r = byKey.get(key);
-        const d = path(f);
-        if (!d) return '';
-        return `<path d="${d}" fill="${r ? ctx.colorFromValue(r.pair.b, min, max) : '#eceaf5'}" stroke="#ffffff" stroke-width="1"
-          class="${key === state.estadoKey ? 'selected-state' : ''}" data-state-key="${escapeHtml(key)}"></path>`;
-      }).join('')}`;
-      barsStage.innerHTML = '';
-      svg.querySelectorAll('path[data-state-key]').forEach((node) => {
-        const r = byKey.get(node.dataset.stateKey);
-        node.addEventListener('mousemove', (event) => {
-          tooltip.innerHTML = `
-            <div class="chart-tooltip-title">${escapeHtml(r ? r.label : 'Sin dato')}</div>
-            ${r ? `
-              <div class="chart-tooltip-row"><span class="chart-tooltip-dot" style="background:var(--brecha-m)"></span><span>Mujeres ${formatMoney(r.pair.m)}</span></div>
-              <div class="chart-tooltip-row"><span class="chart-tooltip-dot" style="background:var(--brecha-h)"></span><span>Hombres ${formatMoney(r.pair.h)}</span></div>
-              <div class="chart-tooltip-row"><strong>Brecha ${formatGap(r.pair.b)}</strong></div>` : ''}`;
-          tooltip.hidden = false;
-          ctx.positionSharedTooltip(tooltip, event.clientX, event.clientY);
-        });
-        node.addEventListener('mouseleave', () => { tooltip.hidden = true; });
-        node.addEventListener('click', () => {
-          if (!r) return;
-          state.estadoKey = r.key;
-          ctx.track('entity_select', { entity: r.label, section: 'brecha', variable: 'estado' });
-          paint();
-        });
-      });
-    } else {
-      // Las barras del explorador estatal no admiten valores negativos: una brecha
-      // negativa se dibuja sin altura, pero su valor se muestra completo.
-      ctx.renderBarsStage(
-        barsStage,
-        rows.map((r) => ({
-          key: r.key,
-          label: r.label,
-          value: Math.max(r.pair.b, 0),
-          displayValue: r.pair.b.toFixed(1),
-          unitSymbol: '%',
-          unit: '',
-        })),
-        state.estadoKey,
-        (nextKey) => {
-          state.estadoKey = nextKey;
-          paint();
-        }
-      );
-      svg.innerHTML = '';
-    }
-
-    list.innerHTML = rows.map((r, i) => `
-      <li class="${r.key === state.estadoKey ? 'active' : ''}" data-state-key="${escapeHtml(r.key)}">
-        <span>${i + 1}. ${escapeHtml(r.label)}</span><strong>${formatGap(r.pair.b)}</strong>
-      </li>`).join('');
-    list.querySelectorAll('li[data-state-key]').forEach((li) => {
-      li.addEventListener('click', () => {
-        state.estadoKey = li.dataset.stateKey;
-        paint();
-      });
-    });
-
-    const sel = byKey.get(state.estadoKey);
-    if (profileName.textContent && profileName.textContent !== sel?.label) {
-      replayAnimation(chart.querySelector('.entity-profile-box'), 'anim-swap');
-    }
-    profileName.textContent = sel?.label || '';
-    profileList.innerHTML = sel ? `
-      <li><span class="entity-indicator-name">Ingreso de las mujeres</span><strong class="entity-indicator-value">${formatMoney(sel.pair.m)}</strong></li>
-      <li><span class="entity-indicator-name">Ingreso de los hombres</span><strong class="entity-indicator-value">${formatMoney(sel.pair.h)}</strong></li>
-      <li><span class="entity-indicator-name">Brecha salarial</span><strong class="entity-indicator-value">${formatGap(sel.pair.b)}</strong></li>
-      <li><span class="entity-indicator-name">Posición</span><strong class="entity-indicator-value">${rows.indexOf(sel) + 1} de ${rows.length}</strong></li>` : '';
-  };
-
-  chart.querySelectorAll('.view-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      state.estadoView = btn.dataset.view === 'bars' ? 'bars' : 'map';
-      chart.querySelectorAll('.view-btn').forEach((b) => b.classList.toggle('active', b === btn));
-      ctx.track('view_toggle', { view_type: state.estadoView, section: 'brecha' });
-      paint();
-    });
-  });
-
-  paint();
-  ctx.syncIndicatorSideHeightToMap(mapWrap, side);
-  // Categorías sin geometría en el mapa: se reportan para detectar alias faltantes.
-  if (path) {
-    const mapped = new Set(features.map((f) => ctx.normalizeStateName(ctx.getFeatureName(f))));
-    const missing = cats.filter((c) => !mapped.has(ctx.normalizeStateName(c.label)));
-    if (missing.length) console.warn('[brecha] Entidades sin geometría:', missing.map((c) => c.label).join(', '));
-  }
 }
 
 // ── Barras agrupadas ────────────────────────────────────────────────────────
@@ -810,7 +715,7 @@ function renderGroupedBars(groups, unidad, selectedKey, escapeHtml) {
 }
 
 // ── Cortes aislados ─────────────────────────────────────────────────────────
-function renderAislado(corte, rows, medicion, escapeHtml) {
+function renderAislado(corte, rows, medicion, texto, escapeHtml) {
   const items = rows
     .filter((r) => r.repr && r[medicion])
     .map((r) => ({ label: r.label, pair: r[medicion], mkey: `${corte.id}|${r.id}` }));
@@ -818,11 +723,17 @@ function renderAislado(corte, rows, medicion, escapeHtml) {
   return `
     <article class="brecha-card ais-card">
       <h5 class="ais-title">${escapeHtml(corte.label)}</h5>
+      ${texto?.subtitulo ? `<p class="ais-subtitle">${emphasizeMedicion(texto.subtitulo, escapeHtml)}</p>` : ''}
       <div class="brecha-legend ais-legend">
         <span class="brecha-key brecha-key--h">Hombres</span>
         <span class="brecha-key brecha-key--m">Mujeres</span>
       </div>
       ${items.map((r) => renderBarsRow(r, corte.unidad, scale, null, escapeHtml)).join('') || '<p class="brecha-empty">Sin datos para este corte.</p>'}
+      ${texto?.nota || texto?.fuente ? `
+        <footer class="brecha-chart-foot ais-foot">
+          ${texto.nota ? `<p>${escapeHtml(texto.nota)}</p>` : ''}
+          ${texto.fuente ? `<p>${escapeHtml(texto.fuente)}</p>` : ''}
+        </footer>` : ''}
     </article>`;
 }
 

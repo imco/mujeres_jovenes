@@ -2268,7 +2268,7 @@ h2 {
   --brecha-pill-text: #5b3fd6;
   /* Etiqueta de la brecha (naranja IMCO) y fondo de las filas alternas. */
   --brecha-gap: #fc8e6d;
-  --brecha-gap-text: #3b1a0e;
+  --brecha-gap-text: #ffffff;
   --brecha-zebra: #faf9fe;
 }
 

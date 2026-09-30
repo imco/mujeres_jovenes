@@ -179,6 +179,27 @@ Las fuentes de datos de todas las gráficas (incluidas las STEM) deben usar `for
   - `escapeHtml()`
   - `formatSourceWithNoteBreak()`
 
+## Ligas por pestaña
+
+Cada pestaña tiene una liga propia con el parámetro `?tab=<slug>`:
+
+| Pestaña | Liga |
+|---------|------|
+| Nacional | `?tab=nacional` |
+| Estatal | `?tab=estatal` |
+| CDMX | `?tab=cdmx` |
+| STEM | `?tab=stem` |
+| Brecha salarial | `?tab=brecha-salarial` |
+| Investigaciones | `?tab=investigaciones` |
+
+El slug se define en el campo `slug` de cada pestaña en `const TABS` (`assets/js/app.js`). Un slug desconocido abre Nacional.
+
+Funciona en dos niveles:
+- **App suelto** (Vercel o local): al cambiar de pestaña, la URL se actualiza con `history.replaceState`.
+- **Embebido en WordPress** (`template_Monitor_mujeres_jovenes.php`): la plantilla lee `?tab=` de la página y lo pasa al `src` del iframe. Al navegar, el app manda `postMessage({ type: 'mj:tab', tab })` y la plantilla actualiza la URL de WordPress. Cualquier cambio a la plantilla hay que pegarlo a mano en el tema de WordPress.
+
+El botón **Copiar liga** del encabezado copia la liga de la pestaña activa: la de `imco.org.mx` cuando el app está embebido, la propia cuando corre suelto.
+
 ## Ejecutar local
 
 Requiere **Node ≥ 18**. Si el sistema tiene una versión anterior, usar nvm:

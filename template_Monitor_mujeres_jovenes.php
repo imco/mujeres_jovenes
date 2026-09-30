@@ -9,6 +9,14 @@ get_website_header();
 
 $dashboard_url = 'https://mujeres-jovenes.vercel.app/';
 
+// Ligas por pestaña: ?tab=<slug> en esta página se pasa al iframe para que el
+// dashboard abra en esa pestaña desde el primer render. Slugs válidos:
+// nacional, estatal, cdmx, stem, brecha-salarial, investigaciones.
+$mj_tab = isset($_GET['tab']) ? strtolower(trim((string) $_GET['tab'])) : '';
+if ($mj_tab !== '' && preg_match('/^[a-z0-9-]{1,40}$/', $mj_tab)) {
+  $dashboard_url = add_query_arg('tab', $mj_tab, $dashboard_url);
+}
+
 wp_register_style('monitor-mujeres-jovenes-template', false);
 wp_enqueue_style('monitor-mujeres-jovenes-template');
 wp_add_inline_style('monitor-mujeres-jovenes-template', "
@@ -121,10 +129,28 @@ wp_add_inline_script('monitor-mj-template-js', "
       iframe.style.height = clamp(available, min, max) + 'px';
     }
 
-    // Soporte opcional para auto-height si el app embebido decide enviar postMessage.
+    // El dashboard avisa la pestaña activa; se refleja en ?tab= de esta página
+    // (sin entrada en el historial) para que la liga se pueda compartir.
+    function syncTabToUrl(slug) {
+      if (typeof slug !== 'string' || !/^[a-z0-9-]{1,40}$/.test(slug)) return;
+      if (!window.history || !window.history.replaceState) return;
+      try {
+        var url = new URL(window.location.href);
+        url.searchParams.set('tab', slug);
+        window.history.replaceState(null, '', url.toString());
+      } catch (e) { /* URL API no disponible: se conserva la URL actual */ }
+    }
+
     window.addEventListener('message', function (event) {
-      if (!useAutoHeightFromChild) return;
       if (!event || !event.data || typeof event.data !== 'object') return;
+
+      if (event.data.type === 'mj:tab') {
+        syncTabToUrl(event.data.tab);
+        return;
+      }
+
+      // Auto-height: el app embebido envía su altura por postMessage.
+      if (!useAutoHeightFromChild) return;
       if (event.data.type !== 'mj:resize') return;
       if (typeof event.data.height !== 'number') return;
 

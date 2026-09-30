@@ -6,6 +6,7 @@ import { renderBrechaStory } from './brecha.js';
 const TABS = [
   {
     id: 'dashboard-nacional',
+    slug: 'nacional',
     label: 'Nacional',
     title: 'Datos nacionales',
     downloadLabel: 'Descarga datos',
@@ -61,6 +62,7 @@ const TABS = [
   },
   {
     id: 'estadisticas-entidad',
+    slug: 'estatal',
     label: 'Estatal',
     title: 'Estados #ConLupaDeGénero',
     downloadLabel: 'Descargas las boletas',
@@ -79,6 +81,7 @@ const TABS = [
   },
   {
     id: 'cdmx-alcaldia',
+    slug: 'cdmx',
     label: 'CDMX',
     title: 'Mujeres jóvenes en la CDMX',
     pill: 'Alcaldías CDMX',
@@ -98,6 +101,7 @@ const TABS = [
   },
   {
     id: 'stem',
+    slug: 'stem',
     label: 'STEM',
     title: 'Mujeres en STEM',
     subtitle: 'Ciencia, Tecnología, Ingeniería y Matemáticas',
@@ -161,6 +165,7 @@ const TABS = [
   },
   {
     id: 'brecha-salarial',
+    slug: 'brecha-salarial',
     label: 'Brecha salarial',
     title: 'Brecha salarial',
     // La descarga responde a la selección del explorador (ver brecha.js).
@@ -176,6 +181,7 @@ const TABS = [
   },
   {
     id: 'investigaciones',
+    slug: 'investigaciones',
     label: 'Investigaciones',
     title: 'Investigaciones',
     subtitle: 'Conoce nuestras investigaciones más recientes sobre las mujeres en la economía.',
@@ -396,6 +402,9 @@ const COMPARE_COLOR_NEUTRAL_HIGH = '#cfcbe8';
 
 const MONITOR_SITE_URL = 'https://imco.org.mx/monitor/mujeres-en-la-economia/';
 const MONITOR_SITE_TITLE = 'Monitor Mujeres en la Economía';
+// Parámetro de la URL que identifica la pestaña (?tab=<slug>). Lo leen tanto
+// este app como la página de WordPress que lo embebe.
+const TAB_QUERY_PARAM = 'tab';
 
 const tabNav = document.getElementById('tab-nav');
 const dashboard = document.getElementById('dashboard');
@@ -412,6 +421,8 @@ init();
 
 // Punto de entrada de la app.
 function init() {
+  const initialTab = tabFromLocation();
+  if (initialTab) activeTab = initialTab.id;
   setupEmbedAutoResize();
   setupViewPillActions();
   renderTabButtons();
@@ -490,11 +501,48 @@ function setupEmbedAutoResize() {
   window.setTimeout(scheduleNotify, 2500);
 }
 
+// ── Ligas por pestaña ────────────────────────────────────────────────────────
+// La pestaña activa se refleja en ?tab=<slug>. Dentro de WordPress, el padre
+// recibe el slug por postMessage y actualiza su propia URL (ver la plantilla PHP).
+
+// Pestaña indicada en la URL actual, o null si no viene o no existe.
+function tabFromLocation() {
+  const slug = new URLSearchParams(window.location.search).get(TAB_QUERY_PARAM);
+  if (!slug) return null;
+  return TABS.find((item) => item.slug === slug.trim().toLowerCase()) || null;
+}
+
+// Liga pública de una pestaña. Embebido, apunta a la página del monitor en
+// imco.org.mx; suelto (Vercel o local), a la URL propia.
+function buildShareUrl(tab) {
+  const base = window.parent === window
+    ? `${window.location.origin}${window.location.pathname}`
+    : MONITOR_SITE_URL;
+  const url = new URL(base);
+  url.searchParams.set(TAB_QUERY_PARAM, tab.slug);
+  return url.toString();
+}
+
+// Escribe la pestaña en la URL propia (sin entrada en el historial) y avisa al padre.
+function syncTabToUrl(tab) {
+  try {
+    const url = new URL(window.location.href);
+    url.searchParams.set(TAB_QUERY_PARAM, tab.slug);
+    window.history.replaceState(null, '', url);
+  } catch (_error) {
+    // Sin History API no hay liga que sincronizar; la navegación sigue igual.
+  }
+  if (window.parent !== window) {
+    window.parent.postMessage({ type: 'mj:tab', tab: tab.slug }, '*');
+  }
+}
+
 // Renderiza navegación superior de pestañas.
 function selectTab(tabId) {
   const tab = TABS.find((item) => item.id === tabId);
   if (!tab || activeTab === tabId) return;
   activeTab = tabId;
+  syncTabToUrl(tab);
   renderTabButtons();
   loadTab(activeTab);
   track('tab_view', { tab_id: tab.id, tab_label: tab.label });
@@ -550,13 +598,6 @@ async function loadTab(tabId) {
 // - CDMX: botón de descarga de boletas.
 function renderViewPill(tab) {
   const hasDownload = Boolean(tab.downloadHref || tab.downloadAction);
-  if (!hasDownload) {
-    viewPill.className = 'pill';
-    viewPill.textContent = tab.pill || '';
-    // Sin descarga ni texto, la píldora vacía se vería como una mancha blanca.
-    viewPill.hidden = !tab.pill;
-    return;
-  }
   viewPill.hidden = false;
 
   const citationText = buildMonitorWebsiteCitation();
@@ -565,7 +606,17 @@ function renderViewPill(tab) {
     : '';
   viewPill.className = 'pill pill-download-wrap';
   const downloadLabel = escapeHtml(tab.downloadLabel || 'Descarga datos');
-  const downloadMarkup = tab.downloadAction
+  const shareMarkup = `<button
+      type="button"
+      class="pill-cite-btn pill-share-btn"
+      data-action="copy-share-link"
+      data-share-url="${escapeHtml(buildShareUrl(tab))}"
+      title="Copiar la liga de esta pestaña"
+      aria-label="Copiar la liga de esta pestaña"
+    >
+      Copiar liga
+    </button>`;
+  const downloadMarkup = !hasDownload ? '' : tab.downloadAction
     ? `<button type="button" class="pill-download-btn" data-action="dynamic-download" title="${downloadLabel}">
         <span class="pill-download-icon" aria-hidden="true">⬇</span>
         <span>${downloadLabel}</span>
@@ -580,9 +631,7 @@ function renderViewPill(tab) {
       <span class="pill-download-icon" aria-hidden="true">⬇</span>
       <span>${downloadLabel}</span>
     </a>`;
-  viewPill.innerHTML = `
-    ${brandLogoMarkup}
-    ${downloadMarkup}
+  const citeMarkup = !hasDownload ? '' : `
     <div class="pill-cite-wrap">
       <button
         type="button"
@@ -601,9 +650,14 @@ function renderViewPill(tab) {
           <button type="button" class="pill-cite-copy-btn" data-action="copy-cite-text">Copiar cita</button>
         </div>
       </div>
-    </div>
+    </div>`;
+  viewPill.innerHTML = `
+    ${brandLogoMarkup}
+    ${downloadMarkup}
+    ${citeMarkup}
+    ${shareMarkup}
   `;
-  if (!tab.downloadAction) {
+  if (hasDownload && !tab.downloadAction) {
     viewPill.querySelector('.pill-download-btn')?.addEventListener('click', () => {
       track('file_download', { file_name: tab.downloadFilename || tab.downloadHref, section: tab.label });
     });
@@ -657,6 +711,21 @@ function setupViewPillActions() {
           feedbackEl.hidden = false;
         }
       }
+      return;
+    }
+
+    if (action === 'copy-share-link') {
+      const copyBtn = actionNode instanceof HTMLButtonElement ? actionNode : null;
+      const shareUrl = actionNode.getAttribute('data-share-url') || '';
+      if (!copyBtn || !shareUrl) return;
+
+      const copied = await copyTextToClipboard(shareUrl);
+      track('share_link_copy', { success: copied, tab_id: activeTab });
+      const originalLabel = copyBtn.textContent || 'Copiar liga';
+      copyBtn.textContent = copied ? '¡Liga copiada!' : 'No se pudo copiar';
+      window.setTimeout(() => {
+        copyBtn.textContent = originalLabel;
+      }, 1400);
       return;
     }
 

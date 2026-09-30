@@ -2507,10 +2507,9 @@ h2 {
 .bd-label { display: grid; gap: .1rem; min-width: 0; }
 .bd-label-name { font-weight: 700; color: var(--text); font-size: .9rem; }
 .bd-label-desc { font-size: .78rem; color: #8a8fa8; }
-.bd-label-vals { display: none; }
 /* Posiciones en variables: --x/--w con la escala de montos; --mx/--mw, la de celular. */
 .bd-line { left: var(--x); width: var(--w); }
-.bd-dot, .bd-gap { left: var(--x); }
+.bd-dot, .bd-gap, .bd-val { left: var(--x); }
 .bd-mobile-note { display: none; }
 
 /* El track deja margen a los lados para las cifras de los extremos. */
@@ -2821,23 +2820,8 @@ h2 {
   .bd-axis > div:first-child { display: none; }
   .bd-row { min-height: 0; padding: .5rem .3rem; }
   .bd-plot { height: 60px; }
-  /* Cifras en el renglón del nombre: la línea usa todo el ancho de la fila. */
-  .bd-label { grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; column-gap: .6rem; }
-  .bd-label-desc { grid-column: 1; }
-  .bd-label-vals {
-    display: flex;
-    gap: .7rem;
-    grid-column: 2;
-    grid-row: 1;
-    font-size: .82rem;
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
-  }
-  .bd-label-vals .is-m { color: var(--brecha-m); }
-  .bd-label-vals .is-h { color: #6b7088; }
-  .bd-row .bd-val { display: none; }
   .bd-line { left: var(--mx); width: var(--mw); }
-  .bd-dot, .bd-gap { left: var(--mx); }
+  .bd-dot, .bd-gap, .bd-val { left: var(--mx); }
   /* Sin escala de montos en celular: el eje no aplica. */
   .bd-chart .bd-axis { display: none; }
   .bd-mobile-note { display: block; margin: 0 0 .6rem; font-size: .76rem; color: #7b809a; }
@@ -2845,10 +2829,11 @@ h2 {
   .bd-line { height: 6px; }
   /* Brecha siempre debajo de la línea: encima taparía los puntos. */
   .bd-gap, .bd-gap--above { transform: translate(-50%, calc(-50% + 20px)); font-size: .72rem; }
-  .bd-track, .bd-nd { inset: 0 18px; }
-  .bd-val { font-size: .82rem; }
-  .bd-val.is-left { transform: translate(calc(-100% - 12px), -50%); }
-  .bd-val.is-right { transform: translate(12px, -50%); }
+  .bd-track, .bd-nd { inset: 0 6px; }
+  /* Cifras junto a los puntos, en letra más chica para que quepan a los lados. */
+  .bd-val { font-size: .72rem; }
+  .bd-val.is-left { transform: translate(calc(-100% - 9px), -50%); }
+  .bd-val.is-right { transform: translate(9px, -50%); }
   .bd-tick { font-size: .64rem; }
   .bd-tick:nth-child(even) { display: none; }
   .ais-row { grid-template-columns: 1fr; }

@@ -549,12 +549,12 @@ function renderDumbbell(groups, unidad, selectedKey, escapeHtml) {
   const pos = (v) => ((v - scale.lo) / (scale.hi - scale.lo)) * 100;
   // Celular: con la escala de montos la distancia entre los puntos se pierde en
   // 300 px. Ahí la longitud de la línea representa la brecha (la mayor ocupa el
-  // 84% del ancho) y las cifras van junto al nombre. Las posiciones de ambas
-  // escalas viajan en variables CSS y la hoja de estilos elige cuál usar.
+  // 50% del ancho) y a los lados queda espacio para las cifras. Las posiciones de
+  // ambas escalas viajan en variables CSS y la hoja de estilos elige cuál usar.
   const maxGap = Math.max(...groups.flatMap((g) => g.rows).map((r) => (r.pair ? Math.abs(r.pair.b) : 0)), 1);
   const mobilePos = ({ m, h, b }) => {
-    const len = Math.max((Math.abs(b) / maxGap) * 84, 5);
-    const start = 8;
+    const len = Math.max((Math.abs(b) / maxGap) * 50, 9);
+    const start = 25;
     return m <= h ? { pm: start, ph: start + len } : { pm: start + len, ph: start };
   };
 
@@ -583,21 +583,18 @@ function renderDumbbell(groups, unidad, selectedKey, escapeHtml) {
     const mlo = Math.min(mob.pm, mob.ph);
     const mhi = Math.max(mob.pm, mob.ph);
     const aria = `${r.label}: mujeres ${formatMoney(m, unidad)}, hombres ${formatMoney(h, unidad)}, brecha ${formatGap(b)}`;
-    // En móvil las cifras van junto al nombre (CSS): así la línea usa todo el
-    // ancho y la distancia entre los puntos se alcanza a ver.
-    const vals = `<span class="bd-label-vals" aria-hidden="true"><b class="is-m">${formatMoney(m, unidad)}</b><b class="is-h">${formatMoney(h, unidad)}</b></span>`;
     return `
       <div class="bd-row${r.reference ? ' is-ref' : ''}${selected ? ' is-selected' : ''}" data-key="${escapeHtml(r.key)}" data-mkey="${escapeHtml(r.key)}"
            role="button" tabindex="0" aria-pressed="${selected}" aria-label="${escapeHtml(aria)}">
-        ${label.replace(/<\/div>\s*$/, `${vals}</div>`)}
+        ${label}
         <div class="bd-plot">
           <div class="bd-track">
             <span class="bd-line" style="--x:${lo}%;--w:${hi - lo}%;--mx:${mlo}%;--mw:${mhi - mlo}%"></span>
             <span class="bd-gap${gapAbove ? ' bd-gap--above' : ''}" style="--x:${(lo + hi) / 2}%;--mx:${(mlo + mhi) / 2}%">${formatGap(b)}</span>
             <span class="bd-dot bd-dot--h" style="--x:${ph}%;--mx:${mob.ph}%"></span>
             <span class="bd-dot bd-dot--m" style="--x:${pm}%;--mx:${mob.pm}%"></span>
-            <span class="bd-val bd-val--m ${mLeft ? 'is-left' : 'is-right'}" style="left:${pm}%">${formatMoney(m, unidad)}</span>
-            <span class="bd-val bd-val--h ${mLeft ? 'is-right' : 'is-left'}" style="left:${ph}%">${formatMoney(h, unidad)}</span>
+            <span class="bd-val bd-val--m ${mLeft ? 'is-left' : 'is-right'}" style="--x:${pm}%;--mx:${mob.pm}%">${formatMoney(m, unidad)}</span>
+            <span class="bd-val bd-val--h ${mLeft ? 'is-right' : 'is-left'}" style="--x:${ph}%;--mx:${mob.ph}%">${formatMoney(h, unidad)}</span>
           </div>
         </div>
       </div>`;

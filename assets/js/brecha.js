@@ -35,6 +35,9 @@ const HELP_HTML = `
 // Por debajo de esta separación relativa entre los dos puntos, la etiqueta de
 // la brecha no cabe entre ellos y se coloca encima.
 const GAP_INLINE_MIN_RATIO = 0.13;
+// En celular (escala de brecha, % del ancho): con menos separación la burbuja
+// taparía los puntos y se coloca debajo de la línea.
+const GAP_INLINE_MIN_MOBILE = 22;
 
 // ── Formato ─────────────────────────────────────────────────────────────────
 const moneyFormatters = {
@@ -590,7 +593,7 @@ function renderDumbbell(groups, unidad, selectedKey, escapeHtml) {
         <div class="bd-plot">
           <div class="bd-track">
             <span class="bd-line" style="--x:${lo}%;--w:${hi - lo}%;--mx:${mlo}%;--mw:${mhi - mlo}%"></span>
-            <span class="bd-gap${gapAbove ? ' bd-gap--above' : ''}" style="--x:${(lo + hi) / 2}%;--mx:${(mlo + mhi) / 2}%">${formatGap(b)}</span>
+            <span class="bd-gap${gapAbove ? ' bd-gap--above' : ''}${mhi - mlo < GAP_INLINE_MIN_MOBILE ? ' bd-gap--mbelow' : ''}" style="--x:${(lo + hi) / 2}%;--mx:${(mlo + mhi) / 2}%">${formatGap(b)}</span>
             <span class="bd-dot bd-dot--h" style="--x:${ph}%;--mx:${mob.ph}%"></span>
             <span class="bd-dot bd-dot--m" style="--x:${pm}%;--mx:${mob.pm}%"></span>
             <span class="bd-val bd-val--m ${mLeft ? 'is-left' : 'is-right'}" style="--x:${pm}%;--mx:${mob.pm}%">${formatMoney(m, unidad)}</span>

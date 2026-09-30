@@ -2827,8 +2827,10 @@ h2 {
   .bd-mobile-note { display: block; margin: 0 0 .6rem; font-size: .76rem; color: #7b809a; }
   .bd-dot { width: 13px; height: 13px; border-width: 1.5px; }
   .bd-line { height: 6px; }
-  /* Brecha siempre debajo de la línea: encima taparía los puntos. */
-  .bd-gap, .bd-gap--above { transform: translate(-50%, calc(-50% + 20px)); font-size: .72rem; }
+  /* Brecha sobre la línea, entre los puntos; si no cabe, debajo (encima
+     chocaría con el nombre de la fila). */
+  .bd-gap, .bd-gap--above { transform: translate(-50%, -50%); font-size: .72rem; }
+  .bd-gap.bd-gap--mbelow { transform: translate(-50%, calc(-50% + 20px)); }
   .bd-track, .bd-nd { inset: 0 6px; }
   /* Cifras junto a los puntos, en letra más chica para que quepan a los lados. */
   .bd-val { font-size: .72rem; }

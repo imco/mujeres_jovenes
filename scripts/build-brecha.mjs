@@ -27,7 +27,7 @@ const CORTES = [
   { id: 'estado',         label: 'Entidad federativa',      aliases: ['estado', 'entidad federativa'] },
   { id: 'jornada',        label: 'Jornada laboral',         aliases: ['duración de la jornada laboral', 'jornada'] },
   { id: 'informalidad',   label: 'Informalidad laboral',    aliases: ['condición de informalidad', 'informalidad'] },
-  { id: 'puesto',         label: 'Ocupaciones',             aliases: ['ocupaciones', 'nivel de puesto'] },
+  { id: 'puesto',         label: 'Ocupaciones',             aliases: ['ocupaciones', 'ocupación', 'nivel de ocupación', 'nivel de puesto'] },
   { id: 'escolaridad',    label: 'Escolaridad',             aliases: ['escolaridad'] },
   { id: 'edad',           label: 'Edad',                    aliases: ['edad'] },
   { id: 'maternidad',     label: 'Maternidad y paternidad', aliases: ['maternidad y paternidad', 'maternidad'] },
@@ -83,7 +83,7 @@ function slugify(text) {
     .replace(/^-+|-+$/g, '');
 }
 
-// "1a - Alta dirección" → "Alta dirección" (el código SINCO solo sirve para ordenar).
+// "1a - Directivos / Mando alto" → "Directivos / Mando alto" (el código SINCO solo sirve para ordenar).
 // Exige espacios alrededor del guion para no tocar rangos como "15-19".
 const cleanLabel = (s) => String(s).trim().replace(/^\d+[a-z]?\s+-\s+/i, '');
 
@@ -104,9 +104,10 @@ function pair(m, h, decimals) {
 
 const isRepr = (v) => v === true || String(v).trim().toLowerCase() === 'true';
 
-function readSheet(wb, name) {
-  const ws = wb.Sheets[name];
-  if (!ws) throw new Error(`Falta la hoja "${name}"`);
+function readSheet(wb, names) {
+  const name = [].concat(names).find((n) => wb.Sheets[n]);
+  const ws = name && wb.Sheets[name];
+  if (!ws) throw new Error(`Falta la hoja "${[].concat(names).join('" o "')}"`);
   const rows = XLSX.utils.sheet_to_json(ws, { header: 1, blankrows: false, defval: '' });
   const headers = (rows[1] || []).map((h) => String(h).trim());
   return rows.slice(2).map((r) => Object.fromEntries(headers.map((h, i) => [h, r[i]])));
@@ -146,7 +147,8 @@ const UNICO_SHEETS = {
   estado: 'Estado',
   jornada: 'Duración de la jornada laboral',
   informalidad: 'Condición de Informalidad',
-  puesto: 'Nivel de puesto',
+  // "Nivel de puesto" en bases anteriores a la clasificación de ocupaciones del IMCO.
+  puesto: ['Nivel de ocupación', 'Nivel de puesto'],
   escolaridad: 'Escolaridad',
   edad: 'Edad',
   maternidad: 'Maternidad y paternidad',

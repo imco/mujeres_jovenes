@@ -1,5 +1,13 @@
 [
   {
+    "titulo": "Monitor | Brecha Salarial",
+    "anio": "2026",
+    "fecha": "2026-09-29",
+    "resumen": "La brecha salarial en México no desaparece, persiste en todos los niveles educativos y condiciones socioeconómicas. Las mayores brechas salariales están en los extremos educativos, con 22% entre quienes tienen primaria o menos y 25% entre quienes cuentan con posgrado. La brecha salarial se duplica con la maternidad, al aumentar de 9% entre las mujeres sin hijos a 17% entre aquellas con hijos.",
+    "url": "https://imco.org.mx/monitor-brecha-salarial/",
+    "imagen": "investigaciones/monitor-brecha-salarial.jpg"
+  },
+  {
     "titulo": "Estados #ConLupaDeGénero 2026",
     "anio": "2026",
     "fecha": "2026-07-07",

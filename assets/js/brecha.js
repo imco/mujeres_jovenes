@@ -32,12 +32,10 @@ const HELP_HTML = `
   <p><strong>Mediana.</strong> Es el ingreso que se ubica a la mitad de la muestra cuando ordenamos los ingresos de las personas de mayor a menor.</p>
 `;
 
-// Por debajo de esta separación relativa entre los dos puntos, la etiqueta de
-// la brecha no cabe entre ellos y se coloca encima.
-const GAP_INLINE_MIN_RATIO = 0.13;
-// En celular (escala de brecha, % del ancho): con menos separación la burbuja
-// taparía los puntos y se coloca debajo de la línea.
-const GAP_INLINE_MIN_MOBILE = 22;
+// Margen (px) que debe quedar entre la píldora de la brecha y cada punto para
+// dibujarla sobre la línea; con menos espacio sale de la línea (ver fitGapPills).
+const GAP_PILL_CLEARANCE = 6;
+const MOBILE_QUERY = '(max-width: 760px)';
 
 // ── Formato ─────────────────────────────────────────────────────────────────
 const moneyFormatters = {
@@ -185,6 +183,25 @@ function replayAnimation(el, className) {
   el.classList.remove(className);
   void el.offsetWidth;
   el.classList.add(className);
+}
+
+// Píldoras de brecha del dumbbell: van sobre la línea si caben entre los dos
+// puntos; si no, salen de la línea (arriba; abajo en celular) unidas a ella por
+// una línea punteada. Se mide con el ancho real de la gráfica y de cada píldora,
+// a partir de las posiciones finales (no de las que tienen durante una animación).
+// Se usa un atributo y no una clase para que animateRows no lo reemplace.
+function fitGapPills(container) {
+  if (!container) return;
+  const mobile = window.matchMedia(MOBILE_QUERY).matches;
+  container.querySelectorAll('.bd-row').forEach((row) => {
+    const pill = row.querySelector('.bd-gap');
+    const track = row.querySelector('.bd-track');
+    const dot = row.querySelector('.bd-dot');
+    if (!pill || !track || !dot) return;
+    const span = Number(mobile ? pill.dataset.mspan : pill.dataset.span) || 0;
+    const free = (span / 100) * track.clientWidth - dot.offsetWidth - GAP_PILL_CLEARANCE * 2;
+    pill.dataset.fit = pill.offsetWidth <= free ? 'inline' : 'out';
+  });
 }
 
 // ── Punto de entrada ────────────────────────────────────────────────────────
@@ -413,6 +430,7 @@ export function renderBrechaStory(data, ctx) {
       : graph;
     chart.classList.toggle('is-long', groups.reduce((n, g) => n + g.rows.length, 0) > ZEBRA_MIN_ROWS);
     bindRowSelection(chart);
+    fitGapPills(chart);
     animateRows(chart, prevChart);
 
     renderAislados();
@@ -502,6 +520,20 @@ export function renderBrechaStory(data, ctx) {
   });
   setupHelp(root, ctx);
 
+  // Al cambiar el ancho de la ventana se recalcula qué píldoras caben en la línea.
+  let resizeFrame = 0;
+  const onResize = () => {
+    if (!root.isConnected) {
+      window.removeEventListener('resize', onResize);
+      return;
+    }
+    cancelAnimationFrame(resizeFrame);
+    resizeFrame = requestAnimationFrame(() => fitGapPills($('chart')));
+  };
+  window.addEventListener('resize', onResize);
+  // Las fuentes web cambian el ancho de las píldoras al terminar de cargar.
+  document.fonts?.ready.then(() => fitGapPills($('chart')));
+
   ctx.setDownloadHandler(() => downloadSelection(data, state, cortesById, getTexto(), buildGroups, ctx));
 
   render();
@@ -581,7 +613,6 @@ function renderDumbbell(groups, unidad, selectedKey, escapeHtml) {
     const lo = Math.min(pm, ph);
     const hi = Math.max(pm, ph);
     const mLeft = m <= h;
-    const gapAbove = (hi - lo) / 100 < GAP_INLINE_MIN_RATIO;
     const mob = mobilePos(r.pair);
     const mlo = Math.min(mob.pm, mob.ph);
     const mhi = Math.max(mob.pm, mob.ph);
@@ -593,7 +624,7 @@ function renderDumbbell(groups, unidad, selectedKey, escapeHtml) {
         <div class="bd-plot">
           <div class="bd-track">
             <span class="bd-line" style="--x:${lo}%;--w:${hi - lo}%;--mx:${mlo}%;--mw:${mhi - mlo}%"></span>
-            <span class="bd-gap${gapAbove ? ' bd-gap--above' : ''}${mhi - mlo < GAP_INLINE_MIN_MOBILE ? ' bd-gap--mbelow' : ''}" style="--x:${(lo + hi) / 2}%;--mx:${(mlo + mhi) / 2}%">${formatGap(b)}</span>
+            <span class="bd-gap" data-span="${hi - lo}" data-mspan="${mhi - mlo}" style="--x:${(lo + hi) / 2}%;--mx:${(mlo + mhi) / 2}%">${formatGap(b)}</span>
             <span class="bd-dot bd-dot--h" style="--x:${ph}%;--mx:${mob.ph}%"></span>
             <span class="bd-dot bd-dot--m" style="--x:${pm}%;--mx:${mob.pm}%"></span>
             <span class="bd-val bd-val--m ${mLeft ? 'is-left' : 'is-right'}" style="--x:${pm}%;--mx:${mob.pm}%">${formatMoney(m, unidad)}</span>

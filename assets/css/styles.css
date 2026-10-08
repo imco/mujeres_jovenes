@@ -2566,7 +2566,21 @@ h2 {
   white-space: nowrap;
   z-index: 1;
 }
-.bd-gap--above { transform: translate(-50%, calc(-50% - 24px)); }
+/* Espacio para la píldora de la primera fila cuando sale por arriba. */
+.bd-chart { padding-top: 12px; }
+.bd-gap { --gap-out: -28px; }
+/* Sin espacio entre los puntos: la píldora sale de la línea y una línea
+   punteada naranja la une con el centro del tramo (brecha.js: fitGapPills). */
+.bd-gap[data-fit="out"] { transform: translate(-50%, calc(-50% + var(--gap-out))); }
+.bd-gap[data-fit="out"]::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  height: calc(-1 * var(--gap-out) - 50% - 1px);
+  border-left: 2px dotted var(--brecha-gap);
+  transform: translateX(-50%);
+}
 
 .bd-nd {
   position: absolute;
@@ -2829,8 +2843,9 @@ h2 {
   .bd-line { height: 6px; }
   /* Brecha sobre la línea, entre los puntos; si no cabe, debajo (encima
      chocaría con el nombre de la fila). */
-  .bd-gap, .bd-gap--above { transform: translate(-50%, -50%); font-size: .72rem; }
-  .bd-gap.bd-gap--mbelow { transform: translate(-50%, calc(-50% + 20px)); }
+  .bd-gap { transform: translate(-50%, -50%); font-size: .72rem; --gap-out: 24px; }
+  /* En celular sale hacia abajo: arriba chocaría con el nombre de la fila. */
+  .bd-gap[data-fit="out"]::after { top: auto; bottom: 100%; height: calc(var(--gap-out) - 50% - 1px); }
   .bd-track, .bd-nd { inset: 0 6px; }
   /* Cifras junto a los puntos, en letra más chica para que quepan a los lados. */
   .bd-val { font-size: .72rem; }

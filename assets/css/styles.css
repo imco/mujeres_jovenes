@@ -3021,3 +3021,27 @@ h2 {
 @media (max-width: 640px) {
   .investigaciones-grid { grid-template-columns: 1fr; }
 }
+
+/* Promedio nacional sobre los mapas STEM (abajo a la izquierda). */
+.stem-map-stage { position: relative; }
+.stem-map-national {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  display: grid;
+  gap: .1rem;
+  padding: .7rem 1.1rem .75rem;
+  background: #fff;
+  border: 1px solid #e4def7;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(31, 35, 64, .08);
+  pointer-events: none;
+}
+.stem-map-national[hidden] { display: none; }
+.stem-map-national span { font-size: .78rem; color: #6b7088; }
+.stem-map-national strong { font-size: 1.9rem; line-height: 1.05; font-weight: 800; color: #5b3fd6; }
+@media (max-width: 760px) {
+  .stem-map-national { left: .5rem; bottom: .5rem; padding: .45rem .7rem .5rem; }
+  .stem-map-national span { font-size: .66rem; }
+  .stem-map-national strong { font-size: 1.3rem; }
+}

@@ -115,8 +115,8 @@ const TABS = [
       {
         key: 'stem-pisa-historico',
         type: 'line',
-        title: 'México registra una tendencia a la baja en el desempeño en matemáticas, comprensión lectora y ciencias',
-        subtitle: 'Histórico de puntajes obtenidos por México entre 2003 y 2022',
+        title: 'México registra una tendencia a la baja en el desempeño en matemáticas y comprensión lectora',
+        subtitle: 'Histórico de puntajes obtenidos por México entre 2003 y 2025',
         file: '/api/data?s=stem',
         width: 'half',
         chartHeightScale: 1.2
@@ -134,7 +134,7 @@ const TABS = [
         type: 'stem-matricula-area',
         title: 'En México de cada tres estudiantes en carreras STEM una es mujer',
         subtitle: 'Distribución de matrícula de hombres y mujeres por área de estudio',
-        file: 'data/stem/monitor_stem.json'
+        file: '/api/data?s=stem'
       },
       {
         key: 'stem-map-matricula',
@@ -159,7 +159,7 @@ const TABS = [
         type: 'stem-mercado-laboral',
         title: 'Mujeres egresadas de carreras STEM acceden a mejores beneficios laborales.',
         subtitle: 'Indicadores del mercado laboral para mujeres por área de estudios',
-        file: 'data/stem/monitor_stem.json'
+        file: '/api/data?s=stem'
       }
     ]
   },
@@ -2792,7 +2792,54 @@ async function fetchJSON(path) {
 
 // Normaliza formato de fuentes tipo "Excel exportado" a la estructura de chart interna.
 // Si cambia la estructura de un JSON de origen, normalmente el ajuste va aquí.
+// Ajustes de la pestaña STEM sobre los datos del Sheet. El Sheet trae fuentes
+// abreviadas ("PISA, OCDE") y colores por serie que no siguen la paleta del
+// monitor (Hombres en naranja): aquí se fijan las fuentes completas y los
+// colores de las gráficas donde importa. Lo demás sale del Sheet tal cual.
+const STEM_AJUSTES = {
+  historico_pisa: {
+    fuente: 'Fuente: Elaborado por el IMCO con datos de PISA de la OCDE.'
+  },
+  nivel_matematicas: {
+    fuente: 'Fuente: Elaborado por el IMCO con datos de PISA 2025 de la OCDE.',
+    colores: { Mujeres: '#7F79FB', Hombres: '#A3A5A8' }
+  },
+  matricula_por_area: {
+    fuente: 'Fuente: Elaborado con datos de los anuarios estadísticos de la ANUIES para el ciclo escolar 2025-2026.',
+    colores: { Mujeres: '#7F79FB', Hombres: '#A3A5A8' }
+  },
+  mapa_matricula_stem: {
+    fuente: 'Fuente: Elaborado por el IMCO con datos de ANUIES para el ciclo escolar 2025-2026.'
+  },
+  mapa_profesionistas_stem: {
+    fuente: 'Fuente: Elaborado por el IMCO con datos de la ENOE al 3T de 2025 del INEGI.'
+  },
+  mercado_laboral_stem: {
+    fuente: 'Fuente: Elaborado con datos de la ENOE al 3T de 2025 del INEGI.',
+    colores: { 'Profesionistas STEM': '#7F79FB', Profesionistas: '#BDBAFF', Nacional: '#E5E4FE' }
+  }
+};
+
+function applyStemAjustes(data) {
+  if (!Array.isArray(data?.graficas)) return data;
+  return {
+    ...data,
+    graficas: data.graficas.map((g) => {
+      const ajuste = STEM_AJUSTES[g.id];
+      if (!ajuste) return g;
+      return {
+        ...g,
+        fuente: ajuste.fuente || g.fuente,
+        series: Array.isArray(g.series)
+          ? g.series.map((s) => ({ ...s, color: ajuste.colores?.[s.nombre] || s.color }))
+          : g.series
+      };
+    })
+  };
+}
+
 function normalizeSectionData(section, data) {
+  if (section.key?.startsWith('stem-')) data = applyStemAjustes(data);
   if (section.key === 'evolucion-tpe') {
     const sourceRows = Array.isArray(data)
       ? data
@@ -3164,11 +3211,27 @@ function renderStemMapShell() {
       <div class="stem-map-stage mexico-map-stage">
         <svg class="chart-svg stem-choropleth" role="img"></svg>
         <div class="bars-stage" hidden></div>
+        <div class="stem-map-national" hidden>
+          <span>Promedio nacional</span>
+          <strong></strong>
+        </div>
       </div>
       <div class="map-gradient"><span></span><div></div><span></span></div>
       <p class="chart-source stem-map-source" hidden></p>
     </div>
   `;
+}
+
+// Proporción nacional a partir de las filas por entidad: suma de la columna
+// "<x>_stem" entre la suma de "total_<x>" (alumnas o profesionistas).
+function stemNationalShare(records) {
+  const sample = records[0] || {};
+  const totalKey = Object.keys(sample).find((k) => k.startsWith('total_'));
+  const stemKey = Object.keys(sample).find((k) => k.endsWith('_stem'));
+  if (!totalKey || !stemKey) return NaN;
+  const sum = (key) => records.reduce((acc, r) => acc + (Number(r[key]) || 0), 0);
+  const total = sum(totalKey);
+  return total > 0 ? sum(stemKey) / total : NaN;
 }
 
 // Renderiza un mapa choropleth STEM.
@@ -3238,9 +3301,19 @@ async function attachStemMap(container, data, graphId) {
     gradLabels[1].textContent = `${(maxV * 100).toFixed(0)}%`;
   }
 
+  // Promedio nacional: total de casos STEM entre el total de la población de
+  // todas las entidades (columnas "<x>_stem" y "total_<x>" de la hoja).
+  const nationalBox = panel.querySelector('.stem-map-national');
+  const national = stemNationalShare(records);
+  if (nationalBox && Number.isFinite(national)) {
+    nationalBox.querySelector('strong').textContent = `${(national * 100).toFixed(0)}%`;
+  }
+
   const renderCurrentView = () => {
     const mapVisible = selectedView === 'map';
     setIndicatorStageView(svg, barsStage, mapVisible);
+    // En la vista de barras el recuadro taparía las barras; ahí no se muestra.
+    if (nationalBox) nationalBox.hidden = !mapVisible || !Number.isFinite(national);
 
     if (mapVisible) {
       const paths = features.map((feature) => {

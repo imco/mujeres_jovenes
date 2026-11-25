@@ -27,7 +27,7 @@ const TABS = [
         title: 'La participación de las mujeres en el mercado laboral ha cambiado poco en los últimos 20 años',
         subtitle: 'Evolución nacional de la tasa de participación económica por sexo',
         file: '/api/data?s=tpe_historica',
-        source: 'Fuente: Elaborado por el IMCO con datos del tercer trimestre de la Encuesta Nacional de Ocupación y Empleo (ENOE) del INEGI de 2005 a 2025.',
+        source: 'Fuente: Elaborado por el IMCO con datos del tercer trimestre de la Encuesta Nacional de Ocupación y Empleo (ENOE) del INEGI de 2005 a 2026.',
         chartHeightScale: .8
       },
       {
@@ -44,9 +44,9 @@ const TABS = [
       {
         key: 'informalidad-laboral-sexo',
         type: 'line',
-        title: 'Actualmente la diferencia entre hombres y mujeres en la informalidad se encuentra en niveles similares a 2005',
+        title: 'La brecha de informalidad entre mujeres y hombres es de 5.5 puntos, menor que en 2005',
         subtitle: 'Porcentaje de trabajadores en la informalidad por sexo',
-        source: 'Nota: Se considera la tasa de informalidad con respecto a la población ocupada no agropecuaria (TIL2). Fuente: Elaborado por el IMCO con el dato trimestral de la Encuesta Nacional de Ocupación y Empleo (ENOE) del INEGI de 2005 a 2025.',
+        source: 'Nota: Se considera la tasa de informalidad con respecto a la población ocupada no agropecuaria (TIL2). Fuente: Elaborado por el IMCO con el dato trimestral de la Encuesta Nacional de Ocupación y Empleo (ENOE) del INEGI de 2005 al 3T 2026.',
         file: '/api/data?s=informalidad',
         width: 'half',
         chartHeightScale: 1.28
@@ -148,7 +148,7 @@ const TABS = [
       {
         key: 'stem-map-profesionistas',
         type: 'stem-map',
-        title: 'Coahuila y Querétaro lideran a nivel nacional. 18% de las mujeres profesionistas trabajan en STEM',
+        title: 'Durango lidera a nivel nacional: 18% de sus mujeres profesionistas estudiaron una carrera STEM',
         subtitle: 'Proporción de profesionistas STEM respecto al total de profesionistas por estado',
         file: '/api/data?s=stem',
         graphId: 'mapa_profesionistas_stem',
@@ -2812,10 +2812,10 @@ const STEM_AJUSTES = {
     fuente: 'Fuente: Elaborado por el IMCO con datos de ANUIES para el ciclo escolar 2025-2026.'
   },
   mapa_profesionistas_stem: {
-    fuente: 'Fuente: Elaborado por el IMCO con datos de la ENOE al 3T de 2025 del INEGI.'
+    fuente: 'Fuente: Elaborado por el IMCO con datos de la ENOE al 3T de 2026 del INEGI.'
   },
   mercado_laboral_stem: {
-    fuente: 'Fuente: Elaborado con datos de la ENOE al 3T de 2025 del INEGI.',
+    fuente: 'Fuente: Elaborado con datos de la ENOE al 3T de 2026 del INEGI.',
     colores: { 'Profesionistas STEM': '#7F79FB', Profesionistas: '#BDBAFF', Nacional: '#E5E4FE' }
   }
 };
@@ -2925,7 +2925,7 @@ function normalizeSectionData(section, data) {
     return {
       unit: '%',
       max: 32,
-      source: 'Nota: Se utilizan las cifras brutas del método hibrido. La suma de los parciales puede no coincidir con el total por el redondeo. Para el año 2023 y 2024 se usan datos preliminares. Fuente: Elaborado por el IMCO con datos de la Cuenta Satélite del Trabajo No Remunerado de los Hogares de México 2024 del INEGI.',
+      source: 'Nota: Se utilizan las cifras brutas del método híbrido. La suma de los parciales puede no coincidir con el total por el redondeo. Para 2025 se usan datos preliminares. Fuente: Elaborado por el IMCO con datos de la Cuenta Satélite del Trabajo No Remunerado de los Hogares de México 2025 del INEGI.',
       labels: rows.map((row) => String(row.Año)),
       series: [
         {

@@ -85,7 +85,7 @@ const SECTIONS = [
     transform: {
       type: 'tpe-line',
       min: 35, max: 85,
-      source: 'Fuente: Elaborado por el IMCO con datos del tercer trimestre de la Encuesta Nacional de Ocupación y Empleo (ENOE) del INEGI de 2005 a 2025.',
+      source: 'Fuente: Elaborado por el IMCO con datos del tercer trimestre de la Encuesta Nacional de Ocupación y Empleo (ENOE) del INEGI de 2005 a 2026.',
     },
   },
   // ── STEM (multi-sheet: 6 hojas → 1 blob monitor_stem.json) ────────────────

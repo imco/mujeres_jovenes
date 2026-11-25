@@ -3,7 +3,7 @@
 //
 //   npm run data:brecha
 //
-// Fuentes:
+// Fuentes (ver "Fuente JSON" abajo para usar un JSON ya armado en lugar de los Excel):
 //   - Base_monitor_brecha_*.xlsx       → ingresos y brechas por corte
 //   - Cortes y textos_*.xlsx           → matriz de cortes permitidos y textos
 //
@@ -120,7 +120,50 @@ async function findSource(prefix) {
   return path.join(SOURCES_DIR, hit);
 }
 
-// ── Lectura ──────────────────────────────────────────────────────────────────
+// ── Fuente JSON (alternativa a los Excel) ────────────────────────────────────
+// Si hay un JSON ya armado (p. ej. salida de 02_brecha_monitor_json.R), se
+// valida y se publica tal cual. Orden de prioridad:
+//   1. Ruta pasada como argumento:  npm run data:brecha -- ruta/monitor.json
+//   2. El más reciente scripts/sources/brecha/monitor_brecha_*.json
+//   3. Los Excel (forzar con:       npm run data:brecha -- --excel)
+const args = process.argv.slice(2);
+const forceExcel = args.includes('--excel');
+const jsonArg = args.find((a) => a.endsWith('.json'));
+const jsonSource = forceExcel
+  ? null
+  : jsonArg
+    ? path.resolve(jsonArg)
+    : (await fs.readdir(SOURCES_DIR))
+        .filter((f) => f.startsWith('monitor_brecha_') && f.endsWith('.json'))
+        .sort()
+        .map((f) => path.join(SOURCES_DIR, f))
+        .pop();
+
+if (jsonSource) {
+  const data = JSON.parse(await fs.readFile(jsonSource, 'utf8'));
+  const errores = [];
+  for (const k of ['meta', 'nacional', 'cortes', 'unicos', 'combinados', 'textos']) {
+    if (!(k in data)) errores.push(`falta "${k}"`);
+  }
+  if (!data.meta?.periodo) errores.push('falta meta.periodo');
+  if (!Array.isArray(data.cortes) || !data.cortes.length) errores.push('"cortes" vacío');
+  for (const c of data.cortes ?? []) {
+    if (c.id === 'nivel_ingresos') continue;
+    if (!Array.isArray(data.unicos?.[c.id])) errores.push(`sin datos en unicos.${c.id}`);
+  }
+  if (errores.length) {
+    console.error(`[error] ${path.relative(ROOT, jsonSource)} no tiene el formato esperado:\n  - ${errores.join('\n  - ')}`);
+    process.exit(1);
+  }
+  await fs.mkdir(path.dirname(OUTPUT), { recursive: true });
+  await fs.writeFile(OUTPUT, `${JSON.stringify(data)}\n`, 'utf8');
+  const size = (await fs.stat(OUTPUT)).size;
+  console.log(`[ok] ${path.relative(ROOT, OUTPUT)} desde ${path.relative(ROOT, jsonSource)} (${(size / 1024).toFixed(1)} KB)`);
+  console.log(`     periodo: ${data.meta.periodo} · cortes: ${data.cortes.length} · combinados: ${Object.keys(data.combinados).length} · textos: ${Object.keys(data.textos).length}`);
+  process.exit(0);
+}
+
+// ── Lectura (Excel) ──────────────────────────────────────────────────────────
 const basePath = await findSource('Base_monitor_brecha');
 const textosPath = await findSource('Cortes y textos');
 const base = XLSX.readFile(basePath);
